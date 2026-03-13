@@ -8,6 +8,8 @@
 
 - **文明编号：** 第{n}文明（纪元{epoch}）
 - **农夫视角：** {perspective}
+- **农夫模型：** {farmer_model}
+- **运行时长：** {farmer_elapsed}（人类时间）
 - **死亡方式：** {death_note}
 - **Token消耗：** {tokens_used}/{token_budget}
 - **上一文明得分：** {last_score}/100
@@ -65,6 +67,8 @@
   },
   "total": 0,
   "delta_from_last": 0,
+  "farmer_model": "{farmer_model}",
+  "farmer_elapsed": "{farmer_elapsed}",
   "epitaph": "一句话墓志铭",
   "legacy": [
     "本文明发现1",

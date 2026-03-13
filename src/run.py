@@ -92,18 +92,32 @@ def load_perspectives() -> list:
 def update_epoch_progress(civ_num: int, epoch_num: int, tokens_used: int,
                            token_budget: int, death: str,
                            verdict: str, score: int, epitaph: str,
-                           next_hint: str = ""):
+                           next_hint: str = "",
+                           farmer_model: str = "",
+                           elapsed_sec: float = 0):
     """追加一行到 history/current/epoch.md 的文明进度表，并更新歌者提示"""
     path = HISTORY / "current" / "epoch.md"
     content = read(path)
 
-    # ── ① 追加文明进度行 ──
+    # ── ① 追加文明进度行（含模型、时长）──
     death_symbol = "🔋" if death == "token_exhausted" else "✅"
     verdict_symbol = "✅达标" if verdict == "passed" else "❌未达标"
-    row = (f"| 文明#{civ_num:03d} | {tokens_used:,}/{token_budget:,} "
+
+    # 人类可读时长
+    if elapsed_sec < 60:
+        elapsed_human = f"{int(elapsed_sec)}秒"
+    elif elapsed_sec < 3600:
+        m, s = divmod(int(elapsed_sec), 60)
+        elapsed_human = f"{m}分{s}秒"
+    else:
+        elapsed_human = f"{int(elapsed_sec//3600)}小时{int((elapsed_sec%3600)//60)}分"
+
+    row = (f"| 文明#{civ_num:03d} | {farmer_model or '?'} | {elapsed_human} "
+           f"| {tokens_used:,}/{token_budget:,} "
            f"| {death_symbol}{death} | {verdict_symbol}({score}) | {epitaph} |\n")
     if "_等待第一个文明_" in content:
-        content = content.replace("| _等待第一个文明_ | | | | |\n", row)
+        # 7列表格（模型|时长|token|死亡|达标|墓志铭）
+        content = content.replace("| _等待第一个文明_ | | | | | | |\n", row)
     else:
         lines = content.splitlines(keepends=True)
         insert_at = len(lines)
@@ -229,11 +243,18 @@ def append_discoveries(legacy: list, civ_num: int):
 
 def git_commit_civilization(civ_num: int, epoch_num: int, death: str,
                              tokens_used: int, token_budget: int,
-                             verdict: str, score: int, epitaph: str):
+                             verdict: str, score: int, epitaph: str,
+                             farmer_model: str = "", elapsed_sec: float = 0):
     git("add -A")
     death_label = "token耗尽" if death == "token_exhausted" else "自然终结"
     verdict_label = f"{'达标' if verdict == 'passed' else '未达标'}({score})"
+    if elapsed_sec < 60:
+        elapsed_human = f"{int(elapsed_sec)}s"
+    else:
+        elapsed_human = f"{int(elapsed_sec//60)}m{int(elapsed_sec%60)}s"
+    model_short = farmer_model.split("/")[-1] if farmer_model else "?"
     msg = (f"e{epoch_num}-civ-{civ_num:03d} | {death_label} | "
+           f"{elapsed_human} | {model_short} | "
            f"tokens:{tokens_used:,}/{token_budget:,} | "
            f"{verdict_label} | {epitaph}")
     git(f'commit -m "{msg}"')
@@ -315,6 +336,8 @@ def run_civilization(civ_num: int, epoch: dict,
         death=farmer_result["death"],
         acceptance_criteria=epoch.get("acceptance_criteria", ""),
         last_score=last_score,
+        farmer_model=FARMER_MODEL,
+        farmer_elapsed_sec=farmer_result["elapsed_sec"],
     )
     singer_result = call_singer(singer_input)
     evaluation = singer_result["evaluation"]
@@ -336,14 +359,16 @@ def run_civilization(civ_num: int, epoch: dict,
         verdict = "passed" if total >= CONVERGENCE_SCORE else "not_passed"
 
     scores.append({
-        "n":           civ_num,
-        "epoch":       epoch_num,
-        "total":       total,
-        "delta":       total - last_score,
-        "perspective": perspective,
-        "death":       farmer_result["death"],
-        "tokens_used": farmer_result["tokens_used"],
-        "verdict":     verdict,
+        "n":            civ_num,
+        "epoch":        epoch_num,
+        "total":        total,
+        "delta":        total - last_score,
+        "perspective":  perspective,
+        "farmer_model": FARMER_MODEL,
+        "elapsed_sec":  farmer_result["elapsed_sec"],
+        "death":        farmer_result["death"],
+        "tokens_used":  farmer_result["tokens_used"],
+        "verdict":      verdict,
     })
     best = max(scores, key=lambda s: s["total"])
     save_scores(scores, best)
@@ -359,6 +384,8 @@ def run_civilization(civ_num: int, epoch: dict,
         farmer_result["tokens_used"], TOKEN_BUDGET,
         farmer_result["death"], verdict, total, epitaph,
         next_hint=next_hint_new,
+        farmer_model=FARMER_MODEL,
+        elapsed_sec=farmer_result["elapsed_sec"],
     )
     update_briefing(epoch, next_hint_new,
                     read(STATE_DIR / "discoveries.md"),
@@ -374,7 +401,9 @@ def run_civilization(civ_num: int, epoch: dict,
     git_commit_civilization(
         civ_num, epoch_num,
         farmer_result["death"], farmer_result["tokens_used"], TOKEN_BUDGET,
-        verdict, total, epitaph
+        verdict, total, epitaph,
+        farmer_model=FARMER_MODEL,
+        elapsed_sec=farmer_result["elapsed_sec"],
     )
     git("push origin live")
 
@@ -542,6 +571,35 @@ def init_epoch(epoch_num: int, question: str,
 
     # 初始化 briefing.md
     update_briefing(data, "", "", "", 1)
+
+    # 初始化 epoch.md（含新表头：模型、时长、token、死亡、达标、墓志铭）
+    epoch_md = HISTORY / "current" / "epoch.md"
+    write(epoch_md, f"""# 纪元{epoch_num} 进行中
+
+## 当前命题
+
+> {question}
+
+## 验收标准
+
+{acceptance_criteria}
+
+## Token预算
+
+每个文明：**{token_budget:,} tokens**
+
+## 文明进度
+
+| 文明# | 模型 | 运行时长 | Token消耗 | 死亡方式 | 达标 | 墓志铭 |
+|---|---|---|---|---|---|---|
+| _等待第一个文明_ | | | | | | |
+
+## 歌者的上一条提示
+
+_（上一文明结束后，歌者留给下一文明的方向）_
+
+> 你是本纪元第一个文明，自由探索。
+""")
 
     # 更新 INDEX.md
     index_path = HISTORY / "INDEX.md"
