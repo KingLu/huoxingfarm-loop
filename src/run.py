@@ -435,7 +435,8 @@ def finalize_epoch(epoch: dict, scores: list, winning_civ: int):
     write(index_path, index)
 
     git("add -A")
-    git(f'commit -m "epoch-{epoch_num}-end: 纪元{epoch_num}收敛 | 历经{civ_count}文明 | 得分{best[\"total\"]}"')
+    score = best["total"]
+    git(f'commit -m "epoch-{epoch_num}-end: 纪元{epoch_num}收敛 | 历经{civ_count}文明 | 得分{score}"')
     git_tag_epoch_end(epoch_num)
 
 

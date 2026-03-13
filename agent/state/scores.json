@@ -1,6 +1,24 @@
 {
-  "scores": [],
-  "best": null,
-  "current_civilization": 0,
-  "status": "not_started"
+  "scores": [
+    {
+      "n": 1,
+      "epoch": 1,
+      "total": 93,
+      "delta": 93,
+      "perspective": "2050年的历史学家（回顾视角）",
+      "death": "natural",
+      "tokens_used": 1662,
+      "verdict": "passed"
+    }
+  ],
+  "best": {
+    "n": 1,
+    "epoch": 1,
+    "total": 93,
+    "delta": 93,
+    "perspective": "2050年的历史学家（回顾视角）",
+    "death": "natural",
+    "tokens_used": 1662,
+    "verdict": "passed"
+  }
 }

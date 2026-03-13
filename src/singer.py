@@ -35,7 +35,12 @@ def build_singer_input(civ_num: int, epoch_num: int, perspective: str,
         "token_exhausted": f"token耗尽（消耗 {tokens_used}/{token_budget}，强制截断）",
     }.get(death, death)
 
-    return template.format(
+    # 把 markdown 代码块里的 { } 转义，避免被 .format() 误解析
+    def escape_code_blocks(m):
+        return m.group(0).replace("{", "{{").replace("}", "}}")
+    safe_template = re.sub(r"```[\s\S]*?```", escape_code_blocks, template)
+
+    return safe_template.format(
         n=civ_num,
         epoch=epoch_num,
         perspective=perspective,
