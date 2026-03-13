@@ -363,6 +363,18 @@
       "death": "natural",
       "tokens_used": 3622,
       "verdict": "not_passed"
+    },
+    {
+      "n": 33,
+      "epoch": 1,
+      "total": 50,
+      "delta": -2,
+      "perspective": "中国商业航天创业者",
+      "farmer_model": "qwen3.5:0.8b",
+      "elapsed_sec": 23.4,
+      "death": "natural",
+      "tokens_used": 3568,
+      "verdict": "not_passed"
     }
   ],
   "best": {
