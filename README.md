@@ -11,16 +11,17 @@
 
 | 角色 | 模型 | 职责 |
 |---|---|---|
-| 🌾 农场主 | 灵耳（Claude） | 发起任务，每10轮审阅，掌舵方向 |
-| 👨‍🌾 农夫 | Qwen3.5:35b（GPU工作站） | 每轮生成策略迭代 |
-| 🎵 歌者 | Qwen3.5:35b（GPU工作站） | 评分、记录史书、git commit |
-| 🔍 情报员 | intel（Gemini） | 按需召唤，补充现实数据 |
+| 🌾 农场主 | 灵耳（Claude Sonnet） | 发起纪元命题，审阅收敛结果，掌舵方向 |
+| 👨‍🌾 农夫 | DeepSeek（deepseek-chat） | 每轮读史书、生成战略方案，token耗尽即消亡 |
+| 🎵 歌者 | DeepSeek（deepseek-chat） | 独立评分、提炼遗产、记录史书、git commit |
+
+> 情报员（intel/Gemini）可按需由农场主手动召唤，补充现实数据。
 
 ## 三层结构
 
 ```
 项目总史（MarsfarM）
-  └── 纪元（Epoch）      ← 一个大命题，跑若干文明直到命题收敛
+  └── 纪元（Epoch）      ← 一个大命题，跑若干文明直到收敛
         └── 文明（Civilization）  ← 一次 Loop 迭代
 ```
 
@@ -33,63 +34,95 @@ main   ← 纪元正史（纪元终结时合并，含终章）
   └── live  ← 文明实录（歌者每轮 commit）
 ```
 
-## Tag 规范
+## Tag 规范（只打纪元级，不打文明级）
 
 | Tag | 打在 | 时机 |
 |---|---|---|
-| `e{N}-civ-{NNN}` | live | 每个文明结束（自动） |
-| `e{N}-best-{score}` | live | 当前纪元新高分（自动） |
-| `epoch-{N}-start` | live | 新纪元开始（自动） |
-| `epoch-{N}-end` | main | 纪元收敛后合并（自动） |
-| `pivot-N` | main | 农场主调整方向（手动） |
-| `convergence` | main | 史诗完结 |
+| `epoch-{N}-start` | live | 新纪元第一个文明开始前（自动） |
+| `epoch-{N}-end` | main | 纪元收敛合并后（自动） |
+| `pivot-N` | main | 农场主调整命题方向（手动） |
+| `convergence` | main | 史诗完结（手动） |
+
+文明记录在 git commit message 和 `agent/civilizations/` 目录中，不占用 tag。
 
 ## 目录结构
 
 ```
 huoxingfarm-loop/
 ├── README.md
-├── DESIGN.md               ← 完整设计方案
-├── run.py                  ← Controller 主程序（待实现）
-├── .env.example            ← 环境变量模板（不含真实密钥）
-├── prompts/
-│   ├── farmer.md           ← 农夫 prompt 模板
-│   ├── singer.md           ← 歌者 prompt 模板
-│   └── perspectives.json   ← 10个思维视角
-├── state/
-│   ├── epoch.json          ← 当前纪元（编号、命题、进度）
-│   ├── epoch-answers.md    ← 所有已完成纪元最终答案（永久积累）
-│   ├── current.json        ← 当前纪元最优方案
-│   ├── discoveries.md      ← 当前纪元已知定律
-│   └── scores.json         ← 当前纪元分数历史
-└── logs/
-    └── civilization-NNN.md ← 文明编号全局唯一，跨纪元连续
+├── DESIGN.md                       ← 完整设计方案
+├── .env.example                    ← 环境变量模板（不含真实密钥）
+├── src/
+│   ├── run.py                      ← Controller 主程序
+│   ├── farmer.py                   ← 农夫 API 调用模块
+│   ├── singer.py                   ← 歌者 API 调用模块
+│   ├── .env                        ← 本地密钥（不提交）
+│   └── prompts/
+│       ├── farmer.md               ← 农夫 prompt 模板
+│       ├── singer.md               ← 歌者 prompt 模板
+│       └── perspectives.json       ← 10个思维视角
+└── agent/
+    ├── history/
+    │   ├── INDEX.md                ← 史书总目
+    │   ├── current/
+    │   │   ├── briefing.md         ← 农夫启动包（每轮刷新）
+    │   │   └── epoch.md            ← 当前纪元进展表
+    │   └── epochs/
+    │       └── epoch-NNN.md        ← 已完成纪元的封存史册
+    ├── state/
+    │   ├── epoch.json              ← 当前纪元（编号、命题、状态）
+    │   ├── epoch-answers.md        ← 所有已完成纪元答案（永久积累）
+    │   ├── discoveries.md          ← 当前纪元已知定律
+    │   └── scores.json             ← 分数历史与最优记录
+    └── civilizations/
+        └── epoch-NNN/
+            └── civ-NNN/
+                ├── farmer.md       ← 农夫产出
+                └── singer.md       ← 歌者评价（含JSON评分+文明叙事）
 ```
 
 ## 快速开始
 
 ```bash
-# 1. 复制并填写环境变量
-cp .env.example .env
-# 编辑 .env，填入 GPU 工作站 API 地址和密钥
+# 1. 克隆仓库
+git clone https://github.com/KingLu/huoxingfarm-loop.git
+cd huoxingfarm-loop
 
-# 2. 运行 Loop
-python3 run.py --rounds 20
+# 2. 创建 Python 3.12 虚拟环境
+python3.12 -m venv .venv
+.venv/bin/pip install python-dotenv
 
-# 3. 查看史书
+# 3. 配置密钥
+cp src/.env.example src/.env
+# 编辑 src/.env，填入 DeepSeek API Key
+
+# 4. 初始化纪元1
+.venv/bin/python src/run.py init
+
+# 5. 启动 Loop
+.venv/bin/python src/run.py
+
+# 6. 查看史书
 git log --oneline live
+cat agent/state/scores.json
+```
 
-# 4. 查看当前最优方案
-cat state/current.json
+## git commit 格式
+
+```
+e1-civ-001 | 自然终结 | tokens:1,662/100,000 | 达标(93) | 墓志铭文字
+e1-civ-007 | token耗尽 | tokens:100,000/100,000 | 未达标(61) | 墓志铭文字
+epoch-1-end: 纪元1收敛 | 历经1文明 | 得分93
 ```
 
 ## 收敛条件
 
-- 总分 ≥ 85/100 → 自动收敛
+- 总分 ≥ 85/100 → 自动收敛，纪元终结
 - 连续5轮提升 < 2分 → 通知农场主决策
-- 最多运行50轮
+- 最多运行50轮（MAX_ROUNDS）
 
 ---
 
 *项目发起：MarsfarM 火星农场*  
-*设计哲学：仿《三体》游戏，文明迭代，史书传承*
+*设计哲学：仿《三体》游戏，文明迭代，史书传承*  
+*版本：v1.0 | 2026-03-13 | 纪元1已收敛（93分）*
