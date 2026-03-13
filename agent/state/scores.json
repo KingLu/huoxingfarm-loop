@@ -29,6 +29,16 @@
       "death": "natural",
       "tokens_used": 1633,
       "verdict": "not_passed"
+    },
+    {
+      "n": 3,
+      "epoch": 1,
+      "total": 14,
+      "delta": -37,
+      "perspective": "荷兰温室农业专家",
+      "death": "token_exhausted",
+      "tokens_used": 4785,
+      "verdict": "not_passed"
     }
   ],
   "best": {
