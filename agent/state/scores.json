@@ -207,6 +207,18 @@
       "death": "token_exhausted",
       "tokens_used": 5804,
       "verdict": "not_passed"
+    },
+    {
+      "n": 20,
+      "epoch": 1,
+      "total": 8,
+      "delta": -2,
+      "perspective": "2050年的历史学家（回顾视角）",
+      "farmer_model": "qwen3.5:0.8b",
+      "elapsed_sec": 91.3,
+      "death": "token_exhausted",
+      "tokens_used": 5855,
+      "verdict": "not_passed"
     }
   ],
   "best": {
