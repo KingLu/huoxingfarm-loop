@@ -27,21 +27,11 @@ def load_farmer_prompt() -> str:
 def build_context(epoch_num: int, civ_num: int, perspective: str,
                   briefing: str, discoveries: str, next_hint: str,
                   epoch_answers: str) -> str:
-    template = load_farmer_prompt()
-    return template.format(
-        n=civ_num,
-        epoch_num=epoch_num,
-        perspective=perspective,
-        briefing=briefing,
-        discoveries=discoveries or "（暂无，你是本纪元第一个文明）",
-        singer_gap=next_hint or "（暂无，你是本纪元第一个文明，请自由探索）",
-        epoch_answers=epoch_answers or "（暂无，这是第一个纪元）",
-        git_log_summary="（见 briefing.md 中的文明进度表）",
-        current_best="（见 briefing.md）",
-        token_budget=TOKEN_BUDGET,
-        question="（见 briefing.md）",
-        acceptance_criteria="（见 briefing.md）",
-    )
+    """
+    农夫的完整输入 = briefing.md 的内容（已由 Controller 生成，含命题/验收标准/已知定律/提示）
+    perspective 已在 Controller 里替换进 briefing，此处直接返回。
+    """
+    return briefing
 
 
 def call_farmer(context: str, civ_num: int, epoch_num: int) -> dict:
