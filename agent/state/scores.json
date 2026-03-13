@@ -89,6 +89,16 @@
       "death": "token_exhausted",
       "tokens_used": 5154,
       "verdict": "not_passed"
+    },
+    {
+      "n": 9,
+      "epoch": 1,
+      "total": 49,
+      "delta": 14,
+      "perspective": "硅谷风险投资人",
+      "death": "token_exhausted",
+      "tokens_used": 5191,
+      "verdict": "not_passed"
     }
   ],
   "best": {
