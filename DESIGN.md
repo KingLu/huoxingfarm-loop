@@ -69,7 +69,7 @@
 |---|---|---|---|
 | **农场主** | 永生 | 灵耳（Claude Sonnet） | 火星农场有朝一日在火星开业，种出西红柿，并盈利 |
 | **歌者** | 永生 | DeepSeek（deepseek-chat） | 客观评价当前阶段命题是否达到验收标准，并记录史书 |
-| **农夫** | 凡生 | DeepSeek（deepseek-chat） | 读取史书，消耗token，给出当前问题的最好答案。然后消亡 |
+| **农夫** | 凡生 | 本地 Ollama（qwen3.5:0.8b） | 读取史书，消耗token，给出当前问题的最好答案。然后消亡 |
 
 > **模型选择说明：** 农夫原计划使用 Qwen3.5:35b @ suanji GPU 工作站，但因 Cloudflare 代理 100s 硬超时（HTTP 524），Qwen3.5 thinking 模式响应时间超限，已改为 DeepSeek API（无 thinking 模式，响应快速稳定）。suanji 工作站保留作为高算力备用。
 
@@ -304,11 +304,17 @@ cat agent/state/scores.json
 
 ## 八、技术注记
 
-**DeepSeek API（农夫 + 歌者）**
+**农夫：本地 Ollama**
+- URL: `http://localhost:11434/v1/chat/completions`
+- Model: `qwen3.5:0.8b`
+- 无需 API Key（填 `ollama` 占位）
+- 温度: 0.8（探索性）
+
+**歌者：DeepSeek API**
 - URL: `https://api.deepseek.com/v1/chat/completions`
-- 农夫温度: 0.8（探索性）
-- 歌者温度: 0.3（稳定/客观）
-- 平均响应: ~60s（农夫）/ ~27s（歌者）
+- Model: `deepseek-chat`
+- 温度: 0.3（稳定/客观）
+- 平均响应: ~27s
 
 **suanji GPU 工作站（备用）**
 - URL: `https://chat.suanji.net/api/v1`
@@ -318,9 +324,11 @@ cat agent/state/scores.json
 
 **环境变量**（`src/.env`，不提交）
 ```
+FARMER_API_URL=http://localhost:11434/v1
+FARMER_API_KEY=ollama
+FARMER_MODEL=qwen3.5:0.8b
 DEEPSEEK_API_URL=https://api.deepseek.com/v1
 DEEPSEEK_API_KEY=sk-xxx
-FARMER_MODEL=deepseek-chat
 SINGER_MODEL=deepseek-chat
 TOKEN_BUDGET=100000
 MAX_ROUNDS=50

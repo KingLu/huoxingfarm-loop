@@ -11,9 +11,9 @@ import urllib.request
 import urllib.error
 from pathlib import Path
 
-FARMER_API_URL = os.getenv("DEEPSEEK_API_URL", "https://api.deepseek.com/v1")
-FARMER_API_KEY = os.getenv("DEEPSEEK_API_KEY", "")
-FARMER_MODEL   = os.getenv("FARMER_MODEL", "deepseek-chat")
+FARMER_API_URL = os.getenv("FARMER_API_URL", "http://localhost:11434/v1")
+FARMER_API_KEY = os.getenv("FARMER_API_KEY", "ollama")
+FARMER_MODEL   = os.getenv("FARMER_MODEL", "qwen3.5:0.8b")
 TOKEN_BUDGET   = int(os.getenv("TOKEN_BUDGET", "100000"))
 
 ROOT = Path(__file__).parent.parent
