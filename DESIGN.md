@@ -70,6 +70,7 @@
 | **农场主** | 永生 | 灵耳（Claude Sonnet） | 火星农场有朝一日在火星开业，种出西红柿，并盈利 |
 | **歌者** | 永生 | DeepSeek（deepseek-chat） | 客观评价当前阶段命题是否达到验收标准，并记录史书 |
 | **农夫** | 凡生 | DeepSeek（deepseek-chat） | 读取史书，消耗token，给出当前问题的最好答案。然后消亡 |
+| **情报员** | 永生 | intel（Gemini Flash） | 按农场主指令检索现实数据，输出结构化情报供农夫使用 |
 
 > **模型选择说明：** 农夫原计划使用 Qwen3.5:35b @ suanji GPU 工作站，但因 Cloudflare 代理 100s 硬超时（HTTP 524），Qwen3.5 thinking 模式响应时间超限，已改为 DeepSeek API（无 thinking 模式，响应快速稳定）。suanji 工作站保留作为高算力备用。
 
