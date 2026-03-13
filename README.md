@@ -14,7 +14,6 @@
 | 🌾 农场主 | 灵耳（Claude Sonnet） | 永生 | 发起纪元命题，审阅收敛结果，掌舵方向 |
 | 👨‍🌾 农夫 | DeepSeek（deepseek-chat） | 凡生 | 每轮读史书、生成战略方案，token耗尽即消亡 |
 | 🎵 歌者 | DeepSeek（deepseek-chat） | 永生 | 独立评分、提炼遗产、记录史书、git commit |
-| 🔍 情报员 | intel（Gemini Flash） | 永生 | 按需召唤，补充现实数据（市场/政策/竞品） |
 
 ## 三层结构
 
