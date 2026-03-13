@@ -91,7 +91,13 @@ def call_farmer(context: str, civ_num: int, epoch_num: int) -> dict:
 
     elapsed = round(time.time() - start, 1)
     choice  = data["choices"][0]
-    content = choice["message"]["content"]
+    message = choice["message"]
+    content = message.get("content", "") or ""
+
+    # qwen3.5 thinking 模式：实际输出在 reasoning 字段，content 为空
+    if not content.strip():
+        content = message.get("reasoning", "") or ""
+
     usage   = data.get("usage", {})
     tokens_used = usage.get("total_tokens",
                   usage.get("completion_tokens", 0) + usage.get("prompt_tokens", 0))
