@@ -24,16 +24,32 @@ def load_singer_prompt() -> str:
     return (PROMPTS_DIR / "singer.md").read_text(encoding="utf-8")
 
 
+def _human_duration(seconds: float) -> str:
+    """把秒数转为人类可读时长"""
+    if seconds < 60:
+        return f"{int(seconds)}秒"
+    elif seconds < 3600:
+        m, s = divmod(int(seconds), 60)
+        return f"{m}分{s}秒"
+    else:
+        h, r = divmod(int(seconds), 3600)
+        m = r // 60
+        return f"{h}小时{m}分"
+
+
 def build_singer_input(civ_num: int, epoch_num: int, perspective: str,
                        farmer_output: str, tokens_used: int,
                        token_budget: int, death: str,
-                       acceptance_criteria: str, last_score: int) -> str:
+                       acceptance_criteria: str, last_score: int,
+                       farmer_model: str = "", farmer_elapsed_sec: float = 0) -> str:
     """构建歌者的完整输入"""
     template = load_singer_prompt()
     death_note = {
         "natural": "自然终结（农夫主动完成作答）",
         "token_exhausted": f"token耗尽（消耗 {tokens_used}/{token_budget}，强制截断）",
     }.get(death, death)
+
+    elapsed_human = _human_duration(farmer_elapsed_sec)
 
     # 把 markdown 代码块里的 { } 转义，避免被 .format() 误解析
     def escape_code_blocks(m):
@@ -50,18 +66,15 @@ def build_singer_input(civ_num: int, epoch_num: int, perspective: str,
         acceptance_criteria=acceptance_criteria,
         last_score=last_score,
         farmer_output=farmer_output,
+        farmer_model=farmer_model or "未知",
+        farmer_elapsed=elapsed_human,
     )
 
 
 def call_singer(singer_input: str) -> dict:
     """
     调用歌者（DeepSeek）。
-    返回：{
-        "raw": str,          # 完整原始输出
-        "evaluation": dict,  # 解析后的 JSON 评价
-        "narrative": str,    # 文明叙事段落
-        "elapsed_sec": float,
-    }
+    返回：{raw, evaluation, narrative, elapsed_sec}
     """
     system_prompt = (
         "你是火星农场史诗的歌者，永生的史官。"
@@ -77,7 +90,7 @@ def call_singer(singer_input: str) -> dict:
             {"role": "user",   "content": singer_input},
         ],
         "max_tokens": 4096,
-        "temperature": 0.3,   # 歌者需要稳定和客观
+        "temperature": 0.3,
         "stream": False,
     }).encode("utf-8")
 
@@ -101,7 +114,6 @@ def call_singer(singer_input: str) -> dict:
 
     elapsed = time.time() - start
     raw = data["choices"][0]["message"]["content"]
-
     evaluation, narrative = parse_singer_output(raw)
 
     return {
@@ -114,20 +126,13 @@ def call_singer(singer_input: str) -> dict:
 
 def parse_singer_output(raw: str) -> tuple[dict, str]:
     """从歌者输出中解析 JSON 评价块 和 文明叙事"""
-    # 提取第一个 ```json ... ``` 块
     json_match = re.search(r"```json\s*([\s\S]*?)```", raw)
     if not json_match:
-        # 尝试直接解析整体
         try:
-            evaluation = json.loads(raw)
-            narrative = ""
-            return evaluation, narrative
+            return json.loads(raw), ""
         except Exception:
             raise ValueError(f"歌者输出中未找到 JSON 块:\n{raw[:500]}")
 
     evaluation = json.loads(json_match.group(1).strip())
-
-    # 叙事段落：JSON 块之后的文本
     narrative = raw[json_match.end():].strip()
-
     return evaluation, narrative
