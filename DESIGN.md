@@ -434,30 +434,59 @@ main   ← 纪元正史（纪元终结时合并，含终章）
   └── live  ← 文明实录（歌者每轮 commit）
 ```
 
-### Tag 体系
+### Tag 体系（只打纪元级别）
+
+文明不打 tag——文明记录在史书文件里，不在 git tag 里。
+Tag 只标记纪元边界，保持 git 索引清晰。
 
 | Tag | 打在 | 时机 | 示例 |
 |---|---|---|---|
-| `e{N}-civ-{NNN}` | live | 每个文明结束（自动） | `e1-civ-047` |
-| `e{N}-best-{score}` | live | 当前纪元新高分（自动） | `e1-best-70` |
-| `epoch-{N}-start` | live | 新纪元开始（自动） | `epoch-2-start` |
-| `epoch-{N}-end` | main | 纪元收敛合并后（自动） | `epoch-1-end` |
-| `pivot-{N}` | main | 农场主调整方向（手动） | `pivot-3` |
-| `convergence` | main | 所有命题解决，史诗完结 | `convergence` |
+| `epoch-{N}-start` | live | 新纪元第一个文明开始前 | `epoch-1-start` |
+| `epoch-{N}-end` | main | 纪元达标，合并到main后 | `epoch-1-end` |
+| `pivot-{N}` | main | 农场主调整命题方向（手动） | `pivot-3` |
+| `convergence` | main | 项目完结，史诗终章 | `convergence` |
 
 ### git log 全局视图
 
 ```
-e3-civ-721  文明#721 | 纪元3 | 得分:71 | 团队构建
-e3-civ-720  文明#720 | 纪元3 | 得分:68 | 团队构建
+[commit] 纪元3 文明#721 | token耗尽 | 未达标 | 团队构建命题
+[commit] 纪元3 文明#720 | 自然终结 | 未达标(71) | 团队构建命题
 epoch-2-end ★ 纪元2终结 | 融资路径已解 | 历经412个文明
-e2-civ-589  文明#589 | 纪元2 | 得分:86 ← 收敛点
+[commit] 纪元2 文明#589 | 自然终结 | 达标(86) ← 收敛点
 ...
 epoch-1-end ★ 纪元1终结 | 运营模式已解 | 历经312个文明
-e1-civ-312  文明#312 | 纪元1 | 得分:87 ← 收敛点
-e1-best-70
-e1-civ-007  文明#007 | 纪元1 | 得分:70 | NASA合同模式首现
+epoch-2-start
+[commit] 纪元1 文明#312 | 自然终结 | 达标(87) ← 收敛点
+[commit] 纪元1 文明#007 | 自然终结 | 未达标(68) | NASA合同首现
+epoch-1-start
 ```
+
+### 史书文件体系
+
+农夫每次文明开始时，读取以下文件：
+
+```
+history/
+  INDEX.md                  ← 史书总目：项目使命 + 纪元一览 + 导航
+  current/
+    briefing.md             ← 农夫启动包（Controller每轮生成，农夫只读这一个）
+    epoch.md                ← 当前纪元进展：命题/验收标准/文明进度表/歌者提示
+  epochs/
+    epoch-001.md            ← 纪元1完整史册（达标后封存）
+    epoch-002.md            ← 纪元2完整史册
+    ...
+```
+
+**农夫的阅读路径（极简）：**
+1. 读 `history/current/briefing.md` —— 这一个文件包含启动所需的全部信息
+2. 如需了解更多上下文，可读 `history/current/epoch.md`（当前纪元进展）
+3. 如需了解已完成纪元的答案，可读 `history/epochs/epoch-NNN.md`
+
+**歌者的写入路径：**
+1. 每个文明结束后，追加一行到 `history/current/epoch.md`（文明进度表）
+2. 更新 `history/current/briefing.md`（给下一文明的启动包）
+3. git commit（文明记录在commit message中，不打tag）
+4. 纪元达标后：写 `history/epochs/epoch-NNN.md`（终章），更新 `history/INDEX.md`
 
 ---
 
