@@ -71,7 +71,7 @@
 | **歌者** | 永生 | DeepSeek（deepseek-chat） | 客观评价当前阶段命题是否达到验收标准，并记录史书 |
 | **农夫** | 凡生 | 本地 Ollama（qwen3.5:0.8b） | 读取史书，消耗token，给出当前问题的最好答案。然后消亡 |
 
-> **模型选择说明：** 农夫原计划使用 Qwen3.5:35b @ suanji GPU 工作站，但因 Cloudflare 代理 100s 硬超时（HTTP 524），Qwen3.5 thinking 模式响应时间超限，已改为 DeepSeek API（无 thinking 模式，响应快速稳定）。suanji 工作站保留作为高算力备用。
+> **模型选择说明：** 农夫使用本地 Ollama（qwen3.5:0.8b），通过原生 `/api/chat` 接口调用，`think` 参数可配置（当前 `false`，关闭 thinking 模式以提升输出质量）。OpenAI compat 接口（`/v1/chat/completions`）不支持 `think` 参数，已改用原生接口。
 
 ### 闭环结构
 
@@ -305,10 +305,11 @@ cat agent/state/scores.json
 ## 八、技术注记
 
 **农夫：本地 Ollama**
-- URL: `http://localhost:11434/v1/chat/completions`
+- URL: `http://localhost:11434`（Ollama 原生 `/api/chat`，非 OpenAI compat）
 - Model: `qwen3.5:0.8b`
-- 无需 API Key（填 `ollama` 占位）
+- 无需 API Key
 - 温度: 0.8（探索性）
+- `think` 参数：可配置（`FARMER_THINK=false`），关闭 thinking 模式提升输出质量
 
 **歌者：DeepSeek API**
 - URL: `https://api.deepseek.com/v1/chat/completions`
@@ -316,17 +317,13 @@ cat agent/state/scores.json
 - 温度: 0.3（稳定/客观）
 - 平均响应: ~27s
 
-**suanji GPU 工作站（备用）**
-- URL: `https://chat.suanji.net/api/v1`
-- 注意：需要 `User-Agent: curl/8.7.1`（否则 403）
-- 注意：Cloudflare 代理 100s 硬超时，Qwen3.5 thinking 模式容易触发 HTTP 524
-- 可用模型：qwen3.5:35b, qwen3.5:9b, minimax-m2.5, qwen3-30b 等
-
-**环境变量**（`src/.env`，不提交）
+**环境变量**（`src/.env`）
 ```
-FARMER_API_URL=http://localhost:11434/v1
+FARMER_API_URL=http://localhost:11434
 FARMER_API_KEY=ollama
 FARMER_MODEL=qwen3.5:0.8b
+FARMER_THINK=false
+VERBOSE=true
 DEEPSEEK_API_URL=https://api.deepseek.com/v1
 DEEPSEEK_API_KEY=sk-xxx
 SINGER_MODEL=deepseek-chat
