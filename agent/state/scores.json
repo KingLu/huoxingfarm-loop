@@ -327,6 +327,18 @@
       "death": "token_exhausted",
       "tokens_used": 6330,
       "verdict": "not_passed"
+    },
+    {
+      "n": 30,
+      "epoch": 1,
+      "total": 8,
+      "delta": 2,
+      "perspective": "首批火星殖民者（潜在客户）",
+      "farmer_model": "qwen3.5:0.8b",
+      "elapsed_sec": 92.9,
+      "death": "token_exhausted",
+      "tokens_used": 6455,
+      "verdict": "not_passed"
     }
   ],
   "best": {
