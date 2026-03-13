@@ -63,7 +63,7 @@ def _call_ollama_native(system_prompt: str, context: str, civ_num: int) -> dict:
             {"role": "system", "content": system_prompt},
             {"role": "user",   "content": context},
         ],
-        "think": True,        # 开启 thinking 模式，推理结果在 message.thinking，答案在 message.content
+        "think": False,       # 关闭 thinking，所有 token 用于直接输出答案
         "stream": False,
         "options": {
             "num_predict": 4096,
