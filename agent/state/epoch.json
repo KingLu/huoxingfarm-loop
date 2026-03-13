@@ -4,7 +4,7 @@
   "acceptance_criteria": "以下四条必须同时满足：\n1. 明确具体的签约对象（公司名/部门/决策人角色，非泛指）\n2. 清晰的破冰路径（谁引荐、谁拍板、通过什么事件触发采购）\n3. 最小交付物（第一份合同具体交付什么，能在12个月内完成原型验证）\n4. 合同规模合理（首单 ≥ 500万美元，有充足理由支撑对方愿意付这个价）",
   "token_budget": 100000,
   "started_at_civilization": null,
-  "current_civilization": 0,
-  "next_hint": "",
+  "current_civilization": 1,
+  "next_hint": "必须具体化：签约对象是谁（具体公司/部门/决策人），如何接触到他们（具体引荐人或事件），第一份合同具体交付什么（可验证的原型）。",
   "status": "running"
 }
