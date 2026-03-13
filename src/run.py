@@ -32,6 +32,8 @@ TOKEN_BUDGET       = int(os.getenv("TOKEN_BUDGET", "100000"))
 MAX_ROUNDS         = int(os.getenv("MAX_ROUNDS", "50"))
 CONVERGENCE_SCORE  = int(os.getenv("CONVERGENCE_SCORE", "85"))
 FARMER_MODEL       = os.getenv("FARMER_MODEL", "qwen3.5:0.8b")
+FARMER_THINK       = os.getenv("FARMER_THINK", "false").lower() in ("true", "1", "yes")
+SINGER_MODEL_NAME  = os.getenv("SINGER_MODEL", "deepseek-chat")
 
 
 # ─── 工具函数 ────────────────────────────────────────────
@@ -57,9 +59,24 @@ def git(cmd: str, cwd=ROOT):
     )
     return result.stdout.strip()
 
-def log(msg: str):
+VERBOSE = os.getenv("VERBOSE", "true").lower() in ("true", "1", "yes")
+
+def log(msg: str, level: str = "info"):
+    """
+    level: info | detail | section
+    detail 只在 VERBOSE=true 时打印
+    section 打印分隔线
+    """
     ts = datetime.now().strftime("%H:%M:%S")
-    print(f"[{ts}] {msg}")
+    if level == "section":
+        print(f"\n[{ts}] {'─' * 50}")
+        print(f"[{ts}] {msg}")
+        print(f"[{ts}] {'─' * 50}")
+    elif level == "detail":
+        if VERBOSE:
+            print(f"[{ts}]   ↳ {msg}")
+    else:
+        print(f"[{ts}] {msg}")
 
 
 # ─── 状态管理 ────────────────────────────────────────────
@@ -313,20 +330,41 @@ def run_civilization(civ_num: int, epoch: dict,
 
     # ── Step 3: 农夫运行 ──
     log(f"🌱 文明#{civ_num:03d} 诞生 | 纪元{epoch_num} | 视角：{perspective}")
-    farmer_result = call_farmer(context, civ_num, epoch_num)
-    log(f"💀 文明#{civ_num:03d} 消亡 | {farmer_result['death']} | "
-        f"tokens:{farmer_result['tokens_used']:,} | 耗时:{farmer_result['elapsed_sec']}s")
+    log(f"农夫配置 → 模型:{FARMER_MODEL} | think:{FARMER_THINK} | token预算:{TOKEN_BUDGET:,}", "detail")
+    log(f"史书长度 → briefing:{len(briefing)}字符 | 已知定律:{len(discoveries)}字符", "detail")
 
-    # 保存农夫输出
-    write(civ_dir / "farmer.md",
-          f"# 文明#{civ_num:03d} — 农夫产出\n\n"
-          f"**视角：** {perspective}\n"
-          f"**死亡方式：** {farmer_result['death']}\n"
-          f"**Token消耗：** {farmer_result['tokens_used']:,}/{TOKEN_BUDGET:,}\n\n"
-          f"---\n\n{farmer_result['content']}")
+    t_farmer_start = datetime.now()
+    farmer_result = call_farmer(context, civ_num, epoch_num)
+    t_farmer_end = datetime.now()
+
+    elapsed_human = farmer_result['elapsed_sec']
+    log(f"💀 文明#{civ_num:03d} 消亡 | {farmer_result['death']} | "
+        f"tokens:{farmer_result['tokens_used']:,} | 耗时:{elapsed_human}s")
+    log(f"农夫产出长度：{len(farmer_result['content'])} 字符", "detail")
+
+    # 农夫史书（含模型信息区块）
+    farmer_meta = (
+        f"# 文明#{civ_num:03d} — 农夫产出\n\n"
+        f"## 运行元数据\n\n"
+        f"| 字段 | 值 |\n"
+        f"|---|---|\n"
+        f"| 模型 | `{FARMER_MODEL}` |\n"
+        f"| Think模式 | `{FARMER_THINK}` |\n"
+        f"| 视角 | {perspective} |\n"
+        f"| 死亡方式 | {farmer_result['death']} |\n"
+        f"| Token消耗 | {farmer_result['tokens_used']:,} / {TOKEN_BUDGET:,} |\n"
+        f"| 运行时长 | {elapsed_human}s |\n"
+        f"| 开始时间 | {t_farmer_start.strftime('%H:%M:%S')} |\n"
+        f"| 结束时间 | {t_farmer_end.strftime('%H:%M:%S')} |\n\n"
+        f"---\n\n"
+        f"## 农夫输出\n\n"
+        f"{farmer_result['content']}"
+    )
+    write(civ_dir / "farmer.md", farmer_meta)
 
     # ── Step 4: 歌者评价 ──
     log(f"🎵 歌者开始评价文明#{civ_num:03d}...")
+    log(f"歌者配置 → 模型:{SINGER_MODEL_NAME}", "detail")
     singer_input = build_singer_input(
         civ_num=civ_num,
         epoch_num=epoch_num,
@@ -340,15 +378,36 @@ def run_civilization(civ_num: int, epoch: dict,
         farmer_model=FARMER_MODEL,
         farmer_elapsed_sec=farmer_result["elapsed_sec"],
     )
+    t_singer_start = datetime.now()
     singer_result = call_singer(singer_input)
+    t_singer_end = datetime.now()
+
     evaluation = singer_result["evaluation"]
     total = evaluation.get("total", 0)
     log(f"🎵 歌者评价完成 | 得分:{total}/100 | 耗时:{singer_result['elapsed_sec']}s")
+    log(f"评分明细 → 可行性:{evaluation.get('scores',{}).get('feasibility','?')} "
+        f"完整性:{evaluation.get('scores',{}).get('completeness','?')} "
+        f"一致性:{evaluation.get('scores',{}).get('consistency','?')} "
+        f"新颖性:{evaluation.get('scores',{}).get('novelty','?')} "
+        f"不确定性:{evaluation.get('scores',{}).get('uncertainty_reduction','?')}", "detail")
 
-    # 保存歌者输出
-    write(civ_dir / "singer.md",
-          f"# 文明#{civ_num:03d} — 歌者评价\n\n"
-          f"---\n\n{singer_result['raw']}")
+    # 歌者史书（含模型信息区块）
+    singer_meta = (
+        f"# 文明#{civ_num:03d} — 歌者评价\n\n"
+        f"## 运行元数据\n\n"
+        f"| 字段 | 值 |\n"
+        f"|---|---|\n"
+        f"| 歌者模型 | `{SINGER_MODEL_NAME}` |\n"
+        f"| 农夫模型 | `{FARMER_MODEL}` |\n"
+        f"| 农夫Think模式 | `{FARMER_THINK}` |\n"
+        f"| 评价耗时 | {singer_result['elapsed_sec']}s |\n"
+        f"| 开始时间 | {t_singer_start.strftime('%H:%M:%S')} |\n"
+        f"| 结束时间 | {t_singer_end.strftime('%H:%M:%S')} |\n\n"
+        f"---\n\n"
+        f"## 歌者评价\n\n"
+        f"{singer_result['raw']}"
+    )
+    write(civ_dir / "singer.md", singer_meta)
 
     # ── Step 5: 更新状态 ──
     epitaph = evaluation.get("epitaph", "")
@@ -504,6 +563,11 @@ def main():
     log("=" * 60)
     log("🚀 火星农场 Agent Loop 启动")
     log("=" * 60)
+    log(f"🤖 角色配置")
+    log(f"   农夫  → 模型:{FARMER_MODEL} | think:{FARMER_THINK} | API:Ollama原生/api/chat", "detail")
+    log(f"   歌者  → 模型:{SINGER_MODEL_NAME} | API:DeepSeek", "detail")
+    log(f"   农场主→ 模型:Claude Sonnet (灵耳)", "detail")
+    log(f"⚙️  Loop参数 → token预算:{TOKEN_BUDGET:,} | 收敛线:{CONVERGENCE_SCORE} | 最大轮数:{MAX_ROUNDS}")
 
     epoch      = load_epoch()
     scores     = load_scores()
