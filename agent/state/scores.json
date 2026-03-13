@@ -99,16 +99,26 @@
       "death": "token_exhausted",
       "tokens_used": 5191,
       "verdict": "not_passed"
+    },
+    {
+      "n": 10,
+      "epoch": 1,
+      "total": 69,
+      "delta": 20,
+      "perspective": "NASA 航天工程师",
+      "death": "natural",
+      "tokens_used": 2630,
+      "verdict": "not_passed"
     }
   ],
   "best": {
-    "n": 6,
+    "n": 10,
     "epoch": 1,
-    "total": 59,
-    "delta": 39,
-    "perspective": "硅谷风险投资人",
+    "total": 69,
+    "delta": 20,
+    "perspective": "NASA 航天工程师",
     "death": "natural",
-    "tokens_used": 4587,
+    "tokens_used": 2630,
     "verdict": "not_passed"
   }
 }
