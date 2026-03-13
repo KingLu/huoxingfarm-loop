@@ -639,18 +639,30 @@
       "death": "natural",
       "tokens_used": 5187,
       "verdict": "not_passed"
+    },
+    {
+      "n": 56,
+      "epoch": 1,
+      "total": 87,
+      "delta": 17,
+      "perspective": "中国商业航天创业者",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 48.8,
+      "death": "natural",
+      "tokens_used": 5329,
+      "verdict": "passed"
     }
   ],
   "best": {
-    "n": 55,
+    "n": 56,
     "epoch": 1,
-    "total": 70,
-    "delta": 3,
-    "perspective": "曾经失败的火星创业者（深刻反思）",
+    "total": 87,
+    "delta": 17,
+    "perspective": "中国商业航天创业者",
     "farmer_model": "qwen3.5:2b",
-    "elapsed_sec": 44.7,
+    "elapsed_sec": 48.8,
     "death": "natural",
-    "tokens_used": 5187,
-    "verdict": "not_passed"
+    "tokens_used": 5329,
+    "verdict": "passed"
   }
 }
