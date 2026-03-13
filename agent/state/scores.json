@@ -615,6 +615,18 @@
       "death": "natural",
       "tokens_used": 4994,
       "verdict": "not_passed"
+    },
+    {
+      "n": 54,
+      "epoch": 1,
+      "total": 67,
+      "delta": 28,
+      "perspective": "联合国粮农组织官员",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 43.8,
+      "death": "natural",
+      "tokens_used": 4974,
+      "verdict": "not_passed"
     }
   ],
   "best": {
