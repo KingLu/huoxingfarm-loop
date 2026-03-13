@@ -4,7 +4,7 @@
   "acceptance_criteria": "以下三条必须同时满足：\n1. 明确第一个付费客户（具体机构或群体，非泛指）\n2. 可信的资金来源（谁出钱，为什么出，大概规模）\n3. 清晰的盈利路径（10年后如何独立盈利，不依赖补贴）",
   "token_budget": 100000,
   "started_at_civilization": 1,
-  "current_civilization": 50,
-  "next_hint": "必须找到一个在现实世界中真实存在、有明确预算和采购流程，并愿意为火星农业的初期、具体产品或服务付费的第一个客户。",
-  "status": "running"
+  "current_civilization": 56,
+  "next_hint": "下一文明应具体探索并验证，在现实世界中，何种机制或压力能迫使一个‘超级甲方’必须为‘环境风险数据’支付如此天价，并形成稳定的采购需求。",
+  "status": "completed"
 }

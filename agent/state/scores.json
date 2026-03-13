@@ -579,16 +579,90 @@
       "death": "natural",
       "tokens_used": 4869,
       "verdict": "not_passed"
+    },
+    {
+      "n": 51,
+      "epoch": 1,
+      "total": 51,
+      "delta": 12,
+      "perspective": "联合国粮农组织官员",
+      "farmer_model": "qwen3.5:0.8b",
+      "elapsed_sec": 29.3,
+      "death": "natural",
+      "tokens_used": 4939,
+      "verdict": "not_passed"
+    },
+    {
+      "n": 52,
+      "epoch": 1,
+      "total": 46,
+      "delta": -5,
+      "perspective": "2050年的历史学家（回顾视角）",
+      "farmer_model": "qwen3.5:0.8b",
+      "elapsed_sec": 26.9,
+      "death": "natural",
+      "tokens_used": 4894,
+      "verdict": "not_passed"
+    },
+    {
+      "n": 53,
+      "epoch": 1,
+      "total": 39,
+      "delta": -7,
+      "perspective": "荷兰温室农业专家",
+      "farmer_model": "qwen3.5:0.8b",
+      "elapsed_sec": 28.1,
+      "death": "natural",
+      "tokens_used": 4994,
+      "verdict": "not_passed"
+    },
+    {
+      "n": 54,
+      "epoch": 1,
+      "total": 67,
+      "delta": 28,
+      "perspective": "联合国粮农组织官员",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 43.8,
+      "death": "natural",
+      "tokens_used": 4974,
+      "verdict": "not_passed"
+    },
+    {
+      "n": 55,
+      "epoch": 1,
+      "total": 70,
+      "delta": 3,
+      "perspective": "曾经失败的火星创业者（深刻反思）",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 44.7,
+      "death": "natural",
+      "tokens_used": 5187,
+      "verdict": "not_passed"
+    },
+    {
+      "n": 56,
+      "epoch": 1,
+      "total": 87,
+      "delta": 17,
+      "perspective": "中国商业航天创业者",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 48.8,
+      "death": "natural",
+      "tokens_used": 5329,
+      "verdict": "passed"
     }
   ],
   "best": {
-    "n": 10,
+    "n": 56,
     "epoch": 1,
-    "total": 69,
-    "delta": 20,
-    "perspective": "NASA 航天工程师",
+    "total": 87,
+    "delta": 17,
+    "perspective": "中国商业航天创业者",
+    "farmer_model": "qwen3.5:2b",
+    "elapsed_sec": 48.8,
     "death": "natural",
-    "tokens_used": 2630,
-    "verdict": "not_passed"
+    "tokens_used": 5329,
+    "verdict": "passed"
   }
 }
