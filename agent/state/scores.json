@@ -603,6 +603,18 @@
       "death": "natural",
       "tokens_used": 4894,
       "verdict": "not_passed"
+    },
+    {
+      "n": 53,
+      "epoch": 1,
+      "total": 39,
+      "delta": -7,
+      "perspective": "荷兰温室农业专家",
+      "farmer_model": "qwen3.5:0.8b",
+      "elapsed_sec": 28.1,
+      "death": "natural",
+      "tokens_used": 4994,
+      "verdict": "not_passed"
     }
   ],
   "best": {
