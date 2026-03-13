@@ -71,7 +71,8 @@ huoxingfarm-loop/
     │   ├── epoch.json              ← 当前纪元（编号、命题、状态）
     │   ├── epoch-answers.md        ← 所有已完成纪元答案（永久积累）
     │   ├── discoveries.md          ← 当前纪元已知定律
-    │   └── scores.json             ← 分数历史与最优记录
+    │   ├── scores.json             ← 分数历史与最优记录
+    │   └── current.json            ← 当前纪元最优方案快照
     └── civilizations/
         └── epoch-NNN/
             └── civ-NNN/

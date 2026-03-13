@@ -143,7 +143,8 @@ huoxingfarm-loop/
     │   ├── epoch.json          ← 当前纪元状态
     │   ├── epoch-answers.md    ← 跨纪元答案积累
     │   ├── discoveries.md      ← 当前纪元已知定律
-    │   └── scores.json         ← 分数历史
+    │   ├── scores.json         ← 分数历史
+    │   └── current.json        ← 当前纪元最优方案快照
     └── civilizations/
         └── epoch-NNN/
             └── civ-NNN/
