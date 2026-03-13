@@ -91,21 +91,20 @@ def load_perspectives() -> list:
 
 def update_epoch_progress(civ_num: int, epoch_num: int, tokens_used: int,
                            token_budget: int, death: str,
-                           verdict: str, score: int, epitaph: str):
-    """追加一行到 history/current/epoch.md 的文明进度表"""
+                           verdict: str, score: int, epitaph: str,
+                           next_hint: str = ""):
+    """追加一行到 history/current/epoch.md 的文明进度表，并更新歌者提示"""
     path = HISTORY / "current" / "epoch.md"
     content = read(path)
+
+    # ── ① 追加文明进度行 ──
     death_symbol = "🔋" if death == "token_exhausted" else "✅"
     verdict_symbol = "✅达标" if verdict == "passed" else "❌未达标"
     row = (f"| 文明#{civ_num:03d} | {tokens_used:,}/{token_budget:,} "
            f"| {death_symbol}{death} | {verdict_symbol}({score}) | {epitaph} |\n")
-    # 找到表格末尾追加
     if "_等待第一个文明_" in content:
-        content = content.replace(
-            "| _等待第一个文明_ | | | | |\n", row
-        )
+        content = content.replace("| _等待第一个文明_ | | | | |\n", row)
     else:
-        # 在最后一个 | 行后追加
         lines = content.splitlines(keepends=True)
         insert_at = len(lines)
         for i in range(len(lines) - 1, -1, -1):
@@ -114,6 +113,23 @@ def update_epoch_progress(civ_num: int, epoch_num: int, tokens_used: int,
                 break
         lines.insert(insert_at, row)
         content = "".join(lines)
+
+    # ── ③ 更新"歌者的上一条提示"段落（fix: 之前写死了初始文字）──
+    if next_hint:
+        import re
+        content = re.sub(
+            r"(## 歌者的上一条提示\n\n_（.*?）_\n\n>).*?(\n\n)",
+            rf"\1 {next_hint}\2",
+            content,
+            flags=re.DOTALL,
+        )
+        # 如果是第一次（还是旧的初始文字格式）
+        content = re.sub(
+            r"(## 歌者的上一条提示\n\n_（.*?）_\n\n>)[^\n]+",
+            rf"\1 {next_hint}",
+            content,
+        )
+
     write(path, content)
 
 
@@ -339,7 +355,8 @@ def run_civilization(civ_num: int, epoch: dict,
     update_epoch_progress(
         civ_num, epoch_num,
         farmer_result["tokens_used"], TOKEN_BUDGET,
-        farmer_result["death"], verdict, total, epitaph
+        farmer_result["death"], verdict, total, epitaph,
+        next_hint=next_hint_new,   # ③ 同步更新歌者提示
     )
 
     next_hint_new = evaluation.get("next_focus", "")
@@ -425,14 +442,25 @@ def finalize_epoch(epoch: dict, scores: list, winning_civ: int):
 """
     write(answers_path, answers)
 
-    # 更新 history/INDEX.md
+    # 更新 history/INDEX.md —— 删除所有本纪元旧行，追加已完成行
     index_path = HISTORY / "INDEX.md"
-    index = read(index_path)
-    index = index.replace(
-        f"| 纪元{epoch_num} | {epoch['question']} | 🔄 进行中 | - | - |",
-        f"| 纪元{epoch_num} | {epoch['question']} | ✅ 已完成 | {civ_count} | 得分{best['total']} |"
-    )
-    write(index_path, index)
+    lines = read(index_path).splitlines(keepends=True)
+    # 过滤掉所有含 "纪元{epoch_num}" 的表格行（可能有多行：进行中 + 已完成）
+    cleaned = [l for l in lines if f"| 纪元{epoch_num} |" not in l]
+    # 在最后一个表格行后插入已完成行
+    q_short = epoch['question'][:20]
+    new_row = f"| 纪元{epoch_num} | {q_short}... | ✅ 已完成 | {civ_count} | 得分{best['total']} |\n"
+    insert_at = len(cleaned)
+    for i in range(len(cleaned) - 1, -1, -1):
+        if cleaned[i].startswith("|"):
+            insert_at = i + 1
+            break
+    cleaned.insert(insert_at, new_row)
+    write(index_path, "".join(cleaned))
+
+    # ② 更新 epoch.json status → completed
+    epoch["status"] = "completed"
+    save_json(STATE_DIR / "epoch.json", epoch)
 
     git("add -A")
     score = best["total"]

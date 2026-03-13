@@ -3,7 +3,8 @@
 > 仿照《三体》游戏逻辑：文明一次次重启，史书永久留存。
 > 下一个文明站在所有失败者的肩膀上，直到解出答案。
 
-**纪元1核心命题：** 火星农场项目通过什么形式/模式运作，可以最大概率成功？
+*版本：v1.1 | 2026-03-13*  
+*实现状态：✅ 已运行，纪元1已收敛（93分，文明#001）*
 
 ---
 
@@ -30,7 +31,7 @@
 | 一次文明 | 一轮 Loop 迭代 |
 | 文明毁灭 | 本轮评分不足，自然终结 |
 | 史书留存 | 歌者提交 git commit |
-| 下个文明读史 | 农夫读 git log 启动 |
+| 下个文明读史 | 农夫读 briefing.md 启动 |
 | 解出三体问题 | 当前纪元命题收敛（≥85/100） |
 | 新的三体问题 | 纪元加一，新命题诞生 |
 | 不同历史人物 | 农夫每轮随机切换「思维视角」 |
@@ -46,111 +47,31 @@
 ### 纪元预设弧线（可动态调整）
 
 ```
-纪元1：运营模式
+纪元1：运营模式  ← ✅ 已收敛（93分）
   命题：「火星农场通过什么形式/模式运作可以最大概率成功？」
 
-纪元2：融资路径
+纪元2：融资路径（待定）
   命题：「谁会投资火星农场，第一笔钱从哪来？」
 
-纪元3：团队构建
-  命题：「火星农场需要什么核心团队，从哪里找？」
-
-纪元4：技术选型
-  命题：「什么种植技术组合在火星最具可行性？」
-
-纪元5：风险对冲
-  命题：「哪些因素可能让项目彻底失败，怎么规避？」
-
-纪元N：最终整合
-  命题：「将前N纪元的发现整合，写出完整商业计划书」
+纪元3：团队构建（待定）
+纪元4：技术选型（待定）
+纪元5：风险对冲（待定）
+纪元N：最终整合 — 完整商业计划书
 ```
 
-> 每个纪元的命题由农场主在上一纪元收敛后确定，或由歌者提炼「未解之谜」供农场主选择。
-
 ---
 
-## 二、三角色体系的理论基础
+## 二、三角色体系
 
-> 为什么是三个角色？为什么两个永生、一个凡生？
-> 这不是随意的设计——它是生命演化和人类文明独立发现的最优解。
+### 角色一览
 
-### 角色本质
+| 角色 | 存在形态 | 模型 | 唯一使命 |
+|---|---|---|---|
+| **农场主** | 永生 | 灵耳（Claude Sonnet） | 火星农场有朝一日在火星开业，种出西红柿，并盈利 |
+| **歌者** | 永生 | DeepSeek（deepseek-chat） | 客观评价当前阶段命题是否达到验收标准，并记录史书 |
+| **农夫** | 凡生 | 本地 Ollama（qwen3.5:0.8b） | 读取史书，消耗token，给出当前问题的最好答案。然后消亡 |
 
-| 角色 | 存在形态 | 类比 |
-|---|---|---|
-| 农场主 | **永生**，跨越所有文明和纪元 | 目标与方向的载体 |
-| 歌者 | **永生**，跨越所有文明和纪元 | 记忆与评价的载体 |
-| 农夫 | **凡生**，只活在一个文明里 | 执行与探索的载体 |
-
-### 四条独立证据链
-
-**① 进化生物学：魏斯曼屏障（最强类比）**
-
-魏斯曼（1892）发现多细胞生命分为两类细胞：
-- **生殖细胞（Germ-line）**：永生，跨代保存核心遗传信息 = 农场主 + 歌者
-- **体细胞（Soma）**：凡生，每代重新生成，与环境博弈，死后不污染基因库 = 农夫
-
-这种「永生记忆 + 凡生执行」的分工是多细胞生命进化的**核心稳定策略**：通过保护核心数据（生殖细胞）免受环境噪声（体细胞损伤）干扰，实现跨代稳定进化。
-
-> 来源：*Das Keimplasma: eine Theorie der Vererbung* / August Weismann / 1892
-
-**② 人类文明史：杜梅齐尔三功能假说**
-
-乔治·杜梅齐尔（1958）发现印欧文明的社会结构和神话体系天然是三元的：
-- 祭司（设定方向，传承法理）≈ 农场主
-- 史官（记录历史，解释律法）≈ 歌者
-- 生产者（执行，消亡，更替）≈ 农夫
-
-中世纪欧洲「祈祷者、战斗者、劳动者」的三级结构维持了数百年。这个结构在不同文明中独立涌现，说明它是社会组织的稳定吸引子。
-
-> 来源：*L'Idéologie tripartite des Indo-Européens* / Georges Dumézil / 1958
-
-**③ 组织理论：制度永生性（赫伯特·西蒙）**
-
-大学、修道院、教会——人类最长寿的组织都表现出相同模式：
-- 制度记忆（歌者）+ 核心战略（农场主）保持稳定
-- 个体执行者（农夫）快速流动，反而带来「探索性灵活性」，防止系统陷入「能力陷阱」
-
-凡生个体的更替（Turnover）是系统保持活力的必要机制，而非缺陷。
-
-> 来源：*Administrative Behavior* / Herbert Simon / 1947
-
-**④ 哲学/神话：印度三相神（Trimurti）**
-
-梵天（创造）→ 毗湿奴（维护）→ 湿婆（毁灭/重生），构成永恒闭环。农夫的「消亡」不是失败，而是**进化的必要条件**——为下一次创造腾出空间。
-
-> 来源：《往世书》（Puranas）
-
-### 三个关键前提（缺一不可）
-
-| 前提 | 含义 | 在本系统中的实现 |
-|---|---|---|
-| **信息隔离屏障** | 农夫的错误不能污染农场主的智慧库 | `state/epoch-answers.md` 只由歌者写入，农夫无权修改永生层数据 |
-| **歌者真正独立** | 若歌者变成农场主的附庸，系统失去自我修正能力 | 歌者是独立的模型实例，不接受农场主实时指令，独立打分 |
-| **农夫彻底归零** | 每个文明必须从新鲜视角出发 | 每轮农夫只接收史书摘要（结构化信息），不读取前文明的原始对话 |
-
-### 结论
-
-这个三角色体系是**生命演化和人类文明独立收敛到的最优解**。它的稳定性来自于：
-- 长期智慧积累（永生层）与短期环境适应（凡生层）的分离
-- 评价机制（歌者）与执行机制（农夫）的解耦
-- 核心目标（农场主）的超越性，不随单次失败而动摇
-
----
-
-## 三、角色设计
-
-> 三个角色，三个使命，形成自洽闭环。不需要外力纠偏。
-
-### 核心使命
-
-| 角色 | 存在形态 | 唯一使命 |
-|---|---|---|
-| **农场主** | 永生，跨越所有文明和纪元 | 火星农场有朝一日在火星开业，种出西红柿，并盈利。使命过于宏大，故分解为一个个阶段命题（纪元） |
-| **歌者** | 永生，跨越所有文明和纪元 | 客观评价当前阶段命题是否达到验收标准，并记录史书 |
-| **农夫** | 凡生，只活在一个文明里 | 读取史书，消耗token，给出当前问题的最好答案。然后消亡 |
-
----
+> **模型选择说明：** 农夫原计划使用 Qwen3.5:35b @ suanji GPU 工作站，但因 Cloudflare 代理 100s 硬超时（HTTP 524），Qwen3.5 thinking 模式响应时间超限，已改为 DeepSeek API（无 thinking 模式，响应快速稳定）。suanji 工作站保留作为高算力备用。
 
 ### 闭环结构
 
@@ -168,425 +89,253 @@
   └── 达标   → 通知农场主 → 农场主提出下一阶段命题
 ```
 
-**信息流的唯一通道：**
-- 歌者写史书，农夫读史书
-- 这是三角色之间唯一的信息传递路径
-- 农场主不干预评价过程，歌者不接受农场主实时指令
+### 四条规则（最小规则集）
 
----
-
-### 角色约束（最小规则集）
-
-**四条规则，缺一不可：**
-
-1. **农场主定题**：每个纪元开始时，农场主提出命题 + 验收标准 + token预算，之后不干预执行过程
-2. **农夫守时**：每个文明有固定token预算（默认10万），用完即死——即使没有答案，文明也强制终结
-3. **歌者守信**：歌者必须独立评价，不能因农场主偏好调整标准；若未达标必须明确说明缺什么
-4. **史书不可篡改**：农夫无权修改已记录的史书；歌者每次只追加，不删改前文明记录
-
-**三角内生张力（不需要外力维持）：**
-- 农场主想快速收敛 → 但只有歌者达标才能进入下一纪元 → 农场主必须等
-- 歌者想维护标准 → 但没有农夫的输出就无事可做 → 歌者依赖农夫
-- 农夫想留下遗产 → 但token有限，必须高效 → 农夫被迫学习前文明
-
-这三个张力形成**自激振荡**——不需要外力，系统持续向前。
-
----
+1. **农场主定题**：纪元开始时写下命题 + 验收标准 + token预算，之后不干预
+2. **农夫守时**：每个文明有固定token预算（默认10万），用完即死
+3. **歌者守信**：独立评价，不受农场主偏好影响；未达标必须明确说明缺什么
+4. **史书不可篡改**：农夫无权修改已记录的史书；歌者只追加，不删改
 
 ### 农夫的Token预算与死亡机制
 
-每个文明的生命由token预算决定，默认 **100,000 tokens**。
-
-| 死亡方式 | 触发条件 | 歌者的评价方式 |
+| 死亡方式 | 触发条件 | commit 标记 |
 |---|---|---|
-| **自然终结** | 农夫完成答案，主动交卷 | 评价答案质量，对照验收标准 |
-| **token耗尽** | 消耗达到预算上限，强制终结 | 评价「在死前做了什么」，提炼未完成的发现 |
+| **自然终结** | 农夫完成作答，主动交卷 | `自然终结` |
+| **token耗尽** | 消耗达到预算上限，强制终结 | `token耗尽` |
 
-**Token耗尽也有价值：** 消耗路径本身是历史数据——后续文明读史书时，能看到哪些方向「很耗token但无结果」，从而规避。
+### 农夫的可见性（信息隔离）
 
-**commit格式（含token数据）：**
-```
-e1-civ-007 | 自然终结 | tokens:43,821/100,000 | 达标:否(68/100) | NASA合同模式首现
-e1-civ-008 | token耗尽 | tokens:100,000/100,000 | 死因:探索投资路线无法完成 | 遗产:VC路线不适合火星时间线
-```
+农夫**只能**看到：
+- `history/current/briefing.md`（启动包：命题+验收标准+已知定律+歌者提示）
+- 当前纪元已完成文明的进度表（`history/current/epoch.md`）
+- 已完成纪元的最终答案（`agent/state/epoch-answers.md`）
 
----
-
-### 角色详细规格
-
-**农场主（灵耳 / Claude Sonnet）**
-- 纪元开始时：写下命题、验收标准、token预算（写入 `state/epoch.json`）
-- 纪元运行中：不介入，只能通过修改 `state/epoch.json` 的 `farmer_hint` 字段传递方向提示
-- 收到歌者「达标」通知后：读取史书，决定下一纪元命题
-
-**歌者（Qwen 3.5:35b @ suanji，独立实例）**
-- 每个文明结束后：读入农夫的完整输出 + token消耗数据
-- 对照 `state/epoch.json` 中农场主设定的验收标准评价
-- 输出：达标/未达标 + 缺口说明 + 文明遗产 + 墓志铭
-- 执行 git commit，将本文明永久刻入史书
-- 若达标：追加到 `state/epoch-answers.md`，通知农场主
-
-**歌者的评价格式：**
-```json
-{
-  "civilization": 7,
-  "epoch": 1,
-  "tokens_used": 43821,
-  "tokens_budget": 100000,
-  "death": "natural",
-  "verdict": "not_passed",
-  "score": 68,
-  "criteria_check": {
-    "first_paying_customer": true,
-    "funding_source": true,
-    "profit_path": false
-  },
-  "missing": "盈利路径未说明：产品如何从NASA合同转变为可持续商业？",
-  "legacy": ["NASA/ESA合同是最可信的第一收入来源", "水培+气培混合优于土壤"],
-  "epitaph": "第七文明找到了门，但没走进去",
-  "next_hint": "下一文明重点：合同收入之外，10年后的独立盈利路径"
-}
-```
-
-**农夫（Qwen 3.5:35b @ suanji，每轮新实例）**
-- 只能看到：史书摘要 + 已知定律 + 歌者的 `next_hint` + 本轮token预算
-- 看不到：歌者的评分数字（只知道「未达标，方向提示是…」）
-- 输出：对当前命题的完整回答（Markdown格式）
-- token达到预算上限时，Controller强制截断并送交歌者
+农夫**看不到**：
+- 歌者的评分数字（只知道「未达标，方向提示是…」）
+- 其他文明的完整对话原文
 
 ---
 
-## 四、循环机制
+## 三、数据结构
 
-### 每轮完整流程
-
-```
-Step 1: Controller 读取状态
-    ├── state/epoch.json    （当前纪元：命题、验收标准、token预算）
-    ├── state/discoveries.md （已知定律）
-    └── git log --oneline   （史书目录，最近20条）
-
-Step 2: 构建农夫启动包
-    ├── 当前命题 + 验收标准
-    ├── 歌者上轮的 next_hint
-    ├── state/discoveries.md 全文
-    └── git log 摘要（文明史索引）
-
-Step 3: 农夫运行（带token计数器）
-    ├── 调用 suanji API → qwen3.5:35b
-    ├── 实时累计token消耗
-    ├── 达到预算上限 → 强制截断，标记「token耗尽」
-    └── 输出存入 logs/civilization-{N:03d}.md
-
-Step 4: 歌者运行
-    ├── 输入：农夫输出 + token消耗数据 + 死亡方式
-    ├── 对照验收标准评价
-    ├── 输出评价JSON + 文明叙事
-    └── 追加到 civilization-{N}.md
-
-Step 5: 更新状态
-    ├── 将 legacy 追加到 state/discoveries.md
-    ├── 更新 state/scores.json
-    └── 若达标：写入 state/epoch-answers.md
-
-Step 6: 歌者 git commit + tag
-    ├── git add .
-    ├── git commit -m "e{epoch}-civ-{N:03d} | {death} | tokens:{used}/{budget} | {verdict}({score}) | {epitaph}"
-    └── git tag e{epoch}-civ-{N:03d}
-
-Step 7: Controller 判断
-    ├── 若 verdict == "passed" → 通知农场主，纪元终结流程
-    └── 否则 → 进入下一文明
-```
-
-### 农场主介入时机
-
-**农场主介入时机**（仅两种）：
-- **纪元开始**：写入命题 + 验收标准 + token预算
-- **纪元达标**：收到通知，决定下一纪元命题
-
-农场主可以随时查看史书，但**不在纪元运行中强制介入**（只能修改 `farmer_hint`，由下一文明的启动包携带）。
-
-### 纪元终结流程
+### 目录树（实际实现）
 
 ```
-歌者宣布「达标」
-    ↓
-歌者写「纪元终章」→ 追加到 state/epoch-answers.md
-    ↓
-git checkout main
-git merge live --no-ff -m "epoch-{N}-end: {命题} | 历经{X}个文明 | 最终得分{score}"
-git tag epoch-{N}-end
-git checkout live
-    ↓
-农场主读终章，决定纪元{N+1}命题
-    ↓
-写入 state/epoch.json（新纪元）→ 新文明开始
-```
-  - `pivot <新焦点>`：调整探索角度
-  - `terminate`：宣布收敛
-
----
-
-## 五、数据结构
-
-### 目录树
-
-```
-huoxing-loop/
-├── DESIGN.md               ← 本文件
-├── run.py                  ← Controller 主程序
-├── prompts/
-│   ├── farmer.md           ← 农夫 system prompt 模板
-│   ├── singer.md           ← 歌者 system prompt 模板
-│   └── perspectives.json   ← 10个视角列表
-├── state/
-│   ├── epoch.json          ← 当前纪元（编号、命题、进度）
-│   ├── epoch-answers.md    ← 所有已完成纪元的最终答案（永久积累）
-│   ├── current.json        ← 当前纪元最优方案
-│   ├── discoveries.md      ← 当前纪元已知定律
-│   └── scores.json         ← 当前纪元分数历史
-└── logs/
-    ├── civilization-001.md ← 文明编号全局唯一
-    ├── civilization-002.md
-    └── ...
+huoxingfarm-loop/
+├── src/
+│   ├── run.py                  ← Controller 主程序
+│   ├── farmer.py               ← 农夫 API 模块
+│   ├── singer.py               ← 歌者 API 模块
+│   ├── .env                    ← 本地密钥（不提交）
+│   └── prompts/
+│       ├── farmer.md
+│       ├── singer.md
+│       └── perspectives.json
+└── agent/
+    ├── history/
+    │   ├── INDEX.md
+    │   ├── current/
+    │   │   ├── briefing.md     ← 农夫启动包（Controller每轮刷新）
+    │   │   └── epoch.md        ← 当前纪元进展+文明进度表
+    │   └── epochs/
+    │       └── epoch-NNN.md    ← 已完成纪元封存史册
+    ├── state/
+    │   ├── epoch.json          ← 当前纪元状态
+    │   ├── epoch-answers.md    ← 跨纪元答案积累
+    │   ├── discoveries.md      ← 当前纪元已知定律
+    │   ├── scores.json         ← 分数历史
+    │   └── current.json        ← 当前纪元最优方案快照
+    └── civilizations/
+        └── epoch-NNN/
+            └── civ-NNN/
+                ├── farmer.md   ← 农夫产出
+                └── singer.md   ← 歌者评价（JSON+叙事）
 ```
 
-### state/epoch.json
+### agent/state/epoch.json
 
 ```json
 {
   "epoch_number": 1,
   "question": "火星农场项目通过什么形式/模式运作，可以最大概率成功？",
+  "acceptance_criteria": "三条必须同时满足：1.明确第一个付费客户 2.可信的资金来源 3.清晰的盈利路径",
+  "token_budget": 100000,
   "started_at_civilization": 1,
-  "current_civilization": 47,
-  "status": "running"
+  "current_civilization": 1,
+  "next_hint": "探索在体验经济之外，如何基于已积累的独特技术或生物资产，构建更独立的核心产品",
+  "status": "completed"
 }
 ```
 
-### state/scores.json
+### 歌者输出 JSON 格式
 
 ```json
 {
-  "scores": [
-    {"n": 1,  "epoch": 1, "total": 42, "delta": null, "perspective": "硅谷风险投资人"},
-    {"n": 2,  "epoch": 1, "total": 55, "delta": 13,   "perspective": "NASA工程师"},
-    {"n": 3,  "epoch": 1, "total": 61, "delta": 6,    "perspective": "荷兰农业专家"}
-  ],
-  "best": {"n": 3, "total": 61},
-  "trend": "improving"
+  "civilization": 1,
+  "epoch": 1,
+  "perspective": "2050年的历史学家（回顾视角）",
+  "verdict": "passed",
+  "criteria_check": {
+    "first_paying_customer": true,
+    "funding_source": true,
+    "profit_path": true
+  },
+  "scores": {
+    "feasibility": 16,
+    "completeness": 20,
+    "consistency": 18,
+    "novelty": 19,
+    "uncertainty_reduction": 20
+  },
+  "total": 93,
+  "epitaph": "他们未曾售卖一粒粮食，却用故事与体验，为火星农场换来了第一缕生存的阳光。",
+  "legacy": ["已知定律1", "已知定律2"],
+  "biggest_gap": "对外部叙事价值的依赖，存在故事泡沫风险",
+  "next_focus": "探索更独立的核心产品或服务原型"
 }
-```
-
-### state/epoch-answers.md
-
-```markdown
-# 纪元答案录（永久积累，跨纪元传承）
-
-## 纪元1：运营模式（终结于文明#312，最终得分87）
-**命题：** 火星农场通过什么形式/模式运作可以最大概率成功？
-**答案：** 政府合同（NASA/ESA）+ 科研数据授权费双轨制
-**关键洞见：** 早期客户是航天机构而非消费者；水培+气培混合技术最优
-**未解之谜：** 产权结构与股权设计（由纪元2继续）
-
-## 纪元2：融资路径（终结于文明#xxx）
-...
-```
-
-### state/current.json
-
-```json
-{
-  "updated_at_civilization": 6,
-  "score": 68,
-  "core_model": "政府合同（NASA/ESA）+科研授权费双轨制",
-  "key_insight": "火星农场的第一批客户不是消费者，而是各国航天机构",
-  "summary": "..."
-}
-```
-
-### state/discoveries.md（跨文明积累）
-
-```markdown
-# 已知定律（前文明用生命换来）
-
-## 关于客户
-- [文明#3 验证] 第一批客户是航天机构，不是火星殖民者消费市场
-- [文明#5 推翻] 早期收入不能依赖消费者付费，殖民者规模太小
-
-## 关于技术
-- [文明#4 验证] 水培+气培混合优于土壤，重量/产量比更优
-- [文明#6 待验证] 核能供电优于太阳能（火星日照不稳定）
-
-## 关于资本
-- [文明#7 发现] NASA SBIR 小企业创新研究项目是可用的早期资金来源
-- [文明#2 教训] 纯VC路线对火星时间线不现实，回报周期太长
 ```
 
 ---
 
-## 六、Git 分支与 Tag 设计
+## 四、Git 分支与 Tag
 
 ### 分支
 
 ```
-main   ← 纪元正史（纪元终结时合并，含终章）
+main   ← 纪元正史（纪元收敛时合并）
   └── live  ← 文明实录（歌者每轮 commit）
 ```
 
-### Tag 体系（只打纪元级别）
+### Tag（只打纪元级，不打文明级）
 
-文明不打 tag——文明记录在史书文件里，不在 git tag 里。
-Tag 只标记纪元边界，保持 git 索引清晰。
+| Tag | 打在 | 时机 |
+|---|---|---|
+| `epoch-{N}-start` | live | 新纪元第一个文明开始前 |
+| `epoch-{N}-end` | main | 纪元收敛合并后 |
+| `pivot-N` | main | 农场主调整命题方向（手动） |
+| `convergence` | main | 史诗完结 |
 
-| Tag | 打在 | 时机 | 示例 |
-|---|---|---|---|
-| `epoch-{N}-start` | live | 新纪元第一个文明开始前 | `epoch-1-start` |
-| `epoch-{N}-end` | main | 纪元达标，合并到main后 | `epoch-1-end` |
-| `pivot-{N}` | main | 农场主调整命题方向（手动） | `pivot-3` |
-| `convergence` | main | 项目完结，史诗终章 | `convergence` |
-
-### git log 全局视图
+### commit 格式
 
 ```
-[commit] 纪元3 文明#721 | token耗尽 | 未达标 | 团队构建命题
-[commit] 纪元3 文明#720 | 自然终结 | 未达标(71) | 团队构建命题
-epoch-2-end ★ 纪元2终结 | 融资路径已解 | 历经412个文明
-[commit] 纪元2 文明#589 | 自然终结 | 达标(86) ← 收敛点
-...
-epoch-1-end ★ 纪元1终结 | 运营模式已解 | 历经312个文明
-epoch-2-start
-[commit] 纪元1 文明#312 | 自然终结 | 达标(87) ← 收敛点
-[commit] 纪元1 文明#007 | 自然终结 | 未达标(68) | NASA合同首现
-epoch-1-start
-```
-
-### 史书文件体系
-
-农夫每次文明开始时，读取以下文件：
-
-```
-history/
-  INDEX.md                  ← 史书总目：项目使命 + 纪元一览 + 导航
-  current/
-    briefing.md             ← 农夫启动包（Controller每轮生成，农夫只读这一个）
-    epoch.md                ← 当前纪元进展：命题/验收标准/文明进度表/歌者提示
-  epochs/
-    epoch-001.md            ← 纪元1完整史册（达标后封存）
-    epoch-002.md            ← 纪元2完整史册
-    ...
-```
-
-**农夫的阅读路径（极简）：**
-1. 读 `history/current/briefing.md` —— 这一个文件包含启动所需的全部信息
-2. 如需了解更多上下文，可读 `history/current/epoch.md`（当前纪元进展）
-3. 如需了解已完成纪元的答案，可读 `history/epochs/epoch-NNN.md`
-
-**歌者的写入路径：**
-1. 每个文明结束后，追加一行到 `history/current/epoch.md`（文明进度表）
-2. 更新 `history/current/briefing.md`（给下一文明的启动包）
-3. git commit（文明记录在commit message中，不打tag）
-4. 纪元达标后：写 `history/epochs/epoch-NNN.md`（终章），更新 `history/INDEX.md`
-
----
-
-## 七、收敛判断
-
-### 分数曲线预期形态
-
-```
-分数
-100 |                                          ★ 收敛
- 85 |  - - - - - - - - - - - - - - - - - - - -（收敛线）
- 70 |                          ∧∧∧∧∧
- 55 |              ∧∧∧∧
- 40 |  ∧∧∧∧
-    +--------------------------------------------------→ 文明
-     1  2  3  4  5  6  7  8  9  10 ...
-```
-
-### 终止条件（优先级从高到低）
-
-1. `total >= 85`：自动收敛，输出最终报告
-2. `max(scores[-5:]) - min(scores[-5:]) < 5`：连续5轮震荡，通知农场主
-3. `iteration >= 50`：最大轮次，强制生成报告
-4. 农场主手动 `terminate`
-
----
-
-## 八、最终输出
-
-收敛后，歌者生成「终章」：
-
-```markdown
-# 火星农场战略最终报告
-> 经过 {N} 次文明的探索，于第 {M} 文明收敛
-
-## 核心结论
-{current.json 最优方案的展开版}
-
-## 探索历程
-{scores 曲线描述 + 关键转折点}
-
-## 已知定律（前人遗产）
-{discoveries.md 全文}
-
-## 未解之谜
-{最后一个文明仍未解决的缺口}
+e1-civ-001 | 自然终结 | tokens:1,662/100,000 | 达标(93) | 墓志铭
+epoch-1-end: 纪元1收敛 | 历经1文明 | 得分93
 ```
 
 ---
 
-## 九、技术实现要点
+## 五、每轮完整流程
 
-### API 调用
+```
+Step 1: Controller 读取状态
+    ├── agent/state/epoch.json
+    ├── agent/state/discoveries.md
+    └── agent/state/epoch-answers.md
 
-- **农夫 / 歌者**：`https://chat.suanji.net/api/v1/chat/completions`
-  - Model: `qwen3.5:35b`
-  - Headers: `User-Agent: curl/8.7.1`（必须，否则403）
-  - Timeout: 120s（thinking mode 可能较慢）
-  
-- **情报员**：通过 OpenClaw `sessions_spawn(agentId="intel")`
+Step 2: 构建农夫启动包（写入 history/current/briefing.md）
+    ├── 当前命题 + 验收标准
+    ├── 歌者上轮的 next_focus
+    ├── 已知定律
+    └── 已完成纪元答案
 
-### 错误处理
+Step 3: 农夫运行
+    ├── 调用 DeepSeek API（deepseek-chat）
+    ├── max_tokens: 4096（单次输出上限）
+    ├── token预算通过 usage 累计跟踪
+    └── 输出存入 agent/civilizations/epoch-NNN/civ-NNN/farmer.md
 
-- API 超时 → 重试最多3次，仍失败则本轮记录为「文明被太阳风摧毁」，跳过
-- JSON 解析失败（歌者输出不规范）→ 歌者重新运行一次
-- git 冲突 → 不太可能（单进程写入），但若发生 → force add
+Step 4: 歌者运行
+    ├── 输入：农夫输出 + token数据 + 死亡方式 + 验收标准
+    ├── 调用 DeepSeek API（deepseek-chat）
+    ├── 输出：JSON评分 + 文明叙事
+    └── 存入 agent/civilizations/epoch-NNN/civ-NNN/singer.md
 
-### 运行方式
+Step 5: 更新史书
+    ├── 追加 legacy → agent/state/discoveries.md
+    ├── 更新 agent/state/scores.json
+    ├── 追加进度行 → agent/history/current/epoch.md
+    ├── 更新歌者提示 → agent/history/current/epoch.md
+    └── 刷新农夫启动包 → agent/history/current/briefing.md
+
+Step 6: git commit（由 Controller 执行）
+    └── e{epoch}-civ-{N:03d} | {death} | tokens:{used}/{budget} | {verdict}({score}) | {epitaph}
+
+Step 7: 收敛判断
+    ├── total >= 85 → finalize_epoch（写终章、合并main、打tag）
+    ├── 5轮无实质进展 → 通知农场主
+    └── 否则 → 下一文明
+```
+
+---
+
+## 六、收敛判断
+
+| 条件 | 动作 |
+|---|---|
+| `total >= 85` | 自动收敛，纪元终结，合并 main |
+| 连续5轮提升 < 2分 | 警告，建议农场主介入 |
+| `iteration >= MAX_ROUNDS(50)` | 强制终结，生成当前最优报告 |
+
+---
+
+## 七、运行命令
 
 ```bash
 cd /Users/jenkins/projects/huoxing-loop
-python3 run.py --rounds 20          # 跑20轮
-python3 run.py --rounds 50 --auto   # 跑50轮，全自动（不等农场主审阅）
-python3 run.py --resume             # 从上次中断处继续
-python3 run.py --report             # 生成当前状态报告（不跑新轮次）
+
+# 初始化新纪元（农场主执行）
+.venv/bin/python src/run.py init
+
+# 启动 Loop
+.venv/bin/python src/run.py
+
+# 后台运行并记录日志
+nohup .venv/bin/python -u src/run.py > /tmp/huoxing-loop.log 2>&1 &
+
+# 查看运行日志
+tail -f /tmp/huoxing-loop.log
+
+# 查看史书
+git log --oneline live
+cat agent/state/scores.json
 ```
 
 ---
 
-## 十、第一轮 Seed Prompt（由农场主写入）
+## 八、技术注记
 
+**农夫：本地 Ollama**
+- URL: `http://localhost:11434/v1/chat/completions`
+- Model: `qwen3.5:0.8b`
+- 无需 API Key（填 `ollama` 占位）
+- 温度: 0.8（探索性）
+
+**歌者：DeepSeek API**
+- URL: `https://api.deepseek.com/v1/chat/completions`
+- Model: `deepseek-chat`
+- 温度: 0.3（稳定/客观）
+- 平均响应: ~27s
+
+**suanji GPU 工作站（备用）**
+- URL: `https://chat.suanji.net/api/v1`
+- 注意：需要 `User-Agent: curl/8.7.1`（否则 403）
+- 注意：Cloudflare 代理 100s 硬超时，Qwen3.5 thinking 模式容易触发 HTTP 524
+- 可用模型：qwen3.5:35b, qwen3.5:9b, minimax-m2.5, qwen3-30b 等
+
+**环境变量**（`src/.env`，不提交）
 ```
-火星农场项目（MarsfarM）核心命题：
-
-"去火星种西红柿"
-
-背景：
-- SpaceX Starship 预计2030年代初开始定期火星飞行
-- 首批殖民者面临食物依赖地球补给的巨大挑战
-- 火星农场的愿景：在火星本地生产食物，卖给殖民者
-
-你是第一个探索这个问题的文明。
-没有前人的遗产，只有这个问题：
-
-火星农场项目通过什么形式/模式运作，可以最大概率成功？
-
-请从你被赋予的视角出发，给出你能想到的最好答案。
+FARMER_API_URL=http://localhost:11434/v1
+FARMER_API_KEY=ollama
+FARMER_MODEL=qwen3.5:0.8b
+DEEPSEEK_API_URL=https://api.deepseek.com/v1
+DEEPSEEK_API_KEY=sk-xxx
+SINGER_MODEL=deepseek-chat
+TOKEN_BUDGET=100000
+MAX_ROUNDS=50
+CONVERGENCE_SCORE=85
 ```
 
 ---
 
-*设计版本：v0.1 | 2026-03-13*
-*农场主：灵耳 | 农夫：Qwen3.5:35b | 歌者：Qwen3.5:35b | 情报员：intel*
+*设计版本：v1.1 | 2026-03-13*  
+*农场主：灵耳（Claude Sonnet）| 农夫：DeepSeek | 歌者：DeepSeek*
