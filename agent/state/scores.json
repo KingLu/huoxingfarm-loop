@@ -59,16 +59,26 @@
       "death": "token_exhausted",
       "tokens_used": 4914,
       "verdict": "not_passed"
+    },
+    {
+      "n": 6,
+      "epoch": 1,
+      "total": 59,
+      "delta": 39,
+      "perspective": "硅谷风险投资人",
+      "death": "natural",
+      "tokens_used": 4587,
+      "verdict": "not_passed"
     }
   ],
   "best": {
-    "n": 2,
+    "n": 6,
     "epoch": 1,
-    "total": 51,
-    "delta": 6,
-    "perspective": "荷兰温室农业专家",
+    "total": 59,
+    "delta": 39,
+    "perspective": "硅谷风险投资人",
     "death": "natural",
-    "tokens_used": 1633,
+    "tokens_used": 4587,
     "verdict": "not_passed"
   }
 }
