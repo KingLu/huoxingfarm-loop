@@ -231,6 +231,18 @@
       "death": "natural",
       "tokens_used": 4465,
       "verdict": "not_passed"
+    },
+    {
+      "n": 22,
+      "epoch": 1,
+      "total": 10,
+      "delta": -12,
+      "perspective": "硅谷风险投资人",
+      "farmer_model": "qwen3.5:0.8b",
+      "elapsed_sec": 90.9,
+      "death": "token_exhausted",
+      "tokens_used": 5953,
+      "verdict": "not_passed"
     }
   ],
   "best": {
