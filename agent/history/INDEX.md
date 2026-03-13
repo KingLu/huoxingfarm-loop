@@ -35,3 +35,5 @@ _（随纪元积累更新，见 `state/discoveries.md`）_
 **→ 读取 `history/current/briefing.md` 获取本文明的启动信息**
 
 
+
+| 纪元2 | 火星农场如何在24个月内签下第一份真实合同？ | 🔄 进行中 | - | - |
