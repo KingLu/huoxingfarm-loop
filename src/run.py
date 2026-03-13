@@ -352,14 +352,14 @@ def run_civilization(civ_num: int, epoch: dict,
         append_discoveries(legacy, civ_num)
 
     # ── Step 6: 更新史书 ──
+    next_hint_new = evaluation.get("next_focus", "")   # 先取值再用
+
     update_epoch_progress(
         civ_num, epoch_num,
         farmer_result["tokens_used"], TOKEN_BUDGET,
         farmer_result["death"], verdict, total, epitaph,
-        next_hint=next_hint_new,   # ③ 同步更新歌者提示
+        next_hint=next_hint_new,
     )
-
-    next_hint_new = evaluation.get("next_focus", "")
     update_briefing(epoch, next_hint_new,
                     read(STATE_DIR / "discoveries.md"),
                     read(STATE_DIR / "epoch-answers.md"),
