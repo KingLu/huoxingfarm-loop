@@ -12,7 +12,7 @@ import urllib.request
 import urllib.error
 from pathlib import Path
 
-DEEPSEEK_API_URL = "https://api.deepseek.com/v1"
+DEEPSEEK_API_URL = os.getenv("DEEPSEEK_API_URL", "https://api.deepseek.com/v1")
 DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY", "")
 SINGER_MODEL     = os.getenv("SINGER_MODEL", "deepseek-chat")
 
