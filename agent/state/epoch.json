@@ -4,7 +4,7 @@
   "acceptance_criteria": "以下三条必须同时满足：\n1. 明确第一个付费客户（具体机构或群体，非泛指）\n2. 可信的资金来源（谁出钱，为什么出，大概规模）\n3. 清晰的盈利路径（10年后如何独立盈利，不依赖补贴）",
   "token_budget": 100000,
   "started_at_civilization": 1,
-  "current_civilization": 12,
-  "next_hint": "下一文明必须放弃泛泛的“潜在客户”描述，聚焦于找到一个愿意为具体服务支付第一笔钱的具体机构或个人。",
+  "current_civilization": 13,
+  "next_hint": "下一文明必须放弃宏观历史叙事，聚焦于构建一个具体、可执行、包含明确客户、资金和盈利路径的商业方案。",
   "status": "running"
 }
