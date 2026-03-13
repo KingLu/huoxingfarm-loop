@@ -19,16 +19,26 @@
       "death": "token_exhausted",
       "tokens_used": 4613,
       "verdict": "not_passed"
+    },
+    {
+      "n": 2,
+      "epoch": 1,
+      "total": 51,
+      "delta": 6,
+      "perspective": "荷兰温室农业专家",
+      "death": "natural",
+      "tokens_used": 1633,
+      "verdict": "not_passed"
     }
   ],
   "best": {
-    "n": 1,
+    "n": 2,
     "epoch": 1,
-    "total": 50,
-    "delta": 50,
-    "perspective": "2050年的历史学家（回顾视角）",
+    "total": 51,
+    "delta": 6,
+    "perspective": "荷兰温室农业专家",
     "death": "natural",
-    "tokens_used": 1440,
+    "tokens_used": 1633,
     "verdict": "not_passed"
   }
 }
