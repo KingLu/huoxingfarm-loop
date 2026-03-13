@@ -49,6 +49,16 @@
       "death": "natural",
       "tokens_used": 1972,
       "verdict": "not_passed"
+    },
+    {
+      "n": 5,
+      "epoch": 1,
+      "total": 20,
+      "delta": -17,
+      "perspective": "曾经失败的火星创业者（深刻反思）",
+      "death": "token_exhausted",
+      "tokens_used": 4914,
+      "verdict": "not_passed"
     }
   ],
   "best": {
