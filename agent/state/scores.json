@@ -627,16 +627,30 @@
       "death": "natural",
       "tokens_used": 4974,
       "verdict": "not_passed"
+    },
+    {
+      "n": 55,
+      "epoch": 1,
+      "total": 70,
+      "delta": 3,
+      "perspective": "曾经失败的火星创业者（深刻反思）",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 44.7,
+      "death": "natural",
+      "tokens_used": 5187,
+      "verdict": "not_passed"
     }
   ],
   "best": {
-    "n": 10,
+    "n": 55,
     "epoch": 1,
-    "total": 69,
-    "delta": 20,
-    "perspective": "NASA 航天工程师",
+    "total": 70,
+    "delta": 3,
+    "perspective": "曾经失败的火星创业者（深刻反思）",
+    "farmer_model": "qwen3.5:2b",
+    "elapsed_sec": 44.7,
     "death": "natural",
-    "tokens_used": 2630,
+    "tokens_used": 5187,
     "verdict": "not_passed"
   }
 }
