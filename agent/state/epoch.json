@@ -4,7 +4,7 @@
   "acceptance_criteria": "以下三条必须同时满足：\n1. 明确第一个付费客户（具体机构或群体，非泛指）\n2. 可信的资金来源（谁出钱，为什么出，大概规模）\n3. 清晰的盈利路径（10年后如何独立盈利，不依赖补贴）",
   "token_budget": 100000,
   "started_at_civilization": 1,
-  "current_civilization": 10,
-  "next_hint": "必须找到一个愿意为尚在概念阶段的火星农业数据或代币支付真实现金的、具体可查的早期采用者（如特定研究机构、先锋科技公司或高净值个人投资者）。",
+  "current_civilization": 11,
+  "next_hint": "必须将‘火星农业’的宏大愿景，锚定在一个具体、可触达的付费客户和一笔可量化的初始资金上。",
   "status": "running"
 }
