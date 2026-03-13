@@ -119,6 +119,16 @@
       "death": "token_exhausted",
       "tokens_used": 5345,
       "verdict": "not_passed"
+    },
+    {
+      "n": 12,
+      "epoch": 1,
+      "total": 31,
+      "delta": 1,
+      "perspective": "NASA 航天工程师",
+      "death": "token_exhausted",
+      "tokens_used": 5388,
+      "verdict": "not_passed"
     }
   ],
   "best": {
