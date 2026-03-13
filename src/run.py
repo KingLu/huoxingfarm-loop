@@ -31,6 +31,7 @@ STATE_DIR = AGENT_DIR / "state"
 TOKEN_BUDGET       = int(os.getenv("TOKEN_BUDGET", "100000"))
 MAX_ROUNDS         = int(os.getenv("MAX_ROUNDS", "50"))
 CONVERGENCE_SCORE  = int(os.getenv("CONVERGENCE_SCORE", "85"))
+FARMER_MODEL       = os.getenv("FARMER_MODEL", "qwen3.5:0.8b")
 
 
 # ─── 工具函数 ────────────────────────────────────────────
