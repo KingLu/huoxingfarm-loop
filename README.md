@@ -16,41 +16,54 @@
 | 🎵 歌者 | Qwen3.5:35b（GPU工作站） | 评分、记录史书、git commit |
 | 🔍 情报员 | intel（Gemini） | 按需召唤，补充现实数据 |
 
+## 三层结构
+
+```
+项目总史（MarsfarM）
+  └── 纪元（Epoch）      ← 一个大命题，跑若干文明直到命题收敛
+        └── 文明（Civilization）  ← 一次 Loop 迭代
+```
+
+**核心规则：每迭代一次 = 一个文明；每解决一个命题 = 纪元加一**
+
 ## 分支策略
 
 ```
-main   ← 正史（农场主每10轮审阅后合并）
-  └── live  ← 实录（歌者每轮 commit）
+main   ← 纪元正史（纪元终结时合并，含终章）
+  └── live  ← 文明实录（歌者每轮 commit）
 ```
 
 ## Tag 规范
 
-| Tag | 含义 |
-|---|---|
-| `civ-NNN` | 第N个文明（自动，打在 live） |
-| `best-{score}` | 历史最高分（自动，打在 live） |
-| `era-N-end` | 第N纪结束，农场主审阅（打在 main） |
-| `pivot-N` | 方向调整节点（农场主手动） |
-| `convergence` | 最终收敛（分数≥85） |
+| Tag | 打在 | 时机 |
+|---|---|---|
+| `e{N}-civ-{NNN}` | live | 每个文明结束（自动） |
+| `e{N}-best-{score}` | live | 当前纪元新高分（自动） |
+| `epoch-{N}-start` | live | 新纪元开始（自动） |
+| `epoch-{N}-end` | main | 纪元收敛后合并（自动） |
+| `pivot-N` | main | 农场主调整方向（手动） |
+| `convergence` | main | 史诗完结 |
 
 ## 目录结构
 
 ```
 huoxingfarm-loop/
 ├── README.md
-├── DESIGN.md           ← 完整设计方案
-├── run.py              ← Controller 主程序（待实现）
-├── .env.example        ← 环境变量模板（不含真实密钥）
+├── DESIGN.md               ← 完整设计方案
+├── run.py                  ← Controller 主程序（待实现）
+├── .env.example            ← 环境变量模板（不含真实密钥）
 ├── prompts/
-│   ├── farmer.md       ← 农夫 prompt 模板
-│   ├── singer.md       ← 歌者 prompt 模板
-│   └── perspectives.json ← 10个思维视角
+│   ├── farmer.md           ← 农夫 prompt 模板
+│   ├── singer.md           ← 歌者 prompt 模板
+│   └── perspectives.json   ← 10个思维视角
 ├── state/
-│   ├── current.json    ← 当前最优方案
-│   ├── discoveries.md  ← 跨文明积累的已知定律
-│   └── scores.json     ← 分数历史
+│   ├── epoch.json          ← 当前纪元（编号、命题、进度）
+│   ├── epoch-answers.md    ← 所有已完成纪元最终答案（永久积累）
+│   ├── current.json        ← 当前纪元最优方案
+│   ├── discoveries.md      ← 当前纪元已知定律
+│   └── scores.json         ← 当前纪元分数历史
 └── logs/
-    └── civilization-NNN.md  ← 每个文明的完整记录
+    └── civilization-NNN.md ← 文明编号全局唯一，跨纪元连续
 ```
 
 ## 快速开始
