@@ -195,6 +195,18 @@
       "death": "token_exhausted",
       "tokens_used": 5739,
       "verdict": "not_passed"
+    },
+    {
+      "n": 19,
+      "epoch": 1,
+      "total": 10,
+      "delta": 2,
+      "perspective": "中国商业航天创业者",
+      "farmer_model": "qwen3.5:0.8b",
+      "elapsed_sec": 90.9,
+      "death": "token_exhausted",
+      "tokens_used": 5804,
+      "verdict": "not_passed"
     }
   ],
   "best": {
