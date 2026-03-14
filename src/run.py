@@ -94,6 +94,18 @@ def load_scores() -> list:
 def save_scores(scores: list, best: dict):
     save_json(STATE_DIR / "scores.json", {"scores": scores, "best": best})
 
+def load_global_civ() -> int:
+    """读取全局文明计数器（跨纪元自增，永不重置）"""
+    data = load_json(STATE_DIR / "global_civ.json")
+    return data.get("total_civilizations", 0)
+
+def save_global_civ(total: int):
+    """更新全局文明计数器"""
+    save_json(STATE_DIR / "global_civ.json", {
+        "total_civilizations": total,
+        "note": "全局文明计数器，跨纪元自增，永不重置"
+    })
+
 def get_last_score(scores: list) -> int:
     return scores[-1]["total"] if scores else 0
 
@@ -483,10 +495,14 @@ def run_civilization(civ_num: int, epoch: dict,
                     read(STATE_DIR / "epoch-answers.md"),
                     civ_num + 1)
 
-    # 更新 epoch.json 的 next_hint
+    # 更新 epoch.json 的 next_hint 和本纪元文明计数
+    epoch_done_new = epoch.get("current_civilization", 0) + 1
     epoch["next_hint"] = next_hint_new
-    epoch["current_civilization"] = civ_num
+    epoch["current_civilization"] = epoch_done_new
     save_json(STATE_DIR / "epoch.json", epoch)
+
+    # 更新全局文明计数器
+    save_global_civ(load_global_civ() + 1)
 
     # ── Step 7: git commit ──
     git_commit_civilization(
@@ -604,18 +620,20 @@ def main():
     log(f"   农场主→ 模型:Claude Sonnet (灵耳)", "detail")
     log(f"⚙️  Loop参数 → token预算:{TOKEN_BUDGET:,} | 收敛线:{CONVERGENCE_SCORE} | 最大轮数:{MAX_ROUNDS}")
 
-    epoch      = load_epoch()
-    scores     = load_scores()
+    epoch        = load_epoch()
+    scores       = load_scores()
     perspectives = load_perspectives()
 
-    epoch_num  = epoch["epoch_number"]
-    start_civ  = epoch.get("current_civilization", 0) + 1
+    epoch_num    = epoch["epoch_number"]
+    global_base  = load_global_civ()          # 全局已完成文明总数
+    epoch_done   = epoch.get("current_civilization", 0)  # 本纪元已完成数
+    start_civ    = global_base + epoch_done + 1           # 下一个全局文明号
 
     log(f"📖 纪元{epoch_num} | 命题：{epoch['question'][:40]}...")
-    log(f"📊 已完成文明数：{len(scores)} | 当前最高分：{get_best_score(scores)}")
+    log(f"📊 全局文明数：{global_base + epoch_done} | 当前最高分：{get_best_score(scores)}")
 
     # 纪元第一个文明，打 start tag
-    if start_civ == epoch.get("started_at_civilization", 1):
+    if epoch_done == 0:
         git_tag_epoch_start(epoch_num)
 
     for round_i in range(MAX_ROUNDS):
@@ -659,8 +677,8 @@ def init_epoch(epoch_num: int, question: str,
         "question": question,
         "acceptance_criteria": acceptance_criteria,
         "token_budget": token_budget,
-        "started_at_civilization": 1,
-        "current_civilization": 0,
+        "started_at_civilization": load_global_civ() + 1,  # 本纪元起始全局文明号
+        "current_civilization": 0,  # 本纪元内已完成文明数（非全局号）
         "next_hint": "",
         "status": "running",
     }
