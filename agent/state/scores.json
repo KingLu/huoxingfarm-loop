@@ -1033,6 +1033,28 @@
       },
       "epitaph": "他在地球的田野上，为火星画了一张遥远的支票。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 106,
+      "epoch": 2,
+      "total": 46,
+      "delta": 17,
+      "perspective": "中国商业航天创业者",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 126.4,
+      "death": "natural",
+      "tokens_used": 6698,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 5,
+        "feasibility": 8,
+        "completeness": 10,
+        "consistency": 12,
+        "novelty": 15,
+        "uncertainty_reduction": 5
+      },
+      "epitaph": "他们曾将目光投向火星，却在地球游客的欢呼声中迷失了方向。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
