@@ -687,6 +687,18 @@
       "death": "token_exhausted",
       "tokens_used": 5442,
       "verdict": "not_passed"
+    },
+    {
+      "n": 59,
+      "epoch": 2,
+      "total": 32,
+      "delta": 9,
+      "perspective": "种子轮天使投资人",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 143.4,
+      "death": "token_exhausted",
+      "tokens_used": 6294,
+      "verdict": "not_passed"
     }
   ],
   "best": {
