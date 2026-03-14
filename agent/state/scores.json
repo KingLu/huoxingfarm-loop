@@ -771,6 +771,18 @@
       "death": "token_exhausted",
       "tokens_used": 6669,
       "verdict": "not_passed"
+    },
+    {
+      "n": 66,
+      "epoch": 2,
+      "total": 33,
+      "delta": 4,
+      "perspective": "曾经失败的火星创业者（深刻反思）",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 143.8,
+      "death": "token_exhausted",
+      "tokens_used": 6719,
+      "verdict": "not_passed"
     }
   ],
   "best": {
