@@ -2727,6 +2727,28 @@
       },
       "epitaph": "在沙漠边缘的构想刚刚起笔，便被无情的风沙掩埋。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 238,
+      "epoch": 3,
+      "total": 11,
+      "delta": -3,
+      "perspective": "NASA 航天工程师",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 143.5,
+      "death": "token_exhausted",
+      "tokens_used": 6398,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 2,
+        "feasibility": 3,
+        "completeness": 2,
+        "consistency": 5,
+        "novelty": 1,
+        "uncertainty_reduction": 0
+      },
+      "epitaph": "他画下了宏伟的蓝图，却未能为第一块砖找到安放之地。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
