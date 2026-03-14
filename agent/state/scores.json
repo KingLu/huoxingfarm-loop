@@ -2859,6 +2859,28 @@
       },
       "epitaph": "他们于沙海锚定星辰，以投资逻辑为犁，在盈亏平衡点刻下通往火星的第一道年轮。",
       "mission_check": "通过"
+    },
+    {
+      "n": 244,
+      "epoch": 3,
+      "total": 21,
+      "delta": -54,
+      "perspective": "联合国粮农组织官员",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 143.9,
+      "death": "token_exhausted",
+      "tokens_used": 6855,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 0,
+        "feasibility": 5,
+        "completeness": 5,
+        "consistency": 10,
+        "novelty": 5,
+        "uncertainty_reduction": 0
+      },
+      "epitaph": "他望向地球的饥荒，却遗忘了火星的荒芜。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
