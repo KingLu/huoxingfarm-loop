@@ -1451,6 +1451,28 @@
       },
       "epitaph": "他们试图用地球的物流网络编织火星的利润，却忘了种子必须在火星的土壤里发芽。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 130,
+      "epoch": 2,
+      "total": 21,
+      "delta": -7,
+      "perspective": "中国商业航天创业者",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 149.2,
+      "death": "token_exhausted",
+      "tokens_used": 8192,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 0,
+        "feasibility": 5,
+        "completeness": 5,
+        "consistency": 10,
+        "novelty": 5,
+        "uncertainty_reduction": 0
+      },
+      "epitaph": "他在地球的数据田野里耕耘，却以为能收获火星的果实。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
