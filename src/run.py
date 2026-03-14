@@ -169,6 +169,14 @@ def update_briefing(epoch: dict, next_hint: str, discoveries: str,
                     epoch_answers: str, civ_num: int):
     """刷新 history/current/briefing.md，供下一个文明读取"""
     perspective_placeholder = "{perspective}"  # Controller 启动时替换
+
+    # 读取失败教训
+    failure_lessons = read(STATE_DIR / "failure-lessons.md")
+    # 只取条目部分（去掉文件头说明）
+    lessons_section = ""
+    if "## 纪元" in failure_lessons:
+        lessons_section = failure_lessons[failure_lessons.index("## 纪元"):]
+
     content = f"""# 农夫启动包 — 文明 #{civ_num:03d}
 
 > 此文件由 Controller 在每个文明开始前自动生成。农夫只需读这一个文件。
@@ -216,9 +224,15 @@ def update_briefing(epoch: dict, next_hint: str, discoveries: str,
 
 ---
 
-## 已完成纪元的答案（跨纪元传承）
+## 已确认纪元答案（农场主认可，可继承方向）
 
 {epoch_answers or "暂无。这是第一个纪元。"}
+
+---
+
+## ⛔ 失败教训（农场主否决案例，禁止效仿）
+
+{lessons_section or "暂无失败教训。"}
 
 ---
 
@@ -692,6 +706,58 @@ _（上一文明结束后，歌者留给下一文明的方向）_
 
     log(f"✅ 纪元{epoch_num} 初始化完成")
     log(f"   命题：{question}")
+
+
+def reject_epoch(epoch_num: int, reason: str, lesson: str = ""):
+    """
+    农场主调用：否决已收敛的纪元（歌者通过但农场主不认可）。
+    将该纪元答案移入 failure-lessons.md，并标记为 owner_rejected。
+    之后需重新 init_epoch 重跑。
+    """
+    # 读取纪元信息
+    epoch = load_epoch()
+    if epoch["epoch_number"] != epoch_num:
+        raise ValueError(f"当前纪元是 {epoch['epoch_number']}，不是 {epoch_num}")
+    if epoch.get("status") not in ("completed",):
+        raise ValueError(f"纪元 {epoch_num} 状态为 {epoch.get('status')}，只能否决已完成的纪元")
+
+    # 标记否决
+    epoch["owner_verdict"] = "rejected"
+    epoch["owner_reject_reason"] = reason
+    save_json(STATE_DIR / "epoch.json", epoch)
+
+    # 追加到 failure-lessons.md
+    lessons_path = STATE_DIR / "failure-lessons.md"
+    lessons = read(lessons_path)
+    answers_path = STATE_DIR / "epoch-answers.md"
+    answers = read(answers_path)
+
+    from datetime import datetime
+    today = datetime.now().strftime("%Y-%m-%d")
+
+    # 从 epoch-answers.md 里找到这个纪元的答案摘要
+    entry = f"""
+## 纪元{epoch_num}：{epoch['question'][:40]}...
+**歌者评分：** （见 agent/civilizations/epoch-{epoch_num:03d}/）
+**农场主判定：** ❌ 否决
+**否决时间：** {today}
+**否决原因：** {reason}
+"""
+    if lesson:
+        entry += f"**教训：**\n{lesson}\n"
+    entry += "\n---\n"
+
+    write(lessons_path, lessons + entry)
+
+    # 在 epoch-answers.md 里加否决标注
+    write(answers_path, answers.replace(
+        f"## 纪元{epoch_num}：",
+        f"## ~~纪元{epoch_num}~~（农场主已否决）：",
+    ))
+
+    log(f"⚠️  纪元{epoch_num} 已被农场主否决，原因：{reason}")
+    log(f"   失败教训已记入 state/failure-lessons.md")
+    log(f"   请重新 init_epoch 发起新纪元")
 
 
 if __name__ == "__main__":

@@ -7,6 +7,24 @@
 
 ---
 
+## [v0.4.0] — 2026-03-14 · 农场主否决机制 + 失败教训传承
+
+### 新增
+- **failure-lessons.md**：失败教训录，记录歌者通过但农场主否决的纪元案例
+- **run.py `reject_epoch()`**：农场主否决函数，标记 `owner_verdict=rejected`，自动写入失败教训
+- **briefing.md**：新增「⛔ 失败教训」区块，与「已确认答案」明确区分
+- **纪元1**：已记录为失败教训（偏航到数据服务，物理种植缺失）
+- **epoch.json**：新增 `owner_verdict` 字段（`accepted` / `rejected`）
+
+### 使用方法
+```python
+# 在纪元收敛后，若农场主不认可：
+reject_epoch(epoch_num=1, reason="方案偏离物理种植使命", lesson="...")
+# 然后重新 init_epoch 发起新纪元
+```
+
+---
+
 ## [v0.3.0] — 2026-03-14 · 使命守门重构
 
 ### 新增
