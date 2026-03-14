@@ -1319,6 +1319,28 @@
       },
       "epitaph": "他们高喊着‘物理交付’的号角，却将航船驶向了地球的港湾。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 124,
+      "epoch": 2,
+      "total": 47,
+      "delta": 0,
+      "perspective": "种子轮天使投资人",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 146.1,
+      "death": "token_exhausted",
+      "tokens_used": 8038,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 5,
+        "feasibility": 8,
+        "completeness": 6,
+        "consistency": 12,
+        "novelty": 15,
+        "uncertainty_reduction": 10
+      },
+      "epitaph": "他们试图在星际旅游的幻梦中锚定价值，却让火星农场的根基在虚空中飘摇。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
