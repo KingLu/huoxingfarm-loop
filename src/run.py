@@ -94,6 +94,18 @@ def load_scores() -> list:
 def save_scores(scores: list, best: dict):
     save_json(STATE_DIR / "scores.json", {"scores": scores, "best": best})
 
+def load_global_civ() -> int:
+    """读取全局文明计数器（跨纪元自增，永不重置）"""
+    data = load_json(STATE_DIR / "global_civ.json")
+    return data.get("total_civilizations", 0)
+
+def save_global_civ(total: int):
+    """更新全局文明计数器"""
+    save_json(STATE_DIR / "global_civ.json", {
+        "total_civilizations": total,
+        "note": "全局文明计数器，跨纪元自增，永不重置"
+    })
+
 def get_last_score(scores: list) -> int:
     return scores[-1]["total"] if scores else 0
 
@@ -483,10 +495,14 @@ def run_civilization(civ_num: int, epoch: dict,
                     read(STATE_DIR / "epoch-answers.md"),
                     civ_num + 1)
 
-    # 更新 epoch.json 的 next_hint
+    # 更新 epoch.json 的 next_hint 和本纪元文明计数
+    epoch_done_new = epoch.get("current_civilization", 0) + 1
     epoch["next_hint"] = next_hint_new
-    epoch["current_civilization"] = civ_num
+    epoch["current_civilization"] = epoch_done_new
     save_json(STATE_DIR / "epoch.json", epoch)
+
+    # 更新全局文明计数器
+    save_global_civ(load_global_civ() + 1)
 
     # ── Step 7: git commit ──
     git_commit_civilization(
@@ -512,52 +528,101 @@ def run_civilization(civ_num: int, epoch: dict,
 def finalize_epoch(epoch: dict, scores: list, winning_civ: int):
     """纪元达标：写终章，更新 epoch-answers.md，打 tag"""
     epoch_num = epoch["epoch_number"]
-    best = max(scores, key=lambda s: s["total"])
-    civ_count = len(scores)
+    # 只取当前纪元的分数，避免跨纪元污染
+    epoch_scores = [s for s in scores if s.get("epoch", epoch_num) == epoch_num]
+    if not epoch_scores:
+        epoch_scores = scores  # 兼容旧数据无 epoch 字段
+    best = max(epoch_scores, key=lambda s: s["total"])
+    civ_count = len(epoch_scores)
 
     log(f"🎉 纪元{epoch_num}收敛！历经{civ_count}个文明，最终得分{best['total']}")
 
-    # 写纪元史册
+    # 读取收敛文明的农夫产出（实际方案内容）
+    winning_farmer_md = CIV_DIR / f"epoch-{epoch_num:03d}" / f"civ-{winning_civ:03d}" / "farmer.md"
+    winning_farmer_content = read(winning_farmer_md)
+    # 只取"## 农夫输出"之后的内容
+    if "## 农夫输出" in winning_farmer_content:
+        winning_solution = winning_farmer_content.split("## 农夫输出")[-1].strip()
+    else:
+        winning_solution = winning_farmer_content
+
+    # 读取收敛文明的歌者评价
+    winning_singer_md = CIV_DIR / f"epoch-{epoch_num:03d}" / f"civ-{winning_civ:03d}" / "singer.md"
+    winning_singer_content = read(winning_singer_md)
+    # 只取"## 歌者评价"之后的内容
+    if "## 歌者评价" in winning_singer_content:
+        winning_evaluation = winning_singer_content.split("## 歌者评价")[-1].strip()
+    else:
+        winning_evaluation = winning_singer_content
+
+    # 文明进度表（全纪元回顾）
+    progress_rows = ""
+    for s in epoch_scores:
+        death_sym = "🔋" if s.get("death") == "token_exhausted" else "✅"
+        verdict_sym = "✅" if s.get("verdict") == "passed" else "❌"
+        progress_rows += (f"| #{s['n']:03d} | {s.get('perspective','?')[:20]} "
+                          f"| {s.get('farmer_model','?')} | {s['total']} "
+                          f"| {death_sym} | {verdict_sym} | {s.get('epitaph','')[:30]} |\n")
+
+    # 写纪元史册（含完整方案）
     epoch_file = HISTORY / "epochs" / f"epoch-{epoch_num:03d}.md"
     epoch_content = f"""# 纪元{epoch_num} 史册（已封存）
 
 **命题：** {epoch['question']}
 
-**开始文明：** #{(epoch['started_at_civilization'] or 1):03d}
-**终结文明：** #{winning_civ:03d}
-**历经文明数：** {civ_count}
-**最终得分：** {best['total']}/100
+| 字段 | 值 |
+|---|---|
+| 开始文明 | #{(epoch['started_at_civilization'] or 1):03d} |
+| 收敛文明 | #{winning_civ:03d} |
+| 历经文明数 | {civ_count} |
+| 最终得分 | {best['total']}/100 |
+| 收敛视角 | {best.get('perspective','?')} |
+| 收敛墓志铭 | {best.get('epitaph','?')} |
 
 ---
 
-## 终章
+## 验收标准
 
-（由歌者在收敛时撰写）
-
-本纪元历经 {civ_count} 个文明的探索，最终在第 {winning_civ} 文明达到验收标准。
-得分 {best['total']}/100，视角：{best['perspective']}。
+{epoch.get('acceptance_criteria', '')}
 
 ---
 
-## 文明进度表
+## 收敛方案（文明#{winning_civ:03d} 完整内容）
 
-（详见 agent/civilizations/epoch-{epoch_num:03d}/）
+{winning_solution}
 
 ---
 
-## 最终答案摘要
+## 歌者对收敛方案的评价
 
-（见 state/epoch-answers.md）
+{winning_evaluation}
+
+---
+
+## 全纪元文明进度
+
+| 文明# | 视角 | 模型 | 得分 | 死亡 | 达标 | 墓志铭 |
+|---|---|---|---|---|---|---|
+{progress_rows}
 """
     write(epoch_file, epoch_content)
 
-    # 追加到 epoch-answers.md
+    # 追加到 epoch-answers.md（含实际方案摘要，供后续纪元农夫读取）
     answers_path = STATE_DIR / "epoch-answers.md"
     answers = read(answers_path)
+    # 取方案前500字作为摘要
+    solution_summary = winning_solution[:500] + ("..." if len(winning_solution) > 500 else "")
     answers += f"""
-## 纪元{epoch_num}：{epoch['question'][:30]}...（终结于文明#{winning_civ:03d}，得分{best['total']}）
+## 纪元{epoch_num}：{epoch['question'][:30]}...（收敛于文明#{winning_civ:03d}，得分{best['total']}）
 **命题：** {epoch['question']}
-**答案摘要：** 见 agent/history/epochs/epoch-{epoch_num:03d}.md
+**视角：** {best.get('perspective', '?')}
+**得分：** {best['total']}/100
+**墓志铭：** {best.get('epitaph', '')}
+
+**方案摘要：**
+{solution_summary}
+
+**完整方案：** 见 `agent/history/epochs/epoch-{epoch_num:03d}.md`
 
 """
     write(answers_path, answers)
@@ -600,18 +665,20 @@ def main():
     log(f"   农场主→ 模型:Claude Sonnet (灵耳)", "detail")
     log(f"⚙️  Loop参数 → token预算:{TOKEN_BUDGET:,} | 收敛线:{CONVERGENCE_SCORE} | 最大轮数:{MAX_ROUNDS}")
 
-    epoch      = load_epoch()
-    scores     = load_scores()
+    epoch        = load_epoch()
+    scores       = load_scores()
     perspectives = load_perspectives()
 
-    epoch_num  = epoch["epoch_number"]
-    start_civ  = epoch.get("current_civilization", 0) + 1
+    epoch_num    = epoch["epoch_number"]
+    global_base  = load_global_civ()          # 全局已完成文明总数
+    epoch_done   = epoch.get("current_civilization", 0)  # 本纪元已完成数
+    start_civ    = global_base + epoch_done + 1           # 下一个全局文明号
 
     log(f"📖 纪元{epoch_num} | 命题：{epoch['question'][:40]}...")
-    log(f"📊 已完成文明数：{len(scores)} | 当前最高分：{get_best_score(scores)}")
+    log(f"📊 全局文明数：{global_base + epoch_done} | 当前最高分：{get_best_score(scores)}")
 
     # 纪元第一个文明，打 start tag
-    if start_civ == epoch.get("started_at_civilization", 1):
+    if epoch_done == 0:
         git_tag_epoch_start(epoch_num)
 
     for round_i in range(MAX_ROUNDS):
@@ -628,7 +695,8 @@ def main():
         log(f"📊 文明#{civ_num:03d} 完成 | 得分:{result['total']} | {result['verdict']} | {result['epitaph'][:40]}")
 
         # 收敛判断
-        if result["verdict"] == "passed":
+        # 收敛条件：歌者判 passed 且分数达到收敛线（双重保障）
+        if result["verdict"] == "passed" and result["total"] >= CONVERGENCE_SCORE:
             finalize_epoch(epoch, scores, civ_num)
             log("✅ 纪元收敛，等待农场主设定下一纪元命题")
             break
@@ -654,8 +722,8 @@ def init_epoch(epoch_num: int, question: str,
         "question": question,
         "acceptance_criteria": acceptance_criteria,
         "token_budget": token_budget,
-        "started_at_civilization": 1,
-        "current_civilization": 0,
+        "started_at_civilization": load_global_civ() + 1,  # 本纪元起始全局文明号
+        "current_civilization": 0,  # 本纪元内已完成文明数（非全局号）
         "next_hint": "",
         "status": "running",
     }
