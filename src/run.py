@@ -462,16 +462,19 @@ def run_civilization(civ_num: int, epoch: dict,
         verdict = "passed" if total >= CONVERGENCE_SCORE else "not_passed"
 
     scores.append({
-        "n":            civ_num,
-        "epoch":        epoch_num,
-        "total":        total,
-        "delta":        total - last_score,
-        "perspective":  perspective,
-        "farmer_model": FARMER_MODEL,
-        "elapsed_sec":  farmer_result["elapsed_sec"],
-        "death":        farmer_result["death"],
-        "tokens_used":  farmer_result["tokens_used"],
-        "verdict":      verdict,
+        "n":             civ_num,
+        "epoch":         epoch_num,
+        "total":         total,
+        "delta":         total - last_score,
+        "perspective":   perspective,
+        "farmer_model":  FARMER_MODEL,
+        "elapsed_sec":   farmer_result["elapsed_sec"],
+        "death":         farmer_result["death"],
+        "tokens_used":   farmer_result["tokens_used"],
+        "verdict":       verdict,
+        "scores":        evaluation.get("scores", {}),        # 各维度分（含mission_alignment）
+        "epitaph":       evaluation.get("epitaph", ""),
+        "mission_check": evaluation.get("mission_check", ""),
     })
     best = max(scores, key=lambda s: s["total"])
     save_scores(scores, best)
