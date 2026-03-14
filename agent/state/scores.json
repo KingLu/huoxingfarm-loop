@@ -1121,6 +1121,28 @@
       },
       "epitaph": "他们在地球的土壤里，描绘了火星的幻影。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 110,
+      "epoch": 2,
+      "total": 42,
+      "delta": 21,
+      "perspective": "中国商业航天创业者",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 145.0,
+      "death": "natural",
+      "tokens_used": 7258,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 5,
+        "feasibility": 8,
+        "completeness": 10,
+        "consistency": 12,
+        "novelty": 10,
+        "uncertainty_reduction": 5
+      },
+      "epitaph": "他们仰望星空，却将种子播向了错误的轨道。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
