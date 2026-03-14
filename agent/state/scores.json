@@ -923,6 +923,28 @@
       },
       "epitaph": "他们仰望星空，却将种子播向了错误的轨道。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 94,
+      "epoch": 2,
+      "total": 29,
+      "delta": 1,
+      "perspective": "联合国粮农组织官员",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 149.0,
+      "death": "token_exhausted",
+      "tokens_used": 7459,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 0,
+        "feasibility": 5,
+        "completeness": 5,
+        "consistency": 15,
+        "novelty": 10,
+        "uncertainty_reduction": 0
+      },
+      "epitaph": "他们在地球的数据海洋中，为火星画了一张遥远的饼。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
