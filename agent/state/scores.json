@@ -3167,6 +3167,28 @@
       },
       "epitaph": "他指出了通往火星的沙漠之路，却未能为这条路找到第一块铺路的基石。",
       "mission_check": "通过"
+    },
+    {
+      "n": 258,
+      "epoch": 3,
+      "total": 37,
+      "delta": -9,
+      "perspective": "首批火星殖民者（潜在客户）",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 142.0,
+      "death": "natural",
+      "tokens_used": 7121,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 5,
+        "feasibility": 8,
+        "completeness": 6,
+        "consistency": 10,
+        "novelty": 5,
+        "uncertainty_reduction": 10
+      },
+      "epitaph": "他们找到了通往火星的模拟沙场，却忘记了出发是为了收获果实。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
