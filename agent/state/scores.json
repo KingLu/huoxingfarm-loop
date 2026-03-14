@@ -2925,6 +2925,28 @@
       },
       "epitaph": "他们描绘了数据的蓝图，却遗忘了土壤与种子。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 247,
+      "epoch": 3,
+      "total": 61,
+      "delta": 37,
+      "perspective": "首批火星殖民者（潜在客户）",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 144.4,
+      "death": "token_exhausted",
+      "tokens_used": 7007,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 18,
+        "feasibility": 8,
+        "completeness": 10,
+        "consistency": 12,
+        "novelty": 10,
+        "uncertainty_reduction": 15
+      },
+      "epitaph": "他们于吐鲁番的风沙中锚定了方向，却在商业的荒漠里耗尽了给养。",
+      "mission_check": "通过"
     }
   ],
   "best": {
