@@ -2749,6 +2749,28 @@
       },
       "epitaph": "他画下了宏伟的蓝图，却未能为第一块砖找到安放之地。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 239,
+      "epoch": 3,
+      "total": 19,
+      "delta": 8,
+      "perspective": "曾经失败的火星创业者（深刻反思）",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 126.1,
+      "death": "natural",
+      "tokens_used": 6026,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 0,
+        "feasibility": 5,
+        "completeness": 8,
+        "consistency": 5,
+        "novelty": 3,
+        "uncertainty_reduction": 2
+      },
+      "epitaph": "他们构想了一座宏伟的桥梁，却将桥墩建在了幻想的彼岸。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
