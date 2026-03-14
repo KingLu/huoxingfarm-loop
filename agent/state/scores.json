@@ -1363,6 +1363,28 @@
       },
       "epitaph": "他们锚定了物理的土壤，却未能勾勒出支撑其生长的经济循环。",
       "mission_check": "通过"
+    },
+    {
+      "n": 126,
+      "epoch": 2,
+      "total": 57,
+      "delta": -4,
+      "perspective": "SpaceX 殖民地规划者",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 143.4,
+      "death": "natural",
+      "tokens_used": 8097,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 8,
+        "feasibility": 12,
+        "completeness": 10,
+        "consistency": 14,
+        "novelty": 10,
+        "uncertainty_reduction": 15
+      },
+      "epitaph": "他们看见了火星的土壤，却仍在计算地球的运费。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
