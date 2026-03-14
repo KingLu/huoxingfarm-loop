@@ -1935,6 +1935,28 @@
       },
       "epitaph": "他们执着于物理的真实，却将目光投向了地球的餐桌，而非火星的土壤。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 152,
+      "epoch": 2,
+      "total": 50,
+      "delta": 17,
+      "perspective": "硅谷风险投资人",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 139.0,
+      "death": "natural",
+      "tokens_used": 7960,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 5,
+        "feasibility": 8,
+        "completeness": 10,
+        "consistency": 12,
+        "novelty": 15,
+        "uncertainty_reduction": 10
+      },
+      "epitaph": "他们执着于物理锚点，却将锚链的另一端，系在了地球的码头。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
