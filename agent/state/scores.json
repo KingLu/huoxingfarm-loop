@@ -1891,6 +1891,28 @@
       },
       "epitaph": "他们在地球的数据温室里，精心培育了一个关于火星的遥远幻梦。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 150,
+      "epoch": 2,
+      "total": 0,
+      "delta": -21,
+      "perspective": "2050年的历史学家（回顾视角）",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 149.4,
+      "death": "token_exhausted",
+      "tokens_used": 8192,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 0,
+        "feasibility": 0,
+        "completeness": 0,
+        "consistency": 0,
+        "novelty": 0,
+        "uncertainty_reduction": 0
+      },
+      "epitaph": "于宏大叙事的序章中，因词穷而沉默。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
