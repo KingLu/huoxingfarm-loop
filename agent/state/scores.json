@@ -1913,6 +1913,28 @@
       },
       "epitaph": "于宏大叙事的序章中，因词穷而沉默。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 151,
+      "epoch": 2,
+      "total": 33,
+      "delta": 33,
+      "perspective": "NASA 航天工程师",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 142.8,
+      "death": "natural",
+      "tokens_used": 8072,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 5,
+        "feasibility": 5,
+        "completeness": 5,
+        "consistency": 10,
+        "novelty": 10,
+        "uncertainty_reduction": 5
+      },
+      "epitaph": "他们执着于物理的真实，却将目光投向了地球的餐桌，而非火星的土壤。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
