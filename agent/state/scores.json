@@ -3145,6 +3145,28 @@
       },
       "epitaph": "他在地球的沃土上精耕细作，却遗忘了火星的荒芜。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 257,
+      "epoch": 3,
+      "total": 46,
+      "delta": 22,
+      "perspective": "NASA 航天工程师",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 135.4,
+      "death": "natural",
+      "tokens_used": 6883,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 18,
+        "feasibility": 8,
+        "completeness": 8,
+        "consistency": 10,
+        "novelty": 6,
+        "uncertainty_reduction": 5
+      },
+      "epitaph": "他指出了通往火星的沙漠之路，却未能为这条路找到第一块铺路的基石。",
+      "mission_check": "通过"
     }
   ],
   "best": {
