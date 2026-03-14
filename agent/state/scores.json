@@ -1803,6 +1803,28 @@
       },
       "epitaph": "他高举物理食物的旗帜，却未能为这面旗帜找到任何一面可以插上的土地。",
       "mission_check": "通过"
+    },
+    {
+      "n": 146,
+      "epoch": 2,
+      "total": 33,
+      "delta": -24,
+      "perspective": "联合国粮农组织官员",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 149.4,
+      "death": "token_exhausted",
+      "tokens_used": 8192,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 0,
+        "feasibility": 5,
+        "completeness": 8,
+        "consistency": 10,
+        "novelty": 12,
+        "uncertainty_reduction": 5
+      },
+      "epitaph": "他们试图用地球的金融网络，去捕获火星的幻影。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
