@@ -735,6 +735,18 @@
       "death": "token_exhausted",
       "tokens_used": 6474,
       "verdict": "not_passed"
+    },
+    {
+      "n": 63,
+      "epoch": 2,
+      "total": 26,
+      "delta": -16,
+      "perspective": "SpaceX 殖民地规划者",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 124.8,
+      "death": "natural",
+      "tokens_used": 6041,
+      "verdict": "not_passed"
     }
   ],
   "best": {
