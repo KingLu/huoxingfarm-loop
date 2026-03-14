@@ -1649,6 +1649,28 @@
       },
       "epitaph": "他们试图向火星销售火星的产出，却忘了自己从未踏上那片土地。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 139,
+      "epoch": 2,
+      "total": 29,
+      "delta": -4,
+      "perspective": "种子轮天使投资人",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 149.3,
+      "death": "token_exhausted",
+      "tokens_used": 8192,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 0,
+        "feasibility": 5,
+        "completeness": 5,
+        "consistency": 10,
+        "novelty": 10,
+        "uncertainty_reduction": 5
+      },
+      "epitaph": "他们曾高举物理交付的旗帜，却迷失在通往地球的物流迷宫中。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
