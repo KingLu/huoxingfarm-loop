@@ -1715,6 +1715,28 @@
       },
       "epitaph": "他们在地球的数据田野上耕耘，却将火星的温室留给了想象。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 142,
+      "epoch": 2,
+      "total": 18,
+      "delta": -11,
+      "perspective": "硅谷风险投资人",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 149.4,
+      "death": "token_exhausted",
+      "tokens_used": 8192,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 0,
+        "feasibility": 5,
+        "completeness": 2,
+        "consistency": 10,
+        "novelty": 5,
+        "uncertainty_reduction": 0
+      },
+      "epitaph": "他在地球的数据田野里，遥望着火星的沙尘。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
