@@ -967,6 +967,28 @@
       },
       "epitaph": "他仰望星空，却将种子播撒在了错误的轨道上。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 96,
+      "epoch": 2,
+      "total": 33,
+      "delta": 10,
+      "perspective": "荷兰温室农业专家",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 115.6,
+      "death": "natural",
+      "tokens_used": 6641,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 0,
+        "feasibility": 5,
+        "completeness": 8,
+        "consistency": 10,
+        "novelty": 12,
+        "uncertainty_reduction": 5
+      },
+      "epitaph": "他们建造了宏伟的数据圣殿，却在火星的荒原上，遗忘了第一颗种子的重量。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
