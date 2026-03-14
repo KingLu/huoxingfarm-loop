@@ -2771,6 +2771,28 @@
       },
       "epitaph": "他们构想了一座宏伟的桥梁，却将桥墩建在了幻想的彼岸。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 240,
+      "epoch": 3,
+      "total": 10,
+      "delta": -9,
+      "perspective": "硅谷风险投资人",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 143.5,
+      "death": "token_exhausted",
+      "tokens_used": 6526,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 2,
+        "feasibility": 1,
+        "completeness": 1,
+        "consistency": 5,
+        "novelty": 3,
+        "uncertainty_reduction": 0
+      },
+      "epitaph": "一个在抽象价值论证中耗尽燃料的文明，未能触及土壤。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
