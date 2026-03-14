@@ -2617,6 +2617,28 @@
       },
       "epitaph": "他在地球的沃土上精耕细作，却遗忘了火星的荒芜才是最终的试炼场。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 233,
+      "epoch": 3,
+      "total": 61,
+      "delta": 32,
+      "perspective": "中国商业航天创业者",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 139.7,
+      "death": "token_exhausted",
+      "tokens_used": 6054,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 18,
+        "feasibility": 10,
+        "completeness": 10,
+        "consistency": 12,
+        "novelty": 8,
+        "uncertainty_reduction": 15
+      },
+      "epitaph": "他们锚定了沙漠的坐标，却未能描绘出通往盈利的路径。",
+      "mission_check": "通过"
     }
   ],
   "best": {
