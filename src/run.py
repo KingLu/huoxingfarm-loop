@@ -523,7 +523,7 @@ def finalize_epoch(epoch: dict, scores: list, winning_civ: int):
 
 **命题：** {epoch['question']}
 
-**开始文明：** #{epoch['started_at_civilization']:03d}
+**开始文明：** #{(epoch['started_at_civilization'] or 1):03d}
 **终结文明：** #{winning_civ:03d}
 **历经文明数：** {civ_count}
 **最终得分：** {best['total']}/100
@@ -654,7 +654,7 @@ def init_epoch(epoch_num: int, question: str,
         "question": question,
         "acceptance_criteria": acceptance_criteria,
         "token_budget": token_budget,
-        "started_at_civilization": 1 if epoch_num == 1 else None,
+        "started_at_civilization": 1,
         "current_civilization": 0,
         "next_hint": "",
         "status": "running",
