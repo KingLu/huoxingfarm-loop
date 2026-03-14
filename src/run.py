@@ -610,22 +610,19 @@ def finalize_epoch(epoch: dict, scores: list, winning_civ: int):
 """
     write(epoch_file, epoch_content)
 
-    # 追加到 epoch-answers.md（含实际方案摘要，供后续纪元农夫读取）
+    # 追加到 epoch-answers.md
+    # ⚠️ 重要：只追加摘要标题+墓志铭，不追加方案正文！
+    # 方案正文会污染后续农夫的 context，导致其照抄错误方向。
+    # 完整方案存在 history/epochs/ 供人类查阅，不传给农夫。
     answers_path = STATE_DIR / "epoch-answers.md"
     answers = read(answers_path)
-    # 取方案前500字作为摘要
-    solution_summary = winning_solution[:500] + ("..." if len(winning_solution) > 500 else "")
     answers += f"""
 ## 纪元{epoch_num}：{epoch['question'][:30]}...（收敛于文明#{winning_civ:03d}，得分{best['total']}）
 **命题：** {epoch['question']}
 **视角：** {best.get('perspective', '?')}
 **得分：** {best['total']}/100
 **墓志铭：** {best.get('epitaph', '')}
-
-**方案摘要：**
-{solution_summary}
-
-**完整方案：** 见 `agent/history/epochs/epoch-{epoch_num:03d}.md`
+**完整方案：** 见 `agent/history/epochs/epoch-{epoch_num:03d}.md`（不在此展示，避免污染后续文明）
 
 """
     write(answers_path, answers)
