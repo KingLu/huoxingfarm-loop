@@ -1253,6 +1253,28 @@
       },
       "epitaph": "他们曾望向火星，却在数据迷宫中遗忘了土壤的重量。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 121,
+      "epoch": 2,
+      "total": 57,
+      "delta": 34,
+      "perspective": "种子轮天使投资人",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 113.4,
+      "death": "natural",
+      "tokens_used": 6872,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 18,
+        "feasibility": 8,
+        "completeness": 6,
+        "consistency": 12,
+        "novelty": 14,
+        "uncertainty_reduction": 10
+      },
+      "epitaph": "他们高举物理交付的旗帜，却未能找到通往第一株番茄的真实买家。",
+      "mission_check": "通过"
     }
   ],
   "best": {
