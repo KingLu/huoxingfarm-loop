@@ -2397,6 +2397,28 @@
       },
       "epitaph": "他们仰望星空，却忘记了脚下的土地是通往火星的唯一阶梯。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 223,
+      "epoch": 3,
+      "total": 15,
+      "delta": -6,
+      "perspective": "SpaceX 殖民地规划者",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 142.3,
+      "death": "token_exhausted",
+      "tokens_used": 5631,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 0,
+        "feasibility": 5,
+        "completeness": 2,
+        "consistency": 8,
+        "novelty": 3,
+        "uncertainty_reduction": 0
+      },
+      "epitaph": "他凝视着戈壁的风沙，以为看见了火星的倒影，却忘了自己从未真正踏上那片红色的土地。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
