@@ -2177,6 +2177,28 @@
       },
       "epitaph": "他们在地球的土壤里，寻找火星的倒影。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 163,
+      "epoch": 2,
+      "total": 40,
+      "delta": 17,
+      "perspective": "首批火星殖民者（潜在客户）",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 139.6,
+      "death": "natural",
+      "tokens_used": 7972,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 15,
+        "feasibility": 5,
+        "completeness": 5,
+        "consistency": 10,
+        "novelty": 8,
+        "uncertainty_reduction": 5
+      },
+      "epitaph": "他们高呼回归物理，却未能描绘出第一颗火星西红柿的买家与价格。",
+      "mission_check": "通过"
     }
   ],
   "best": {
