@@ -1737,6 +1737,28 @@
       },
       "epitaph": "他在地球的数据田野里，遥望着火星的沙尘。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 143,
+      "epoch": 2,
+      "total": 29,
+      "delta": 11,
+      "perspective": "首批火星殖民者（潜在客户）",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 149.3,
+      "death": "token_exhausted",
+      "tokens_used": 8192,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 0,
+        "feasibility": 5,
+        "completeness": 5,
+        "consistency": 15,
+        "novelty": 10,
+        "uncertainty_reduction": 0
+      },
+      "epitaph": "他们在地球的土壤上，描绘了火星的幻影。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
