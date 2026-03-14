@@ -182,12 +182,13 @@ def update_briefing(epoch: dict, next_hint: str, discoveries: str,
     """刷新 history/current/briefing.md，供下一个文明读取"""
     perspective_placeholder = "{perspective}"  # Controller 启动时替换
 
-    # 读取失败教训
-    failure_lessons = read(STATE_DIR / "failure-lessons.md")
-    # 只取条目部分（去掉文件头说明）
-    lessons_section = ""
-    if "## 纪元" in failure_lessons:
-        lessons_section = failure_lessons[failure_lessons.index("## 纪元"):]
+    # 失败教训：使用固定简洁禁令，避免具体方案描述被小模型反向参考
+    lessons_section = """⛔ 核心禁令（农场主红线）：
+- 禁止纯数据服务方案（无论商业逻辑多完整）
+- 禁止纯金融/投资产品方案
+- 禁止纯地球农业方案
+- 所有方案核心必须是在火星实际种植农作物
+- 纪元1因提出纯数据服务方案（卫星+环境数据B2G）被农场主否决，此方向永久禁止"""
 
     content = f"""# 农夫启动包 — 文明 #{civ_num:03d}
 
@@ -295,6 +296,148 @@ def append_discoveries(legacy: list, civ_num: int):
     new_entries = "\n".join(f"- [文明#{civ_num:03d}] {item}" for item in legacy)
     content += f"\n\n### 文明#{civ_num:03d} 贡献\n{new_entries}\n"
     write(path, content)
+
+
+def condense_discoveries(civ_num: int):
+    """每 10 个文明凝练一次 discoveries.md，去重相似概念，控制在 60 行以内"""
+    if civ_num % 10 != 0:
+        return
+
+    import re
+
+    path = STATE_DIR / "discoveries.md"
+    content = read(path)
+    if not content.strip():
+        return
+
+    lines = content.splitlines()
+    if len(lines) <= 60:
+        log(f"📋 discoveries.md 当前 {len(lines)} 行，无需凝练")
+        return
+
+    log(f"📋 discoveries.md 已 {len(lines)} 行，开始凝练...")
+
+    # 分离"聚合归类区块"（以 ## 开头的主题段落，非 ### 文明#XXX 贡献）和"逐文明贡献区块"
+    aggregated_lines = []   # 保留主题归类内容（手工或上轮凝练产生）
+    raw_entry_lines = []    # 逐文明原始条目
+
+    in_civ_block = False
+    for line in lines:
+        if re.match(r"^### 文明#\d+", line):
+            in_civ_block = True
+            raw_entry_lines.append(line)
+        elif re.match(r"^##? ", line) and not re.match(r"^### 文明#\d+", line):
+            in_civ_block = False
+            aggregated_lines.append(line)
+        elif in_civ_block:
+            raw_entry_lines.append(line)
+        else:
+            aggregated_lines.append(line)
+
+    # 解析所有逐文明条目：(文明号, 内容)
+    entries = []
+    for line in raw_entry_lines:
+        m = re.match(r"- \[文明#(\d+)\]\s*(.*)", line)
+        if m:
+            entries.append((int(m.group(1)), m.group(2).strip()))
+
+    if not entries:
+        # 没有新的逐文明条目，无需凝练
+        return
+
+    # 分为"最近 20 个文明"和"更早的"
+    all_civ_nums = sorted(set(e[0] for e in entries))
+    recent_threshold = all_civ_nums[-20] if len(all_civ_nums) >= 20 else all_civ_nums[0]
+
+    recent_entries = [(n, t) for n, t in entries if n >= recent_threshold]
+    old_entries = [(n, t) for n, t in entries if n < recent_threshold]
+
+    # 对旧条目做去重：按关键词聚类，相似概念只保留最新版本
+    def extract_keywords(text: str) -> set:
+        """提取中文文本的关键概念词"""
+        quoted = set(re.findall(r"[\"'「」""]([^\"'「」""]+)[\"'「」""]", text))
+        concepts = set(re.findall(r"(?:ISRU|物理[种锚交价产验]|数据服务|封闭循环|垂直农[场业]|"
+                                   r"原位[资土]|内部市场|实物[交产]|火星[殖定农]|模块化|"
+                                   r"闭环|水培|气培|土壤改良)", text))
+        return quoted | concepts
+
+    # 按概念分桶
+    buckets: dict[str, list[tuple[int, str]]] = {}
+    uncategorized = []
+    for n, t in old_entries:
+        kws = extract_keywords(t)
+        if not kws:
+            uncategorized.append((n, t))
+            continue
+        bucket_key = None
+        for existing_key in buckets:
+            existing_kws = set(existing_key.split("|"))
+            if len(kws & existing_kws) >= 1:
+                bucket_key = existing_key
+                break
+        if bucket_key is None:
+            bucket_key = "|".join(sorted(kws))
+        buckets.setdefault(bucket_key, []).append((n, t))
+
+    # 每个桶只保留最新的一条
+    condensed_old = []
+    for bucket_key, items in buckets.items():
+        best = max(items, key=lambda x: x[0])
+        condensed_old.append(best)
+    # 无分类的只保留最新 3 条
+    if uncategorized:
+        uncategorized.sort(key=lambda x: x[0], reverse=True)
+        condensed_old.extend(uncategorized[:3])
+
+    condensed_old.sort(key=lambda x: x[0])
+
+    # 获取纪元头部
+    epoch_data = load_json(STATE_DIR / "epoch.json")
+    epoch_num = epoch_data.get("epoch_number", "?")
+    header = f"# 纪元{epoch_num} 已知定律\n\n_随文明积累更新（已凝练，文明#{civ_num:03d}时整理）_\n"
+
+    # 组装凝练后内容
+    # 1. 保留已有的主题归类聚合区块（去掉旧标题行，重新加新标题）
+    aggregated_body = []
+    for line in aggregated_lines:
+        # 跳过旧的文件标题行（# 纪元X 已知定律 和 _随文明积累更新..._ ）
+        if re.match(r"^# 纪元\d+ 已知定律", line):
+            continue
+        if re.match(r"^_随文明积累更新", line):
+            continue
+        aggregated_body.append(line)
+    # 去掉头尾空行
+    while aggregated_body and not aggregated_body[0].strip():
+        aggregated_body.pop(0)
+    while aggregated_body and not aggregated_body[-1].strip():
+        aggregated_body.pop()
+
+    parts = [header]
+
+    # 2. 插入保留的聚合区块（如：核心共识、技术路径、商业路径等）
+    if aggregated_body:
+        parts.append("")
+        parts.extend(aggregated_body)
+
+    # 3. 新增逐文明去重后的历史精华
+    if condensed_old:
+        parts.append("\n---\n\n### 历史贡献精华（去重摘要）")
+        for n, t in condensed_old:
+            parts.append(f"- [文明#{n:03d}] {t}")
+
+    # 4. 最近 20 个文明保留原始格式
+    current_civ = None
+    for n, t in recent_entries:
+        if n != current_civ:
+            current_civ = n
+            parts.append(f"\n### 文明#{n:03d} 贡献")
+        parts.append(f"- [文明#{n:03d}] {t}")
+
+    result = "\n".join(parts) + "\n"
+    result_lines = len(result.splitlines())
+    log(f"✅ discoveries.md 凝练完成：{len(lines)} → {result_lines} 行")
+
+    write(path, result)
 
 
 # ─── Git 操作 ────────────────────────────────────────────
@@ -462,22 +605,26 @@ def run_civilization(civ_num: int, epoch: dict,
         verdict = "passed" if total >= CONVERGENCE_SCORE else "not_passed"
 
     scores.append({
-        "n":            civ_num,
-        "epoch":        epoch_num,
-        "total":        total,
-        "delta":        total - last_score,
-        "perspective":  perspective,
-        "farmer_model": FARMER_MODEL,
-        "elapsed_sec":  farmer_result["elapsed_sec"],
-        "death":        farmer_result["death"],
-        "tokens_used":  farmer_result["tokens_used"],
-        "verdict":      verdict,
+        "n":             civ_num,
+        "epoch":         epoch_num,
+        "total":         total,
+        "delta":         total - last_score,
+        "perspective":   perspective,
+        "farmer_model":  FARMER_MODEL,
+        "elapsed_sec":   farmer_result["elapsed_sec"],
+        "death":         farmer_result["death"],
+        "tokens_used":   farmer_result["tokens_used"],
+        "verdict":       verdict,
+        "scores":        evaluation.get("scores", {}),        # 各维度分（含mission_alignment）
+        "epitaph":       evaluation.get("epitaph", ""),
+        "mission_check": evaluation.get("mission_check", ""),
     })
     best = max(scores, key=lambda s: s["total"])
     save_scores(scores, best)
 
     if legacy:
         append_discoveries(legacy, civ_num)
+        condense_discoveries(civ_num)
 
     # ── Step 6: 更新史书 ──
     next_hint_new = evaluation.get("next_focus", "")   # 先取值再用
@@ -607,22 +754,19 @@ def finalize_epoch(epoch: dict, scores: list, winning_civ: int):
 """
     write(epoch_file, epoch_content)
 
-    # 追加到 epoch-answers.md（含实际方案摘要，供后续纪元农夫读取）
+    # 追加到 epoch-answers.md
+    # ⚠️ 重要：只追加摘要标题+墓志铭，不追加方案正文！
+    # 方案正文会污染后续农夫的 context，导致其照抄错误方向。
+    # 完整方案存在 history/epochs/ 供人类查阅，不传给农夫。
     answers_path = STATE_DIR / "epoch-answers.md"
     answers = read(answers_path)
-    # 取方案前500字作为摘要
-    solution_summary = winning_solution[:500] + ("..." if len(winning_solution) > 500 else "")
     answers += f"""
 ## 纪元{epoch_num}：{epoch['question'][:30]}...（收敛于文明#{winning_civ:03d}，得分{best['total']}）
 **命题：** {epoch['question']}
 **视角：** {best.get('perspective', '?')}
 **得分：** {best['total']}/100
 **墓志铭：** {best.get('epitaph', '')}
-
-**方案摘要：**
-{solution_summary}
-
-**完整方案：** 见 `agent/history/epochs/epoch-{epoch_num:03d}.md`
+**完整方案：** 见 `agent/history/epochs/epoch-{epoch_num:03d}.md`（不在此展示，避免污染后续文明）
 
 """
     write(answers_path, answers)
@@ -643,9 +787,11 @@ def finalize_epoch(epoch: dict, scores: list, winning_civ: int):
     cleaned.insert(insert_at, new_row)
     write(index_path, "".join(cleaned))
 
-    # ② 更新 epoch.json status → completed
-    epoch["status"] = "completed"
-    save_json(STATE_DIR / "epoch.json", epoch)
+    # ② 更新 epoch.json status → completed（只更新当前文件，不覆盖后续 init_epoch）
+    current_epoch_data = load_json(STATE_DIR / "epoch.json")
+    if current_epoch_data.get("epoch_number") == epoch_num:
+        current_epoch_data["status"] = "completed"
+        save_json(STATE_DIR / "epoch.json", current_epoch_data)
 
     git("add -A")
     score = best["total"]
@@ -728,6 +874,9 @@ def init_epoch(epoch_num: int, question: str,
         "status": "running",
     }
     save_json(STATE_DIR / "epoch.json", data)
+
+    # 清理 epoch-answers.md：截断过长条目，防止方案正文污染
+    _sanitize_epoch_answers()
 
     # 初始化 discoveries.md
     write(STATE_DIR / "discoveries.md",
