@@ -1011,6 +1011,28 @@
       },
       "epitaph": "他们终于转向了土壤，却在支付的门槛前耗尽时间",
       "mission_check": "通过"
+    },
+    {
+      "n": 98,
+      "epoch": 2,
+      "total": 29,
+      "delta": -28,
+      "perspective": "硅谷风险投资人",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 151.7,
+      "death": "token_exhausted",
+      "tokens_used": 7748,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 0,
+        "feasibility": 5,
+        "completeness": 5,
+        "consistency": 15,
+        "novelty": 10,
+        "uncertainty_reduction": 0
+      },
+      "epitaph": "他在地球的田野上，为火星画了一张遥远的支票。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
