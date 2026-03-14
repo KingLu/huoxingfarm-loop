@@ -1627,6 +1627,28 @@
       },
       "epitaph": "他们高擎物理之锚，却未能为它找到现实的港湾。",
       "mission_check": "通过"
+    },
+    {
+      "n": 138,
+      "epoch": 2,
+      "total": 33,
+      "delta": -24,
+      "perspective": "种子轮天使投资人",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 139.6,
+      "death": "natural",
+      "tokens_used": 7984,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 5,
+        "feasibility": 5,
+        "completeness": 5,
+        "consistency": 10,
+        "novelty": 10,
+        "uncertainty_reduction": 5
+      },
+      "epitaph": "他们试图向火星销售火星的产出，却忘了自己从未踏上那片土地。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
