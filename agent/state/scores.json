@@ -2331,6 +2331,28 @@
       },
       "epitaph": "他们在地球的数据迷宫中，遗忘了火星的土壤。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 220,
+      "epoch": 2,
+      "total": 75,
+      "delta": 43,
+      "perspective": "首批火星殖民者（潜在客户）",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 141.1,
+      "death": "natural",
+      "tokens_used": 6312,
+      "verdict": "passed",
+      "scores": {
+        "mission_alignment": 18,
+        "feasibility": 14,
+        "completeness": 16,
+        "consistency": 15,
+        "novelty": 12,
+        "uncertainty_reduction": 15
+      },
+      "epitaph": "他们以番茄为矛，以循环为盾，在红色星球上刻下了第一道绿色的生存印记。",
+      "mission_check": "通过"
     }
   ],
   "best": {
