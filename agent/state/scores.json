@@ -3233,6 +3233,28 @@
       },
       "epitaph": "他们在地球上画出了火星的轮廓，却未能为它注入真实的血液。",
       "mission_check": "通过"
+    },
+    {
+      "n": 261,
+      "epoch": 3,
+      "total": 88,
+      "delta": 31,
+      "perspective": "中国商业航天创业者",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 133.7,
+      "death": "natural",
+      "tokens_used": 6552,
+      "verdict": "passed",
+      "scores": {
+        "mission_alignment": 20,
+        "feasibility": 16,
+        "completeness": 18,
+        "consistency": 18,
+        "novelty": 15,
+        "uncertainty_reduction": 18
+      },
+      "epitaph": "他们在火焰之地的边缘，为红色星球种下了第一份可验证的蓝图。",
+      "mission_check": "通过"
     }
   ],
   "best": {
