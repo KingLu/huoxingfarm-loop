@@ -3189,6 +3189,28 @@
       },
       "epitaph": "他们找到了通往火星的模拟沙场，却忘记了出发是为了收获果实。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 259,
+      "epoch": 3,
+      "total": 42,
+      "delta": 5,
+      "perspective": "中国商业航天创业者",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 137.8,
+      "death": "natural",
+      "tokens_used": 7046,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 5,
+        "feasibility": 8,
+        "completeness": 6,
+        "consistency": 10,
+        "novelty": 12,
+        "uncertainty_reduction": 10
+      },
+      "epitaph": "他们曾指向吐鲁番的烈日，却在数据的迷宫中遗忘了番茄的根。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
