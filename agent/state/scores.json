@@ -2133,6 +2133,28 @@
       },
       "epitaph": "他们为地球的餐桌寻找火星的背书，却忘了火星的土壤需要自己的耕耘者。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 161,
+      "epoch": 2,
+      "total": 57,
+      "delta": 16,
+      "perspective": "NASA 航天工程师",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 150.4,
+      "death": "token_exhausted",
+      "tokens_used": 8192,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 18,
+        "feasibility": 8,
+        "completeness": 6,
+        "consistency": 12,
+        "novelty": 14,
+        "uncertainty_reduction": 10
+      },
+      "epitaph": "他们定义了内部市场，却未能找到第一个踏入市场的真实顾客。",
+      "mission_check": "通过"
     }
   ],
   "best": {
