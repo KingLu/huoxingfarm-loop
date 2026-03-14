@@ -2705,6 +2705,28 @@
       },
       "epitaph": "他于塔克拉玛干的沙丘上，为火星种下了一个模糊的承诺。",
       "mission_check": "通过"
+    },
+    {
+      "n": 237,
+      "epoch": 3,
+      "total": 14,
+      "delta": -41,
+      "perspective": "种子轮天使投资人",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 143.4,
+      "death": "token_exhausted",
+      "tokens_used": 6329,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 5,
+        "feasibility": 2,
+        "completeness": 2,
+        "consistency": 5,
+        "novelty": 3,
+        "uncertainty_reduction": 0
+      },
+      "epitaph": "在沙漠边缘的构想刚刚起笔，便被无情的风沙掩埋。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
