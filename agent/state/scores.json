@@ -2815,6 +2815,28 @@
       },
       "epitaph": "他试图用数据描绘绿洲，却忘了种子需要真实的土壤。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 242,
+      "epoch": 3,
+      "total": 32,
+      "delta": 3,
+      "perspective": "2050年的历史学家（回顾视角）",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 140.7,
+      "death": "natural",
+      "tokens_used": 6580,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 5,
+        "feasibility": 5,
+        "completeness": 8,
+        "consistency": 4,
+        "novelty": 6,
+        "uncertainty_reduction": 10
+      },
+      "epitaph": "他们看见了沙漠，却把希望卖给了星辰。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
