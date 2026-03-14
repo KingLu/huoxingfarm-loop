@@ -795,6 +795,18 @@
       "death": "natural",
       "tokens_used": 6775,
       "verdict": "passed"
+    },
+    {
+      "n": 68,
+      "epoch": 2,
+      "total": 80,
+      "delta": 5,
+      "perspective": "2050年的历史学家（回顾视角）",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 133.3,
+      "death": "natural",
+      "tokens_used": 6550,
+      "verdict": "passed"
     }
   ],
   "best": {
