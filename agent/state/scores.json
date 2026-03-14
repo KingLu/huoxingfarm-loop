@@ -2507,6 +2507,28 @@
       },
       "epitaph": "他们在地球的沙盘上推演，却忘了火星的土壤需要亲手开垦。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 228,
+      "epoch": 3,
+      "total": 44,
+      "delta": 26,
+      "perspective": "中国商业航天创业者",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 139.7,
+      "death": "token_exhausted",
+      "tokens_used": 5976,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 5,
+        "feasibility": 10,
+        "completeness": 8,
+        "consistency": 12,
+        "novelty": 8,
+        "uncertainty_reduction": 10
+      },
+      "epitaph": "他们在地球的沙盘中描绘火星，却忘了真正的战场在星辰之外。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
