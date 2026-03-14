@@ -182,13 +182,33 @@ def update_briefing(epoch: dict, next_hint: str, discoveries: str,
     """刷新 history/current/briefing.md，供下一个文明读取"""
     perspective_placeholder = "{perspective}"  # Controller 启动时替换
 
-    # 失败教训：使用固定简洁禁令，避免具体方案描述被小模型反向参考
-    lessons_section = """⛔ 核心禁令（农场主红线）：
+    # 失败教训和使命说明：根据纪元动态生成，避免跨纪元约束污染
+    epoch_num = epoch.get("epoch_number", 1)
+    if epoch_num <= 2:
+        # 纪元1-2：聚焦火星直接种植
+        lessons_section = """⛔ 核心禁令（农场主红线）：
 - 禁止纯数据服务方案（无论商业逻辑多完整）
 - 禁止纯金融/投资产品方案
 - 禁止纯地球农业方案
 - 所有方案核心必须是在火星实际种植农作物
 - 纪元1因提出纯数据服务方案（卫星+环境数据B2G）被农场主否决，此方向永久禁止"""
+        mission_context = """这是所有纪元命题的终极锚点。无论本纪元命题如何具体，你的方案**必须服务于这个根本使命**：
+- 你提出的任何商业模式，最终都要落实到**在火星土壤上真正种菜**
+- 你的第一个付费客户，必须是为**火星农业本身**而付钱，而不是为数据、概念、卫星服务等衍生物
+- 纯数据服务、纯金融方案、纯地球农业方案——**不符合使命，歌者将扣分**"""
+    else:
+        # 纪元3+：聚焦地球验证阶段
+        lessons_section = """⛔ 核心禁令（农场主红线）：
+- 禁止纯数据服务方案或纯概念设计（必须以实体种植为核心）
+- 禁止纯金融/投资产品方案
+- 禁止与火星种植毫无技术关联的普通地球农业方案
+- 禁止依赖政府补贴或慈善资金的不可持续方案
+- 本纪元聚焦地球验证阶段，方案必须说明技术对火星种植的迁移价值"""
+        mission_context = """这是所有纪元命题的终极锚点。**本纪元（纪元{epoch_num}）聚焦地球验证阶段**——通过在地球极端环境建设验证农场，为火星种植积累技术背书和启动资金。
+- 你的方案必须以**地球极端环境的实体种植**为核心，并说明对火星种植的技术迁移价值
+- 你的第一个付费客户是**地球上真实存在的机构**（军队/科考站/偏远社区/航天机构）
+- "聚焦地球验证"本身是正确方向，不要因为"方案在地球"而自我审查
+- 纯数据服务、纯概念、与火星无技术关联的普通农业——**不符合使命，歌者将扣分**""".replace("{epoch_num}", str(epoch_num))
 
     content = f"""# 农夫启动包 — 文明 #{civ_num:03d}
 
@@ -200,10 +220,7 @@ def update_briefing(epoch: dict, next_hint: str, discoveries: str,
 
 **火星农场有朝一日在火星开业，种出西红柿，并盈利。**
 
-这是所有纪元命题的终极锚点。无论本纪元命题如何具体，你的方案**必须服务于这个根本使命**：
-- 你提出的任何商业模式，最终都要落实到**在火星土壤上真正种菜**
-- 你的第一个付费客户，必须是为**火星农业本身**而付钱，而不是为数据、概念、卫星服务等衍生物
-- 纯数据服务、纯金融方案、纯地球农业方案——**不符合使命，歌者将扣分**
+{mission_context}
 
 ---
 
@@ -257,34 +274,9 @@ def update_briefing(epoch: dict, next_hint: str, discoveries: str,
 
 ## 输出格式
 
-```markdown
-## 第{civ_num}文明战略方案
-**视角：** {perspective_placeholder}
-
-### 核心模式
-（一句话概括——必须说明如何在火星实际种植农作物）
-
-### 为什么这种模式能成功
-（3-5个论点，有具体支撑）
-
-### 火星种植实现路径
-（第一批作物何时、在哪、如何种下？用什么技术克服低重力/辐射/大气等挑战？）
-
-### 第一个付费客户
-（具体是谁，为火星农业本身付钱，愿意付多少，为什么）
-
-### 资金来源
-（谁出钱，为什么，大概规模）
-
-### 10年后的盈利路径
-（如何独立可持续盈利）
-
-### 最大风险及应对
-（1-3个 + 缓解方案）
-
-### 对已知定律的继承与修正
-（吸收了什么，推翻了什么，理由）
-```
+直接回答当前纪元命题，不要套用固定模板。
+围绕命题的验收标准逐条回答，确保每条都有具体内容。
+保持简洁，总字数控制在800字以内。
 """
     write(HISTORY / "current" / "briefing.md", content)
 
@@ -648,8 +640,8 @@ def run_civilization(civ_num: int, epoch: dict,
     epoch["current_civilization"] = epoch_done_new
     save_json(STATE_DIR / "epoch.json", epoch)
 
-    # 更新全局文明计数器
-    save_global_civ(load_global_civ() + 1)
+    # 更新全局文明计数器（直接记录绝对文明号）
+    save_global_civ(civ_num)
 
     # ── Step 7: git commit ──
     git_commit_civilization(
@@ -816,12 +808,12 @@ def main():
     perspectives = load_perspectives()
 
     epoch_num    = epoch["epoch_number"]
-    global_base  = load_global_civ()          # 全局已完成文明总数
-    epoch_done   = epoch.get("current_civilization", 0)  # 本纪元已完成数
-    start_civ    = global_base + epoch_done + 1           # 下一个全局文明号
+    global_base  = load_global_civ()          # 最后一个已完成的全局文明号
+    start_civ    = global_base + 1            # 下一个全局文明号
 
+    epoch_done   = epoch.get("current_civilization", 0)  # 本纪元内已完成数（仅用于日志和首文明判断）
     log(f"📖 纪元{epoch_num} | 命题：{epoch['question'][:40]}...")
-    log(f"📊 全局文明数：{global_base + epoch_done} | 当前最高分：{get_best_score(scores)}")
+    log(f"📊 全局文明数：{global_base} | 当前最高分：{get_best_score(scores)}")
 
     # 纪元第一个文明，打 start tag
     if epoch_done == 0:
@@ -874,9 +866,6 @@ def init_epoch(epoch_num: int, question: str,
         "status": "running",
     }
     save_json(STATE_DIR / "epoch.json", data)
-
-    # 清理 epoch-answers.md：截断过长条目，防止方案正文污染
-    _sanitize_epoch_answers()
 
     # 初始化 discoveries.md
     write(STATE_DIR / "discoveries.md",

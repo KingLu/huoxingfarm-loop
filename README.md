@@ -1,6 +1,10 @@
+<p align="center">
+  <img src="火星农场logo.png" alt="火星农场 Logo" width="200">
+</p>
+
 # 🚀 火星农场 Loop — 三体实验 `v0.3.0`
 
-> 文明一次次重启，史书永久留存。  
+> 文明一次次重启，史书永久留存。
 > 下一个文明站在所有失败者的肩膀上，直到解出答案。
 
 ## ⚠️ 项目根本使命（不可偏离）
@@ -76,7 +80,9 @@ huoxingfarm-loop/
     │   ├── epoch-answers.md        ← 所有已完成纪元答案（永久积累）
     │   ├── discoveries.md          ← 当前纪元已知定律
     │   ├── scores.json             ← 分数历史与最优记录
-    │   └── current.json            ← 当前纪元最优方案快照
+    │   ├── current.json            ← 当前纪元最优方案快照
+    │   ├── failure-lessons.md      ← 农场主否决案例（禁止效仿）
+    │   └── STRATEGY.md             ← 农场主战略手册（使命分解/命题链/储备命题）
     └── civilizations/
         └── epoch-NNN/
             └── civ-NNN/
