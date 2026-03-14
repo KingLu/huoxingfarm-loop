@@ -1979,6 +1979,28 @@
       },
       "epitaph": "他们锚定了物理的土壤，却未能触及商业的基石。",
       "mission_check": "通过"
+    },
+    {
+      "n": 154,
+      "epoch": 2,
+      "total": 21,
+      "delta": -43,
+      "perspective": "种子轮天使投资人",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 149.3,
+      "death": "token_exhausted",
+      "tokens_used": 8192,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 0,
+        "feasibility": 5,
+        "completeness": 5,
+        "consistency": 10,
+        "novelty": 5,
+        "uncertainty_reduction": 0
+      },
+      "epitaph": "他在地球的数据田野里耕耘，却以为能收获火星的果实。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
