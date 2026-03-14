@@ -675,6 +675,18 @@
       "death": "natural",
       "tokens_used": 3900,
       "verdict": "passed"
+    },
+    {
+      "n": 58,
+      "epoch": 2,
+      "total": 23,
+      "delta": -56,
+      "perspective": "NASA 航天工程师",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 138.7,
+      "death": "token_exhausted",
+      "tokens_used": 5442,
+      "verdict": "not_passed"
     }
   ],
   "best": {
