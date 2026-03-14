@@ -2463,6 +2463,28 @@
       },
       "epitaph": "他们仰望火星，却未能在地球上种下第一株通往盈利的番茄。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 226,
+      "epoch": 3,
+      "total": 49,
+      "delta": 19,
+      "perspective": "种子轮天使投资人",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 138.7,
+      "death": "natural",
+      "tokens_used": 5836,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 5,
+        "feasibility": 12,
+        "completeness": 10,
+        "consistency": 8,
+        "novelty": 14,
+        "uncertainty_reduction": 10
+      },
+      "epitaph": "他们在地球上搭建了通往火星的桥梁，却忘了桥的终点必须落在红色的土壤上。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
