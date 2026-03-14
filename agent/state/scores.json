@@ -1825,6 +1825,28 @@
       },
       "epitaph": "他们试图用地球的金融网络，去捕获火星的幻影。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 147,
+      "epoch": 2,
+      "total": 46,
+      "delta": 13,
+      "perspective": "2050年的历史学家（回顾视角）",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 149.4,
+      "death": "token_exhausted",
+      "tokens_used": 8192,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 18,
+        "feasibility": 5,
+        "completeness": 2,
+        "consistency": 8,
+        "novelty": 12,
+        "uncertainty_reduction": 10
+      },
+      "epitaph": "他们找到了正确的方向，却未能描绘出抵达的路径。",
+      "mission_check": "通过"
     }
   ],
   "best": {
