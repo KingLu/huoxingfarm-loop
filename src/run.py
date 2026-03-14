@@ -875,9 +875,6 @@ def init_epoch(epoch_num: int, question: str,
     }
     save_json(STATE_DIR / "epoch.json", data)
 
-    # 清理 epoch-answers.md：截断过长条目，防止方案正文污染
-    _sanitize_epoch_answers()
-
     # 初始化 discoveries.md
     write(STATE_DIR / "discoveries.md",
           f"# 纪元{epoch_num} 已知定律\n\n_随文明积累更新_\n")

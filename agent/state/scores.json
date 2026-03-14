@@ -2375,6 +2375,28 @@
       },
       "epitaph": "他们以番茄为硬通货，在红色星球上锚定了第一个物理闭环。",
       "mission_check": "通过"
+    },
+    {
+      "n": 222,
+      "epoch": 3,
+      "total": 21,
+      "delta": -68,
+      "perspective": "中国商业航天创业者",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 120.1,
+      "death": "natural",
+      "tokens_used": 4215,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 5,
+        "feasibility": 2,
+        "completeness": 0,
+        "consistency": 8,
+        "novelty": 10,
+        "uncertainty_reduction": 0
+      },
+      "epitaph": "他们仰望星空，却忘记了脚下的土地是通往火星的唯一阶梯。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
