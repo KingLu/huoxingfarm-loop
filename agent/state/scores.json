@@ -1957,6 +1957,28 @@
       },
       "epitaph": "他们执着于物理锚点，却将锚链的另一端，系在了地球的码头。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 153,
+      "epoch": 2,
+      "total": 64,
+      "delta": 14,
+      "perspective": "NASA 航天工程师",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 106.5,
+      "death": "natural",
+      "tokens_used": 6980,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 18,
+        "feasibility": 10,
+        "completeness": 8,
+        "consistency": 12,
+        "novelty": 14,
+        "uncertainty_reduction": 15
+      },
+      "epitaph": "他们锚定了物理的土壤，却未能触及商业的基石。",
+      "mission_check": "通过"
     }
   ],
   "best": {
