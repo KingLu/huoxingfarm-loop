@@ -2199,6 +2199,28 @@
       },
       "epitaph": "他们高呼回归物理，却未能描绘出第一颗火星西红柿的买家与价格。",
       "mission_check": "通过"
+    },
+    {
+      "n": 164,
+      "epoch": 2,
+      "total": 66,
+      "delta": 26,
+      "perspective": "曾经失败的火星创业者（深刻反思）",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 149.7,
+      "death": "token_exhausted",
+      "tokens_used": 8192,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 18,
+        "feasibility": 10,
+        "completeness": 8,
+        "consistency": 12,
+        "novelty": 15,
+        "uncertainty_reduction": 16
+      },
+      "epitaph": "他们拥抱了物理的回归，却在通往现实的门口，遗失了开启大门的钥匙。",
+      "mission_check": "通过"
     }
   ],
   "best": {
