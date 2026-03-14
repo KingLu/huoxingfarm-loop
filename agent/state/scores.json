@@ -1693,6 +1693,28 @@
       },
       "epitaph": "他们试图在火星内部构建一个自给自足的闭环，却忘记了农场盈利的根基在于向客户出售食物。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 141,
+      "epoch": 2,
+      "total": 29,
+      "delta": -9,
+      "perspective": "硅谷风险投资人",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 149.3,
+      "death": "token_exhausted",
+      "tokens_used": 8192,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 0,
+        "feasibility": 5,
+        "completeness": 5,
+        "consistency": 15,
+        "novelty": 10,
+        "uncertainty_reduction": 0
+      },
+      "epitaph": "他们在地球的数据田野上耕耘，却将火星的温室留给了想象。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
