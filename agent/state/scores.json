@@ -989,6 +989,28 @@
       },
       "epitaph": "他们建造了宏伟的数据圣殿，却在火星的荒原上，遗忘了第一颗种子的重量。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 97,
+      "epoch": 2,
+      "total": 57,
+      "delta": 24,
+      "perspective": "曾经失败的火星创业者（深刻反思）",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 151.4,
+      "death": "token_exhausted",
+      "tokens_used": 7664,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 18,
+        "feasibility": 8,
+        "completeness": 6,
+        "consistency": 12,
+        "novelty": 14,
+        "uncertainty_reduction": 10
+      },
+      "epitaph": "他们终于转向了土壤，却在支付的门槛前耗尽时间",
+      "mission_check": "通过"
     }
   ],
   "best": {
