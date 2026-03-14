@@ -2881,6 +2881,28 @@
       },
       "epitaph": "他望向地球的饥荒，却遗忘了火星的荒芜。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 245,
+      "epoch": 3,
+      "total": 82,
+      "delta": 61,
+      "perspective": "联合国粮农组织官员",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 142.2,
+      "death": "natural",
+      "tokens_used": 6807,
+      "verdict": "passed",
+      "scores": {
+        "mission_alignment": 18,
+        "feasibility": 15,
+        "completeness": 16,
+        "consistency": 17,
+        "novelty": 14,
+        "uncertainty_reduction": 18
+      },
+      "epitaph": "他们在沙海边缘种下第一株番茄，为火星的红色土壤预演了绿色的可能。",
+      "mission_check": "通过"
     }
   ],
   "best": {
