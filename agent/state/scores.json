@@ -2529,6 +2529,28 @@
       },
       "epitaph": "他们在地球的沙盘中描绘火星，却忘了真正的战场在星辰之外。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 229,
+      "epoch": 3,
+      "total": 44,
+      "delta": 0,
+      "perspective": "SpaceX 殖民地规划者",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 131.3,
+      "death": "natural",
+      "tokens_used": 5658,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 5,
+        "feasibility": 10,
+        "completeness": 8,
+        "consistency": 12,
+        "novelty": 8,
+        "uncertainty_reduction": 10
+      },
+      "epitaph": "他们为地球的航天机构描绘了验证蓝图，却让火星的西红柿在商业闭环中缺席。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
