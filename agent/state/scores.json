@@ -1539,6 +1539,28 @@
       },
       "epitaph": "他们仰望星空，却将根须伸向了地球的引力井。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 134,
+      "epoch": 2,
+      "total": 38,
+      "delta": -12,
+      "perspective": "2050年的历史学家（回顾视角）",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 143.6,
+      "death": "natural",
+      "tokens_used": 8104,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 5,
+        "feasibility": 8,
+        "completeness": 6,
+        "consistency": 12,
+        "novelty": 10,
+        "uncertainty_reduction": 5
+      },
+      "epitaph": "他们试图在火星上建造一个自洽的社区，却忘了最初为何要踏上那片红色的土地。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
