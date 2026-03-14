@@ -127,11 +127,39 @@
 
 ---
 
-## 六、更新记录
+## 六、新纪元启动 Checklist
+
+> 每次初始化新纪元前，农场主必须逐项确认，全部通过才能启动 Loop。
+
+### 启动前检查
+
+- [ ] **epoch.json**：`epoch_number` 已递增，`question` 和 `acceptance_criteria` 已更新为新命题
+- [ ] **epoch-answers.md**：上一纪元状态已标记为"✅ 已收敛（XX分）"或"❌ 农场主否决"，不留"进行中"状态
+- [ ] **briefing 输出格式**：`run.py` 的输出模板是否含上一纪元的专有词？（如"火星种植实现路径"、"第一个付费客户为火星农业付钱"等）若有，修改为通用描述或删除
+- [ ] **歌者提示词**：`src/prompts/singer.md` 里的评价维度是否匹配新命题？
+- [ ] **discoveries.md**：已清空为新纪元格式（`# 纪元N 已知定律`）
+- [ ] **STRATEGY.md**：本文件的纪元命题链已填入新纪元信息
+
+### 启动命令
+
+```bash
+# 1. 手动检查上方清单
+# 2. 初始化纪元
+cd ~/projects/huoxing-loop && .venv/bin/python src/run.py init
+# 3. 确认 epoch.json 内容正确
+cat agent/state/epoch.json
+# 4. 启动 Loop
+nohup .venv/bin/python -u src/run.py > /tmp/huoxing-loop.log 2>&1 &
+```
+
+---
+
+## 七、更新记录
 
 | 日期 | 更新内容 | 操作人 |
 |------|---------|--------|
 | 2026-03-14 | 创建文件，填入纪元1、2记录，建立命题储备池 | 农场主 |
+| 2026-03-15 | 新增纪元启动 Checklist；纪元3命题确认；修正纪元2状态为已收敛 | 农场主 |
 | 2026-03-15 | 确定纪元3命题：地球极端环境验证农场；完善验收标准（5条） | 灵耳 |
 
 ---
