@@ -648,8 +648,8 @@ def run_civilization(civ_num: int, epoch: dict,
     epoch["current_civilization"] = epoch_done_new
     save_json(STATE_DIR / "epoch.json", epoch)
 
-    # 更新全局文明计数器
-    save_global_civ(load_global_civ() + 1)
+    # 更新全局文明计数器（直接记录绝对文明号）
+    save_global_civ(civ_num)
 
     # ── Step 7: git commit ──
     git_commit_civilization(
@@ -816,12 +816,12 @@ def main():
     perspectives = load_perspectives()
 
     epoch_num    = epoch["epoch_number"]
-    global_base  = load_global_civ()          # 全局已完成文明总数
-    epoch_done   = epoch.get("current_civilization", 0)  # 本纪元已完成数
-    start_civ    = global_base + epoch_done + 1           # 下一个全局文明号
+    global_base  = load_global_civ()          # 最后一个已完成的全局文明号
+    start_civ    = global_base + 1            # 下一个全局文明号
 
+    epoch_done   = epoch.get("current_civilization", 0)  # 本纪元内已完成数（仅用于日志和首文明判断）
     log(f"📖 纪元{epoch_num} | 命题：{epoch['question'][:40]}...")
-    log(f"📊 全局文明数：{global_base + epoch_done} | 当前最高分：{get_best_score(scores)}")
+    log(f"📊 全局文明数：{global_base} | 当前最高分：{get_best_score(scores)}")
 
     # 纪元第一个文明，打 start tag
     if epoch_done == 0:
