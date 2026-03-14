@@ -2485,6 +2485,28 @@
       },
       "epitaph": "他们在地球上搭建了通往火星的桥梁，却忘了桥的终点必须落在红色的土壤上。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 227,
+      "epoch": 3,
+      "total": 18,
+      "delta": -31,
+      "perspective": "荷兰温室农业专家",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 139.5,
+      "death": "token_exhausted",
+      "tokens_used": 5911,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 2,
+        "feasibility": 5,
+        "completeness": 4,
+        "consistency": 8,
+        "novelty": 3,
+        "uncertainty_reduction": 0
+      },
+      "epitaph": "他们在地球的沙盘上推演，却忘了火星的土壤需要亲手开垦。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
