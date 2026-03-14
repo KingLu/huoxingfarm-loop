@@ -2947,6 +2947,28 @@
       },
       "epitaph": "他们于吐鲁番的风沙中锚定了方向，却在商业的荒漠里耗尽了给养。",
       "mission_check": "通过"
+    },
+    {
+      "n": 248,
+      "epoch": 3,
+      "total": 25,
+      "delta": -36,
+      "perspective": "种子轮天使投资人",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 144.9,
+      "death": "token_exhausted",
+      "tokens_used": 7095,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 0,
+        "feasibility": 5,
+        "completeness": 5,
+        "consistency": 10,
+        "novelty": 10,
+        "uncertainty_reduction": 0
+      },
+      "epitaph": "他试图用数据描绘农场，却忘了种子需要土壤。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
