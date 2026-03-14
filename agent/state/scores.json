@@ -1143,6 +1143,28 @@
       },
       "epitaph": "他们仰望星空，却将种子播向了错误的轨道。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 116,
+      "epoch": 2,
+      "total": 17,
+      "delta": -25,
+      "perspective": "联合国粮农组织官员",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 148.7,
+      "death": "token_exhausted",
+      "tokens_used": 7572,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 0,
+        "feasibility": 5,
+        "completeness": 2,
+        "consistency": 10,
+        "novelty": 3,
+        "uncertainty_reduction": 0
+      },
+      "epitaph": "他们在地球的数据田野上耕耘，却将火星的温室遗忘在远方。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
