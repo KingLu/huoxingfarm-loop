@@ -167,6 +167,20 @@ huoxingfarm-loop/
 }
 ```
 
+### 歌者评分维度（6维度，满分120折算100）
+
+| 维度 | 满分 | 说明 |
+|---|---|---|
+| **使命一致性** | 20 | 方案核心是否落在火星实际种植上；纯数据/金融方案得0分 |
+| **可行性** | 20 | 技术/资金/时间线具体可执行，非纸上谈兵 |
+| **完整性** | 20 | 验收标准各条的覆盖情况 |
+| **一致性** | 20 | 内部逻辑自洽，无自相矛盾 |
+| **新颖性** | 20 | 超越显而易见的答案，带来真正洞见 |
+| **不确定性消除** | 20 | 比上一文明减少了多少关键未知项 |
+
+> 折算公式：`total = round(六维度之和 / 120 * 100)`
+> 使命一致性得0分时，verdict 强制为 not_passed
+
 ### 歌者输出 JSON 格式
 
 ```json
@@ -175,23 +189,27 @@ huoxingfarm-loop/
   "epoch": 1,
   "perspective": "2050年的历史学家（回顾视角）",
   "verdict": "passed",
+  "mission_check": "通过",
+  "mission_note": "方案以火星温室种植为核心，通过体验经济实现盈利",
   "criteria_check": {
-    "first_paying_customer": true,
-    "funding_source": true,
-    "profit_path": true
+    "criterion_1": true,
+    "criterion_2": true,
+    "criterion_3": true
   },
   "scores": {
+    "mission_alignment": 16,
     "feasibility": 16,
-    "completeness": 20,
+    "completeness": 18,
     "consistency": 18,
-    "novelty": 19,
-    "uncertainty_reduction": 20
+    "novelty": 17,
+    "uncertainty_reduction": 18
   },
-  "total": 93,
+  "raw_total": 103,
+  "total": 86,
   "epitaph": "他们未曾售卖一粒粮食，却用故事与体验，为火星农场换来了第一缕生存的阳光。",
-  "legacy": ["已知定律1", "已知定律2"],
+  "legacy": ["已知定律1（必须与火星种植使命相关）", "已知定律2"],
   "biggest_gap": "对外部叙事价值的依赖，存在故事泡沫风险",
-  "next_focus": "探索更独立的核心产品或服务原型"
+  "next_focus": "探索更独立的核心产品或服务原型（指向火星实际种植）"
 }
 ```
 

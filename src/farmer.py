@@ -1,7 +1,11 @@
 """
 农夫模块 — 凡生执行者
-当前配置：本地 Ollama qwen3.5（原生 /api/chat + think:false 禁用 thinking 模式）
 使命：读史书，消耗 token，给出当前问题的最好答案，然后消亡
+
+API 说明：
+- 默认使用 Ollama 原生 /api/chat（支持 think 参数控制 thinking 模式）
+- think 参数由 FARMER_THINK 环境变量控制（true/false）
+- OpenAI compat /v1/chat/completions 不支持 think 参数，不推荐用于 thinking 模型
 """
 
 import os
@@ -11,17 +15,23 @@ import urllib.request
 import urllib.error
 from pathlib import Path
 
-FARMER_API_URL = os.getenv("FARMER_API_URL", "http://localhost:11434")
-FARMER_API_KEY = os.getenv("FARMER_API_KEY", "ollama")
-FARMER_MODEL   = os.getenv("FARMER_MODEL", "qwen3.5:0.8b")
-TOKEN_BUDGET   = int(os.getenv("TOKEN_BUDGET", "100000"))
+FARMER_API_URL     = os.getenv("FARMER_API_URL", "http://localhost:11434")
+FARMER_API_KEY     = os.getenv("FARMER_API_KEY", "ollama")
+FARMER_MODEL       = os.getenv("FARMER_MODEL", "qwen3.5:2b")
+TOKEN_BUDGET       = int(os.getenv("TOKEN_BUDGET", "100000"))
+USE_OLLAMA_NATIVE  = os.getenv("FARMER_USE_OLLAMA_NATIVE", "true").lower() in ("true", "1", "yes")
+FARMER_THINK       = os.getenv("FARMER_THINK", "false").lower() in ("true", "1", "yes")
 
-# 是否使用 Ollama 原生 API（非 OpenAI compat）
-# 原生 API 支持 think:false，可彻底关闭 thinking 模式
-USE_OLLAMA_NATIVE = os.getenv("FARMER_USE_OLLAMA_NATIVE", "true").lower() == "true"
-
-ROOT = Path(__file__).parent.parent
+ROOT        = Path(__file__).parent.parent
 PROMPTS_DIR = ROOT / "src" / "prompts"
+
+# 项目根本使命（写入 system_prompt，最高优先级）
+_MISSION = (
+    "【项目根本使命，不可违背】"
+    "火星农场有朝一日在火星开业，种出西红柿，并盈利。"
+    "你的任何方案都必须服务于在火星土壤上真正种菜这一物理目标。"
+    "纯数据服务、纯金融方案、纯地球农业方案——不符合使命，歌者将扣分。"
+)
 
 
 def build_context(epoch_num: int, civ_num: int, perspective: str,
@@ -38,11 +48,9 @@ def call_farmer(context: str, civ_num: int, epoch_num: int) -> dict:
     """
     调用农夫 API。
     返回：{content, tokens_used, death, elapsed_sec}
-
-    若 USE_OLLAMA_NATIVE=true，使用 /api/chat + think:false（彻底禁用 thinking 模式）。
-    否则使用 OpenAI-compat /v1/chat/completions。
     """
     system_prompt = (
+        f"{_MISSION}\n\n"
         f"你是火星农场第{civ_num}文明的农夫，你的生命只有 {TOKEN_BUDGET} 个 token。"
         "读取史书，给出当前命题的最好答案，然后消亡。"
     )
@@ -55,7 +63,8 @@ def call_farmer(context: str, civ_num: int, epoch_num: int) -> dict:
 
 def _call_ollama_native(system_prompt: str, context: str, civ_num: int) -> dict:
     """
-    使用 Ollama 原生 /api/chat 接口，支持 think:false 彻底关闭 thinking 模式。
+    使用 Ollama 原生 /api/chat 接口。
+    think 参数由 FARMER_THINK 环境变量控制（默认 false）。
     """
     payload = json.dumps({
         "model": FARMER_MODEL,
@@ -63,7 +72,7 @@ def _call_ollama_native(system_prompt: str, context: str, civ_num: int) -> dict:
             {"role": "system", "content": system_prompt},
             {"role": "user",   "content": context},
         ],
-        "think": False,       # 关闭 thinking，所有 token 用于直接输出答案
+        "think": FARMER_THINK,   # 从环境变量读取，不硬编码
         "stream": False,
         "options": {
             "num_predict": 4096,
@@ -94,7 +103,6 @@ def _call_ollama_native(system_prompt: str, context: str, civ_num: int) -> dict:
     message = data.get("message", {})
     content = message.get("content", "") or ""
 
-    # token 统计（原生 API 字段名）
     prompt_eval = data.get("prompt_eval_count", 0)
     eval_count  = data.get("eval_count", 0)
     tokens_used = prompt_eval + eval_count
@@ -113,8 +121,8 @@ def _call_ollama_native(system_prompt: str, context: str, civ_num: int) -> dict:
 def _call_openai_compat(system_prompt: str, context: str) -> dict:
     """
     OpenAI 兼容接口（用于 DeepSeek 或其他非 Ollama 服务）。
+    注意：不支持 think 参数，FARMER_THINK 配置在此接口下无效。
     """
-    # OpenAI compat 走 /v1，如果 FARMER_API_URL 未包含 /v1 则补上
     base = FARMER_API_URL.rstrip("/")
     if not base.endswith("/v1"):
         base = base + "/v1"

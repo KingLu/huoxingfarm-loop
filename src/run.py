@@ -169,13 +169,32 @@ def update_briefing(epoch: dict, next_hint: str, discoveries: str,
                     epoch_answers: str, civ_num: int):
     """刷新 history/current/briefing.md，供下一个文明读取"""
     perspective_placeholder = "{perspective}"  # Controller 启动时替换
+
+    # 读取失败教训
+    failure_lessons = read(STATE_DIR / "failure-lessons.md")
+    # 只取条目部分（去掉文件头说明）
+    lessons_section = ""
+    if "## 纪元" in failure_lessons:
+        lessons_section = failure_lessons[failure_lessons.index("## 纪元"):]
+
     content = f"""# 农夫启动包 — 文明 #{civ_num:03d}
 
 > 此文件由 Controller 在每个文明开始前自动生成。农夫只需读这一个文件。
 
 ---
 
-## 你的使命
+## ⚠️ 项目根本使命（不可违背）
+
+**火星农场有朝一日在火星开业，种出西红柿，并盈利。**
+
+这是所有纪元命题的终极锚点。无论本纪元命题如何具体，你的方案**必须服务于这个根本使命**：
+- 你提出的任何商业模式，最终都要落实到**在火星土壤上真正种菜**
+- 你的第一个付费客户，必须是为**火星农业本身**而付钱，而不是为数据、概念、卫星服务等衍生物
+- 纯数据服务、纯金融方案、纯地球农业方案——**不符合使命，歌者将扣分**
+
+---
+
+## 你的文明使命
 
 读取史书，消耗 token，给出当前命题的最好答案。然后消亡。
 
@@ -205,9 +224,15 @@ def update_briefing(epoch: dict, next_hint: str, discoveries: str,
 
 ---
 
-## 已完成纪元的答案（跨纪元传承）
+## 已确认纪元答案（农场主认可，可继承方向）
 
 {epoch_answers or "暂无。这是第一个纪元。"}
+
+---
+
+## ⛔ 失败教训（农场主否决案例，禁止效仿）
+
+{lessons_section or "暂无失败教训。"}
 
 ---
 
@@ -224,13 +249,16 @@ def update_briefing(epoch: dict, next_hint: str, discoveries: str,
 **视角：** {perspective_placeholder}
 
 ### 核心模式
-（一句话概括）
+（一句话概括——必须说明如何在火星实际种植农作物）
 
 ### 为什么这种模式能成功
 （3-5个论点，有具体支撑）
 
+### 火星种植实现路径
+（第一批作物何时、在哪、如何种下？用什么技术克服低重力/辐射/大气等挑战？）
+
 ### 第一个付费客户
-（具体是谁，愿意付多少，为什么）
+（具体是谁，为火星农业本身付钱，愿意付多少，为什么）
 
 ### 资金来源
 （谁出钱，为什么，大概规模）
@@ -385,11 +413,14 @@ def run_civilization(civ_num: int, epoch: dict,
     evaluation = singer_result["evaluation"]
     total = evaluation.get("total", 0)
     log(f"🎵 歌者评价完成 | 得分:{total}/100 | 耗时:{singer_result['elapsed_sec']}s")
-    log(f"评分明细 → 可行性:{evaluation.get('scores',{}).get('feasibility','?')} "
-        f"完整性:{evaluation.get('scores',{}).get('completeness','?')} "
-        f"一致性:{evaluation.get('scores',{}).get('consistency','?')} "
-        f"新颖性:{evaluation.get('scores',{}).get('novelty','?')} "
-        f"不确定性:{evaluation.get('scores',{}).get('uncertainty_reduction','?')}", "detail")
+    sc = evaluation.get('scores', {})
+    log(f"评分明细 → 使命:{sc.get('mission_alignment','?')} "
+        f"可行性:{sc.get('feasibility','?')} "
+        f"完整性:{sc.get('completeness','?')} "
+        f"一致性:{sc.get('consistency','?')} "
+        f"新颖性:{sc.get('novelty','?')} "
+        f"不确定性:{sc.get('uncertainty_reduction','?')}", "detail")
+    log(f"使命检查 → {evaluation.get('mission_check','?')} | {evaluation.get('mission_note','')}", "detail")
 
     # 歌者史书（含模型信息区块）
     singer_meta = (
@@ -492,7 +523,7 @@ def finalize_epoch(epoch: dict, scores: list, winning_civ: int):
 
 **命题：** {epoch['question']}
 
-**开始文明：** #{epoch['started_at_civilization']:03d}
+**开始文明：** #{(epoch['started_at_civilization'] or 1):03d}
 **终结文明：** #{winning_civ:03d}
 **历经文明数：** {civ_count}
 **最终得分：** {best['total']}/100
@@ -623,7 +654,7 @@ def init_epoch(epoch_num: int, question: str,
         "question": question,
         "acceptance_criteria": acceptance_criteria,
         "token_budget": token_budget,
-        "started_at_civilization": 1 if epoch_num == 1 else None,
+        "started_at_civilization": 1,
         "current_civilization": 0,
         "next_hint": "",
         "status": "running",
@@ -675,6 +706,58 @@ _（上一文明结束后，歌者留给下一文明的方向）_
 
     log(f"✅ 纪元{epoch_num} 初始化完成")
     log(f"   命题：{question}")
+
+
+def reject_epoch(epoch_num: int, reason: str, lesson: str = ""):
+    """
+    农场主调用：否决已收敛的纪元（歌者通过但农场主不认可）。
+    将该纪元答案移入 failure-lessons.md，并标记为 owner_rejected。
+    之后需重新 init_epoch 重跑。
+    """
+    # 读取纪元信息
+    epoch = load_epoch()
+    if epoch["epoch_number"] != epoch_num:
+        raise ValueError(f"当前纪元是 {epoch['epoch_number']}，不是 {epoch_num}")
+    if epoch.get("status") not in ("completed",):
+        raise ValueError(f"纪元 {epoch_num} 状态为 {epoch.get('status')}，只能否决已完成的纪元")
+
+    # 标记否决
+    epoch["owner_verdict"] = "rejected"
+    epoch["owner_reject_reason"] = reason
+    save_json(STATE_DIR / "epoch.json", epoch)
+
+    # 追加到 failure-lessons.md
+    lessons_path = STATE_DIR / "failure-lessons.md"
+    lessons = read(lessons_path)
+    answers_path = STATE_DIR / "epoch-answers.md"
+    answers = read(answers_path)
+
+    from datetime import datetime
+    today = datetime.now().strftime("%Y-%m-%d")
+
+    # 从 epoch-answers.md 里找到这个纪元的答案摘要
+    entry = f"""
+## 纪元{epoch_num}：{epoch['question'][:40]}...
+**歌者评分：** （见 agent/civilizations/epoch-{epoch_num:03d}/）
+**农场主判定：** ❌ 否决
+**否决时间：** {today}
+**否决原因：** {reason}
+"""
+    if lesson:
+        entry += f"**教训：**\n{lesson}\n"
+    entry += "\n---\n"
+
+    write(lessons_path, lessons + entry)
+
+    # 在 epoch-answers.md 里加否决标注
+    write(answers_path, answers.replace(
+        f"## 纪元{epoch_num}：",
+        f"## ~~纪元{epoch_num}~~（农场主已否决）：",
+    ))
+
+    log(f"⚠️  纪元{epoch_num} 已被农场主否决，原因：{reason}")
+    log(f"   失败教训已记入 state/failure-lessons.md")
+    log(f"   请重新 init_epoch 发起新纪元")
 
 
 if __name__ == "__main__":
