@@ -2903,6 +2903,28 @@
       },
       "epitaph": "他们在沙海边缘种下第一株番茄，为火星的红色土壤预演了绿色的可能。",
       "mission_check": "通过"
+    },
+    {
+      "n": 246,
+      "epoch": 3,
+      "total": 24,
+      "delta": -58,
+      "perspective": "SpaceX 殖民地规划者",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 144.3,
+      "death": "token_exhausted",
+      "tokens_used": 6950,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 0,
+        "feasibility": 8,
+        "completeness": 5,
+        "consistency": 10,
+        "novelty": 6,
+        "uncertainty_reduction": 0
+      },
+      "epitaph": "他们描绘了数据的蓝图，却遗忘了土壤与种子。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
