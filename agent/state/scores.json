@@ -3013,6 +3013,28 @@
       },
       "epitaph": "他们指出了沙漠的方向，却未能描绘出抵达绿洲的路径。",
       "mission_check": "通过"
+    },
+    {
+      "n": 251,
+      "epoch": 3,
+      "total": 25,
+      "delta": -23,
+      "perspective": "首批火星殖民者（潜在客户）",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 131.3,
+      "death": "natural",
+      "tokens_used": 6410,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 5,
+        "feasibility": 5,
+        "completeness": 5,
+        "consistency": 5,
+        "novelty": 5,
+        "uncertainty_reduction": 5
+      },
+      "epitaph": "他们画下了第一笔蓝图，却未能为它注入真实的土壤与阳光。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
