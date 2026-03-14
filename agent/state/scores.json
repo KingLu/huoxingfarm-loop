@@ -2287,6 +2287,28 @@
       },
       "epitaph": "他试图在火星的土壤上嫁接地球的商业藤蔓，却在愿景的膨胀中迷失了最初的根。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 218,
+      "epoch": 2,
+      "total": 82,
+      "delta": 38,
+      "perspective": "种子轮天使投资人",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 79.3,
+      "death": "natural",
+      "tokens_used": 4380,
+      "verdict": "passed",
+      "scores": {
+        "mission_alignment": 20,
+        "feasibility": 14,
+        "completeness": 18,
+        "consistency": 16,
+        "novelty": 15,
+        "uncertainty_reduction": 16
+      },
+      "epitaph": "他们以番茄为矛，刺破了火星农业从概念到现金流的迷雾。",
+      "mission_check": "通过"
     }
   ],
   "best": {
