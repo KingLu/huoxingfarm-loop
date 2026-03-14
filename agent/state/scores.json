@@ -2265,6 +2265,28 @@
       },
       "epitaph": "他们曾仰望星空，却最终将根系扎回了地球的账簿。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 217,
+      "epoch": 2,
+      "total": 44,
+      "delta": -6,
+      "perspective": "荷兰温室农业专家",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 146.0,
+      "death": "token_exhausted",
+      "tokens_used": 6224,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 8,
+        "feasibility": 12,
+        "completeness": 10,
+        "consistency": 8,
+        "novelty": 10,
+        "uncertainty_reduction": 5
+      },
+      "epitaph": "他试图在火星的土壤上嫁接地球的商业藤蔓，却在愿景的膨胀中迷失了最初的根。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
