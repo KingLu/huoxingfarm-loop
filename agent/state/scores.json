@@ -2089,6 +2089,28 @@
       },
       "epitaph": "他们从数据的废墟中醒来，却将目光投向了更遥远的商业星空，而非脚下的红色土壤。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 159,
+      "epoch": 2,
+      "total": 44,
+      "delta": 17,
+      "perspective": "NASA 航天工程师",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 131.3,
+      "death": "natural",
+      "tokens_used": 7729,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 5,
+        "feasibility": 10,
+        "completeness": 8,
+        "consistency": 12,
+        "novelty": 8,
+        "uncertainty_reduction": 10
+      },
+      "epitaph": "他们为火星殖民地种下了第一颗种子，却忘记了农场本身也需要在荒芜中独立生存。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
