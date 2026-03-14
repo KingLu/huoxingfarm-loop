@@ -2639,6 +2639,28 @@
       },
       "epitaph": "他们锚定了沙漠的坐标，却未能描绘出通往盈利的路径。",
       "mission_check": "通过"
+    },
+    {
+      "n": 234,
+      "epoch": 3,
+      "total": 82,
+      "delta": 21,
+      "perspective": "曾经失败的火星创业者（深刻反思）",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 120.9,
+      "death": "natural",
+      "tokens_used": 5535,
+      "verdict": "passed",
+      "scores": {
+        "mission_alignment": 18,
+        "feasibility": 15,
+        "completeness": 18,
+        "consistency": 16,
+        "novelty": 14,
+        "uncertainty_reduction": 17
+      },
+      "epitaph": "他们在赤色沙海中，为红色星球种下了第一颗验证的种子。",
+      "mission_check": "通过"
     }
   ],
   "best": {
