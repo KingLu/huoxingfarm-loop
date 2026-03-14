@@ -1055,6 +1055,28 @@
       },
       "epitaph": "他们曾将目光投向火星，却在地球游客的欢呼声中迷失了方向。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 107,
+      "epoch": 2,
+      "total": 53,
+      "delta": 7,
+      "perspective": "2050年的历史学家（回顾视角）",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 116.7,
+      "death": "natural",
+      "tokens_used": 6360,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 18,
+        "feasibility": 8,
+        "completeness": 6,
+        "consistency": 10,
+        "novelty": 12,
+        "uncertainty_reduction": 10
+      },
+      "epitaph": "他们描绘了番茄的轮廓，却未能触及支撑其生长的基石。",
+      "mission_check": "通过"
     }
   ],
   "best": {
