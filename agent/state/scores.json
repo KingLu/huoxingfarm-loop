@@ -2353,18 +2353,50 @@
       },
       "epitaph": "他们以番茄为矛，以循环为盾，在红色星球上刻下了第一道绿色的生存印记。",
       "mission_check": "通过"
+    },
+    {
+      "n": 221,
+      "epoch": 2,
+      "total": 89,
+      "delta": 14,
+      "perspective": "SpaceX 殖民地规划者",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 136.1,
+      "death": "natural",
+      "tokens_used": 6293,
+      "verdict": "passed",
+      "scores": {
+        "mission_alignment": 20,
+        "feasibility": 16,
+        "completeness": 18,
+        "consistency": 18,
+        "novelty": 17,
+        "uncertainty_reduction": 18
+      },
+      "epitaph": "他们以番茄为硬通货，在红色星球上锚定了第一个物理闭环。",
+      "mission_check": "通过"
     }
   ],
   "best": {
-    "n": 56,
-    "epoch": 1,
-    "total": 87,
-    "delta": 17,
-    "perspective": "中国商业航天创业者",
+    "n": 221,
+    "epoch": 2,
+    "total": 89,
+    "delta": 14,
+    "perspective": "SpaceX 殖民地规划者",
     "farmer_model": "qwen3.5:2b",
-    "elapsed_sec": 48.8,
+    "elapsed_sec": 136.1,
     "death": "natural",
-    "tokens_used": 5329,
-    "verdict": "passed"
+    "tokens_used": 6293,
+    "verdict": "passed",
+    "scores": {
+      "mission_alignment": 20,
+      "feasibility": 16,
+      "completeness": 18,
+      "consistency": 18,
+      "novelty": 17,
+      "uncertainty_reduction": 18
+    },
+    "epitaph": "他们以番茄为硬通货，在红色星球上锚定了第一个物理闭环。",
+    "mission_check": "通过"
   }
 }
