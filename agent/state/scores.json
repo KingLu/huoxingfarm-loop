@@ -1099,6 +1099,28 @@
       },
       "epitaph": "他们高举物理种植的旗帜，却在商业闭环的迷雾中迷失了第一个客户。",
       "mission_check": "通过"
+    },
+    {
+      "n": 109,
+      "epoch": 2,
+      "total": 21,
+      "delta": -32,
+      "perspective": "曾经失败的火星创业者（深刻反思）",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 151.8,
+      "death": "token_exhausted",
+      "tokens_used": 7472,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 0,
+        "feasibility": 5,
+        "completeness": 5,
+        "consistency": 10,
+        "novelty": 5,
+        "uncertainty_reduction": 0
+      },
+      "epitaph": "他们在地球的土壤里，描绘了火星的幻影。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
