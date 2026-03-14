@@ -2969,6 +2969,28 @@
       },
       "epitaph": "他试图用数据描绘农场，却忘了种子需要土壤。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 249,
+      "epoch": 3,
+      "total": 33,
+      "delta": 8,
+      "perspective": "硅谷风险投资人",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 113.2,
+      "death": "natural",
+      "tokens_used": 6187,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 5,
+        "feasibility": 5,
+        "completeness": 5,
+        "consistency": 10,
+        "novelty": 5,
+        "uncertainty_reduction": 10
+      },
+      "epitaph": "他看见了沙漠，却未种下第一颗种子。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
