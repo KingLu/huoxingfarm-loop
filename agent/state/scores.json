@@ -2221,6 +2221,28 @@
       },
       "epitaph": "他们拥抱了物理的回归，却在通往现实的门口，遗失了开启大门的钥匙。",
       "mission_check": "通过"
+    },
+    {
+      "n": 165,
+      "epoch": 2,
+      "total": 21,
+      "delta": -45,
+      "perspective": "首批火星殖民者（潜在客户）",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 133.5,
+      "death": "natural",
+      "tokens_used": 7788,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 0,
+        "feasibility": 5,
+        "completeness": 5,
+        "consistency": 10,
+        "novelty": 5,
+        "uncertainty_reduction": 0
+      },
+      "epitaph": "他们仰望星空，却忘记了脚下的红色土壤。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
