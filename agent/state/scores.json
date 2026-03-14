@@ -2155,6 +2155,28 @@
       },
       "epitaph": "他们定义了内部市场，却未能找到第一个踏入市场的真实顾客。",
       "mission_check": "通过"
+    },
+    {
+      "n": 162,
+      "epoch": 2,
+      "total": 23,
+      "delta": -34,
+      "perspective": "曾经失败的火星创业者（深刻反思）",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 149.5,
+      "death": "token_exhausted",
+      "tokens_used": 8192,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 0,
+        "feasibility": 5,
+        "completeness": 5,
+        "consistency": 10,
+        "novelty": 8,
+        "uncertainty_reduction": 0
+      },
+      "epitaph": "他们在地球的土壤里，寻找火星的倒影。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
