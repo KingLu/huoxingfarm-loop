@@ -1209,6 +1209,28 @@
       },
       "epitaph": "他们在地球的田野上，遥望火星的幻影。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 119,
+      "epoch": 2,
+      "total": 49,
+      "delta": 28,
+      "perspective": "种子轮天使投资人",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 129.4,
+      "death": "natural",
+      "tokens_used": 7222,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 18,
+        "feasibility": 8,
+        "completeness": 6,
+        "consistency": 10,
+        "novelty": 12,
+        "uncertainty_reduction": 5
+      },
+      "epitaph": "他们锚定了物理种植的星辰，却未能描绘出第一个为食物付钱的地球面孔。",
+      "mission_check": "通过"
     }
   ],
   "best": {
