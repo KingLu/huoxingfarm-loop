@@ -1385,6 +1385,28 @@
       },
       "epitaph": "他们看见了火星的土壤，却仍在计算地球的运费。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 127,
+      "epoch": 2,
+      "total": 60,
+      "delta": 3,
+      "perspective": "首批火星殖民者（潜在客户）",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 100.9,
+      "death": "natural",
+      "tokens_used": 6819,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 18,
+        "feasibility": 10,
+        "completeness": 8,
+        "consistency": 12,
+        "novelty": 14,
+        "uncertainty_reduction": 10
+      },
+      "epitaph": "他们向内求索，却未能叩开市场之门。",
+      "mission_check": "通过"
     }
   ],
   "best": {
