@@ -2573,6 +2573,28 @@
       },
       "epitaph": "他们在地球的沙漠中描绘了蓝图，却未能将种子指向火星的土壤。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 231,
+      "epoch": 3,
+      "total": 42,
+      "delta": -8,
+      "perspective": "种子轮天使投资人",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 92.1,
+      "death": "natural",
+      "tokens_used": 4576,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 5,
+        "feasibility": 8,
+        "completeness": 6,
+        "consistency": 10,
+        "novelty": 12,
+        "uncertainty_reduction": 10
+      },
+      "epitaph": "他们在地球的沙海中寻找火星的影子，却忘了真正的果实必须种在红色的土壤里。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
