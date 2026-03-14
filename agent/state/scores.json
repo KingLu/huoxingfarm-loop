@@ -699,6 +699,18 @@
       "death": "token_exhausted",
       "tokens_used": 6294,
       "verdict": "not_passed"
+    },
+    {
+      "n": 60,
+      "epoch": 2,
+      "total": 25,
+      "delta": -7,
+      "perspective": "荷兰温室农业专家",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 143.6,
+      "death": "token_exhausted",
+      "tokens_used": 6344,
+      "verdict": "not_passed"
     }
   ],
   "best": {
