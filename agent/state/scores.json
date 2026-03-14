@@ -2243,6 +2243,28 @@
       },
       "epitaph": "他们仰望星空，却忘记了脚下的红色土壤。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 216,
+      "epoch": 2,
+      "total": 50,
+      "delta": 29,
+      "perspective": "中国商业航天创业者",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 144.1,
+      "death": "natural",
+      "tokens_used": 6090,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 5,
+        "feasibility": 8,
+        "completeness": 10,
+        "consistency": 12,
+        "novelty": 15,
+        "uncertainty_reduction": 10
+      },
+      "epitaph": "他们曾仰望星空，却最终将根系扎回了地球的账簿。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
