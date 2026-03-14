@@ -3035,6 +3035,28 @@
       },
       "epitaph": "他们画下了第一笔蓝图，却未能为它注入真实的土壤与阳光。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 252,
+      "epoch": 3,
+      "total": 48,
+      "delta": 23,
+      "perspective": "中国商业航天创业者",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 89.4,
+      "death": "natural",
+      "tokens_used": 5295,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 18,
+        "feasibility": 8,
+        "completeness": 6,
+        "consistency": 10,
+        "novelty": 5,
+        "uncertainty_reduction": 10
+      },
+      "epitaph": "他们在地球的沙海中，画下了通往火星的第一道模糊的犁痕。",
+      "mission_check": "通过"
     }
   ],
   "best": {
