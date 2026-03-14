@@ -182,12 +182,13 @@ def update_briefing(epoch: dict, next_hint: str, discoveries: str,
     """刷新 history/current/briefing.md，供下一个文明读取"""
     perspective_placeholder = "{perspective}"  # Controller 启动时替换
 
-    # 读取失败教训
-    failure_lessons = read(STATE_DIR / "failure-lessons.md")
-    # 只取条目部分（去掉文件头说明）
-    lessons_section = ""
-    if "## 纪元" in failure_lessons:
-        lessons_section = failure_lessons[failure_lessons.index("## 纪元"):]
+    # 失败教训：使用固定简洁禁令，避免具体方案描述被小模型反向参考
+    lessons_section = """⛔ 核心禁令（农场主红线）：
+- 禁止纯数据服务方案（无论商业逻辑多完整）
+- 禁止纯金融/投资产品方案
+- 禁止纯地球农业方案
+- 所有方案核心必须是在火星实际种植农作物
+- 纪元1因提出纯数据服务方案（卫星+环境数据B2G）被农场主否决，此方向永久禁止"""
 
     content = f"""# 农夫启动包 — 文明 #{civ_num:03d}
 
