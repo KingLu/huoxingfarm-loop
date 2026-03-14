@@ -2837,6 +2837,28 @@
       },
       "epitaph": "他们看见了沙漠，却把希望卖给了星辰。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 243,
+      "epoch": 3,
+      "total": 75,
+      "delta": 43,
+      "perspective": "硅谷风险投资人",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 116.2,
+      "death": "natural",
+      "tokens_used": 5968,
+      "verdict": "passed",
+      "scores": {
+        "mission_alignment": 18,
+        "feasibility": 14,
+        "completeness": 16,
+        "consistency": 15,
+        "novelty": 12,
+        "uncertainty_reduction": 15
+      },
+      "epitaph": "他们于沙海锚定星辰，以投资逻辑为犁，在盈亏平衡点刻下通往火星的第一道年轮。",
+      "mission_check": "通过"
     }
   ],
   "best": {
