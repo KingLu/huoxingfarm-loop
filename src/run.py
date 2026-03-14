@@ -512,8 +512,12 @@ def run_civilization(civ_num: int, epoch: dict,
 def finalize_epoch(epoch: dict, scores: list, winning_civ: int):
     """纪元达标：写终章，更新 epoch-answers.md，打 tag"""
     epoch_num = epoch["epoch_number"]
-    best = max(scores, key=lambda s: s["total"])
-    civ_count = len(scores)
+    # 只取当前纪元的分数，避免跨纪元污染
+    epoch_scores = [s for s in scores if s.get("epoch", epoch_num) == epoch_num]
+    if not epoch_scores:
+        epoch_scores = scores  # 兼容旧数据无 epoch 字段
+    best = max(epoch_scores, key=lambda s: s["total"])
+    civ_count = len(epoch_scores)
 
     log(f"🎉 纪元{epoch_num}收敛！历经{civ_count}个文明，最终得分{best['total']}")
 
@@ -628,7 +632,8 @@ def main():
         log(f"📊 文明#{civ_num:03d} 完成 | 得分:{result['total']} | {result['verdict']} | {result['epitaph'][:40]}")
 
         # 收敛判断
-        if result["verdict"] == "passed":
+        # 收敛条件：歌者判 passed 且分数达到收敛线（双重保障）
+        if result["verdict"] == "passed" and result["total"] >= CONVERGENCE_SCORE:
             finalize_epoch(epoch, scores, civ_num)
             log("✅ 纪元收敛，等待农场主设定下一纪元命题")
             break
