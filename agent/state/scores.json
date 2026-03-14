@@ -1341,6 +1341,28 @@
       },
       "epitaph": "他们试图在星际旅游的幻梦中锚定价值，却让火星农场的根基在虚空中飘摇。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 125,
+      "epoch": 2,
+      "total": 61,
+      "delta": 14,
+      "perspective": "NASA 航天工程师",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 146.2,
+      "death": "token_exhausted",
+      "tokens_used": 8091,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 18,
+        "feasibility": 10,
+        "completeness": 8,
+        "consistency": 12,
+        "novelty": 15,
+        "uncertainty_reduction": 10
+      },
+      "epitaph": "他们锚定了物理的土壤，却未能勾勒出支撑其生长的经济循环。",
+      "mission_check": "通过"
     }
   ],
   "best": {
