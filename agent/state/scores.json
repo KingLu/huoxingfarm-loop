@@ -879,6 +879,28 @@
       "death": "natural",
       "tokens_used": 6792,
       "verdict": "not_passed"
+    },
+    {
+      "n": 92,
+      "epoch": 2,
+      "total": 28,
+      "delta": 1,
+      "perspective": "硅谷风险投资人",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 148.7,
+      "death": "token_exhausted",
+      "tokens_used": 7363,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 0,
+        "feasibility": 8,
+        "completeness": 5,
+        "consistency": 12,
+        "novelty": 6,
+        "uncertainty_reduction": 2
+      },
+      "epitaph": "他在地球的数据田野上耕耘，却以为自己在火星播种。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
