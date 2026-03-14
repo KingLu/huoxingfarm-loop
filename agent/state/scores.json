@@ -2309,6 +2309,28 @@
       },
       "epitaph": "他们以番茄为矛，刺破了火星农业从概念到现金流的迷雾。",
       "mission_check": "通过"
+    },
+    {
+      "n": 219,
+      "epoch": 2,
+      "total": 32,
+      "delta": -50,
+      "perspective": "联合国粮农组织官员",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 146.3,
+      "death": "token_exhausted",
+      "tokens_used": 6398,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 0,
+        "feasibility": 8,
+        "completeness": 6,
+        "consistency": 12,
+        "novelty": 10,
+        "uncertainty_reduction": 2
+      },
+      "epitaph": "他们在地球的数据迷宫中，遗忘了火星的土壤。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
