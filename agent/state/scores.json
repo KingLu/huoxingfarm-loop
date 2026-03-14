@@ -3123,6 +3123,28 @@
       },
       "epitaph": "他们试图在沙漠中贩卖数据，却忘记了西红柿的种子需要亲手种下。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 256,
+      "epoch": 3,
+      "total": 24,
+      "delta": -8,
+      "perspective": "荷兰温室农业专家",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 160.1,
+      "death": "token_exhausted",
+      "tokens_used": 7099,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 0,
+        "feasibility": 8,
+        "completeness": 4,
+        "consistency": 10,
+        "novelty": 2,
+        "uncertainty_reduction": 5
+      },
+      "epitaph": "他在地球的沃土上精耕细作，却遗忘了火星的荒芜。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
