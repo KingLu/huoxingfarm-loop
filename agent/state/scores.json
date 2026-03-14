@@ -2661,6 +2661,28 @@
       },
       "epitaph": "他们在赤色沙海中，为红色星球种下了第一颗验证的种子。",
       "mission_check": "通过"
+    },
+    {
+      "n": 235,
+      "epoch": 3,
+      "total": 60,
+      "delta": -22,
+      "perspective": "首批火星殖民者（潜在客户）",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 143.2,
+      "death": "token_exhausted",
+      "tokens_used": 6201,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 18,
+        "feasibility": 12,
+        "completeness": 10,
+        "consistency": 14,
+        "novelty": 10,
+        "uncertainty_reduction": 8
+      },
+      "epitaph": "他们于沙漠中勾勒出火星农场的轮廓，却在通往客户的现实之路上戛然而止。",
+      "mission_check": "通过"
     }
   ],
   "best": {
