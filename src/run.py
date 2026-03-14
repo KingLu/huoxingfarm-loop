@@ -643,9 +643,11 @@ def finalize_epoch(epoch: dict, scores: list, winning_civ: int):
     cleaned.insert(insert_at, new_row)
     write(index_path, "".join(cleaned))
 
-    # ② 更新 epoch.json status → completed
-    epoch["status"] = "completed"
-    save_json(STATE_DIR / "epoch.json", epoch)
+    # ② 更新 epoch.json status → completed（只更新当前文件，不覆盖后续 init_epoch）
+    current_epoch_data = load_json(STATE_DIR / "epoch.json")
+    if current_epoch_data.get("epoch_number") == epoch_num:
+        current_epoch_data["status"] = "completed"
+        save_json(STATE_DIR / "epoch.json", current_epoch_data)
 
     git("add -A")
     score = best["total"]
