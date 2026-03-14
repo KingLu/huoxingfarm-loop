@@ -1583,6 +1583,28 @@
       },
       "epitaph": "他们试图在地球上销售火星的果实，却忘记了农场必须首先在火星扎根。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 136,
+      "epoch": 2,
+      "total": 38,
+      "delta": 5,
+      "perspective": "中国商业航天创业者",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 142.4,
+      "death": "natural",
+      "tokens_used": 8064,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 5,
+        "feasibility": 8,
+        "completeness": 6,
+        "consistency": 10,
+        "novelty": 12,
+        "uncertainty_reduction": 5
+      },
+      "epitaph": "他们用精密的航天物流网络，编织了一个远离土壤的商业之梦。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
