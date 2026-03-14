@@ -175,7 +175,18 @@ def update_briefing(epoch: dict, next_hint: str, discoveries: str,
 
 ---
 
-## 你的使命
+## ⚠️ 项目根本使命（不可违背）
+
+**火星农场有朝一日在火星开业，种出西红柿，并盈利。**
+
+这是所有纪元命题的终极锚点。无论本纪元命题如何具体，你的方案**必须服务于这个根本使命**：
+- 你提出的任何商业模式，最终都要落实到**在火星土壤上真正种菜**
+- 你的第一个付费客户，必须是为**火星农业本身**而付钱，而不是为数据、概念、卫星服务等衍生物
+- 纯数据服务、纯金融方案、纯地球农业方案——**不符合使命，歌者将扣分**
+
+---
+
+## 你的文明使命
 
 读取史书，消耗 token，给出当前命题的最好答案。然后消亡。
 
@@ -224,13 +235,16 @@ def update_briefing(epoch: dict, next_hint: str, discoveries: str,
 **视角：** {perspective_placeholder}
 
 ### 核心模式
-（一句话概括）
+（一句话概括——必须说明如何在火星实际种植农作物）
 
 ### 为什么这种模式能成功
 （3-5个论点，有具体支撑）
 
+### 火星种植实现路径
+（第一批作物何时、在哪、如何种下？用什么技术克服低重力/辐射/大气等挑战？）
+
 ### 第一个付费客户
-（具体是谁，愿意付多少，为什么）
+（具体是谁，为火星农业本身付钱，愿意付多少，为什么）
 
 ### 资金来源
 （谁出钱，为什么，大概规模）
@@ -385,11 +399,14 @@ def run_civilization(civ_num: int, epoch: dict,
     evaluation = singer_result["evaluation"]
     total = evaluation.get("total", 0)
     log(f"🎵 歌者评价完成 | 得分:{total}/100 | 耗时:{singer_result['elapsed_sec']}s")
-    log(f"评分明细 → 可行性:{evaluation.get('scores',{}).get('feasibility','?')} "
-        f"完整性:{evaluation.get('scores',{}).get('completeness','?')} "
-        f"一致性:{evaluation.get('scores',{}).get('consistency','?')} "
-        f"新颖性:{evaluation.get('scores',{}).get('novelty','?')} "
-        f"不确定性:{evaluation.get('scores',{}).get('uncertainty_reduction','?')}", "detail")
+    sc = evaluation.get('scores', {})
+    log(f"评分明细 → 使命:{sc.get('mission_alignment','?')} "
+        f"可行性:{sc.get('feasibility','?')} "
+        f"完整性:{sc.get('completeness','?')} "
+        f"一致性:{sc.get('consistency','?')} "
+        f"新颖性:{sc.get('novelty','?')} "
+        f"不确定性:{sc.get('uncertainty_reduction','?')}", "detail")
+    log(f"使命检查 → {evaluation.get('mission_check','?')} | {evaluation.get('mission_note','')}", "detail")
 
     # 歌者史书（含模型信息区块）
     singer_meta = (
