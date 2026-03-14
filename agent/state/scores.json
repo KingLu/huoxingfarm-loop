@@ -1869,6 +1869,28 @@
       },
       "epitaph": "他们试图在想象的城邦里，为不存在的居民种植真实的粮食。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 149,
+      "epoch": 2,
+      "total": 21,
+      "delta": -15,
+      "perspective": "荷兰温室农业专家",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 149.4,
+      "death": "token_exhausted",
+      "tokens_used": 8192,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 0,
+        "feasibility": 5,
+        "completeness": 2,
+        "consistency": 10,
+        "novelty": 8,
+        "uncertainty_reduction": 0
+      },
+      "epitaph": "他们在地球的数据温室里，精心培育了一个关于火星的遥远幻梦。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
