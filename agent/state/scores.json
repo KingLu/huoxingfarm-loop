@@ -1297,6 +1297,28 @@
       },
       "epitaph": "他们在地球的土壤里，描绘了火星的幻影。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 123,
+      "epoch": 2,
+      "total": 47,
+      "delta": 26,
+      "perspective": "NASA 航天工程师",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 124.5,
+      "death": "natural",
+      "tokens_used": 7304,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 5,
+        "feasibility": 8,
+        "completeness": 6,
+        "consistency": 10,
+        "novelty": 12,
+        "uncertainty_reduction": 15
+      },
+      "epitaph": "他们高喊着‘物理交付’的号角，却将航船驶向了地球的港湾。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
