@@ -855,6 +855,18 @@
       "death": "token_exhausted",
       "tokens_used": 7176,
       "verdict": "not_passed"
+    },
+    {
+      "n": 73,
+      "epoch": 2,
+      "total": 29,
+      "delta": 0,
+      "perspective": "硅谷风险投资人",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 133.2,
+      "death": "natural",
+      "tokens_used": 6865,
+      "verdict": "not_passed"
     }
   ],
   "best": {
