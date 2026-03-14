@@ -901,6 +901,28 @@
       },
       "epitaph": "他在地球的数据田野上耕耘，却以为自己在火星播种。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 93,
+      "epoch": 2,
+      "total": 28,
+      "delta": 0,
+      "perspective": "首批火星殖民者（潜在客户）",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 152.1,
+      "death": "token_exhausted",
+      "tokens_used": 7412,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 0,
+        "feasibility": 5,
+        "completeness": 5,
+        "consistency": 10,
+        "novelty": 8,
+        "uncertainty_reduction": 5
+      },
+      "epitaph": "他们仰望星空，却将种子播向了错误的轨道。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
