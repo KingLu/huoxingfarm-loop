@@ -136,13 +136,19 @@ def parse_singer_output(raw: str) -> tuple[dict, str]:
     evaluation = json.loads(json_match.group(1).strip())
     narrative = raw[json_match.end():].strip()
 
-    # 若歌者返回6维度（含 mission_alignment），自动折算总分
+    # 强制折算总分：6维度（含 mission_alignment）→ raw/120*100
+    # 5维度（旧格式）→ 直接用 total
     scores = evaluation.get("scores", {})
-    if "mission_alignment" in scores and "total" not in evaluation:
+    if "mission_alignment" in scores:
         raw_total = sum(scores.values())
         evaluation["raw_total"] = raw_total
         evaluation["total"] = round(raw_total / 120 * 100)
-    elif "raw_total" in evaluation and evaluation.get("total", 0) == 0:
-        evaluation["total"] = round(evaluation["raw_total"] / 120 * 100)
+    elif scores and "total" not in evaluation:
+        # 旧5维度兼容：直接求和
+        evaluation["total"] = sum(scores.values())
+
+    # 确保 total 字段存在
+    if "total" not in evaluation:
+        evaluation["total"] = 0
 
     return evaluation, narrative

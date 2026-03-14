@@ -73,7 +73,8 @@
   "criteria_check": {
     "criterion_1": true或false,
     "criterion_2": true或false,
-    "criterion_3": true或false
+    "criterion_3": true或false,
+    "criterion_4": true或false
   },
   "scores": {
     "mission_alignment": 0,
