@@ -1429,6 +1429,28 @@
       },
       "epitaph": "他们试图用地球的杠杆撬动火星的土壤，却迷失在技术授权的幻梦中。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 129,
+      "epoch": 2,
+      "total": 28,
+      "delta": -14,
+      "perspective": "硅谷风险投资人",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 149.2,
+      "death": "token_exhausted",
+      "tokens_used": 8192,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 5,
+        "feasibility": 3,
+        "completeness": 2,
+        "consistency": 8,
+        "novelty": 10,
+        "uncertainty_reduction": 5
+      },
+      "epitaph": "他们试图用地球的物流网络编织火星的利润，却忘了种子必须在火星的土壤里发芽。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
