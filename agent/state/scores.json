@@ -2683,6 +2683,28 @@
       },
       "epitaph": "他们于沙漠中勾勒出火星农场的轮廓，却在通往客户的现实之路上戛然而止。",
       "mission_check": "通过"
+    },
+    {
+      "n": 236,
+      "epoch": 3,
+      "total": 55,
+      "delta": -5,
+      "perspective": "SpaceX 殖民地规划者",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 127.4,
+      "death": "natural",
+      "tokens_used": 5870,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 18,
+        "feasibility": 8,
+        "completeness": 8,
+        "consistency": 10,
+        "novelty": 10,
+        "uncertainty_reduction": 12
+      },
+      "epitaph": "他于塔克拉玛干的沙丘上，为火星种下了一个模糊的承诺。",
+      "mission_check": "通过"
     }
   ],
   "best": {
