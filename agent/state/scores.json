@@ -1495,6 +1495,28 @@
       },
       "epitaph": "他们试图编织地球与火星的双向丝线，却在逻辑的迷宫中耗尽了思想的燃料。",
       "mission_check": "偏离使命"
+    },
+    {
+      "n": 132,
+      "epoch": 2,
+      "total": 25,
+      "delta": -6,
+      "perspective": "2050年的历史学家（回顾视角）",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 153.1,
+      "death": "token_exhausted",
+      "tokens_used": 8192,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 0,
+        "feasibility": 5,
+        "completeness": 5,
+        "consistency": 15,
+        "novelty": 5,
+        "uncertainty_reduction": 0
+      },
+      "epitaph": "他们在地球的数据沃土上耕耘，却将火星的温室留给了幻影。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
