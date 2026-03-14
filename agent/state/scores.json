@@ -3101,6 +3101,28 @@
       },
       "epitaph": "他们看见了沙漠，却未能触及真实的土壤。",
       "mission_check": "通过"
+    },
+    {
+      "n": 255,
+      "epoch": 3,
+      "total": 32,
+      "delta": -25,
+      "perspective": "荷兰温室农业专家",
+      "farmer_model": "qwen3.5:2b",
+      "elapsed_sec": 118.5,
+      "death": "natural",
+      "tokens_used": 6248,
+      "verdict": "not_passed",
+      "scores": {
+        "mission_alignment": 5,
+        "feasibility": 8,
+        "completeness": 6,
+        "consistency": 10,
+        "novelty": 5,
+        "uncertainty_reduction": 5
+      },
+      "epitaph": "他们试图在沙漠中贩卖数据，却忘记了西红柿的种子需要亲手种下。",
+      "mission_check": "偏离使命"
     }
   ],
   "best": {
